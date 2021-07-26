@@ -67,7 +67,7 @@
         </ul>
       <% end %>
       <hr>
-      The following indivuals have not yet selected a cabin<br>
+      The following individuals have not yet selected a cabin<br>
       <ul>
         <%  @event.eventattendances.where(cabin: nil).each do |cabinassignment|  %>
           <li> <%= cabinResident(cabinassignment) %>
