@@ -87,7 +87,11 @@ class EventController < ApplicationController
   def paypal_init
     paypal_client_id = ENV['PAYPAL_CLIENT_ID']
     paypal_client_secret = ENV['PAYPAL_CLIENT_SECRET']
-    environment = PayPal::SandboxEnvironment.new paypal_client_id, paypal_client_secret
+    if ENV['PAYPAL_ENV'] == 'live'
+      environment = PayPal::LiveEnvironment.new paypal_client_id, paypal_client_secret
+    else
+      environment = PayPal::SandboxEnvironment.new paypal_client_id, paypal_client_secret
+    end
     @client = PayPal::PayPalHttpClient.new environment
   end
 end

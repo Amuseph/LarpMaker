@@ -22,7 +22,7 @@
 <script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
 <script>
   paypal.Buttons({
-    env: 'sandbox',
+    env: '<%= escape_javascript ENV['PAYPAL_ENV'] %>',
     createOrder: async () => {
       const response = await fetch('ordermealplan/', {method: 'POST'});
       const responseData = await response.json();
