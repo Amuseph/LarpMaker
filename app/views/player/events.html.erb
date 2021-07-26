@@ -9,6 +9,7 @@
     <th>Description</th>
     <th>Date</th>
     <th>Going As</th>
+    <th>Meal Plan</th>
     <th>Character</th>
 </tr>
 </thead>
@@ -20,6 +21,7 @@
       
       <td><%= eventattendance.event.startdate %></td>
       <td><%= eventattendance.registrationtype %></td>
+      <td><%= eventattendance.mealplan %></td>
       <td>
         <%= if (eventattendance.character && eventattendance.event.startdate < Time.now) then
           eventattendance.character.name 

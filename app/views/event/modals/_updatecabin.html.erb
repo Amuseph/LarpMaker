@@ -1,5 +1,5 @@
 <div class="modal-body" id="updateCabinModalBody">
-  <%= bootstrap_form_with(model: @eventattendance, url: event_updatecabin_path(@event), local: true) do |f| %>
+  <%= bootstrap_form_with(model: @myeventattendance, url: event_updatecabin_path(@event), local: true) do |f| %>
 
     <%= f.select :cabin_id, grouped_options_for_select(@availablecabins), hide_label: true, :include_blank => true %>
 

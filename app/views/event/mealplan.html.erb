@@ -1,0 +1,48 @@
+<h3>Meal Plan</h3>
+<p>
+  The meal includes breakfast on Saturday and Sunday along with dinner on Saturday evening.
+</p>
+<p>
+  <%= simple_format(@event.mealplandetails.html_safe)%>
+</p>
+<form>
+  <div class="form-group">
+    <label for="mealtype">Meal Type</label>
+      <select id="MealType" class="form-control form-control-lg">
+        <option>Meat</option>
+        <option>Vegan</option>
+      </select>
+  </div>
+</form>
+
+<p>
+  <b>Purchase a meal plan today for $<%= @event.mealplancost %> </b>
+</p>
+<div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
+<script>
+  paypal.Buttons({
+    env: 'sandbox',
+    createOrder: async () => {
+      const response = await fetch('ordermealplan/', {method: 'POST'});
+      const responseData = await response.json();
+      return responseData.token;
+    },
+    onApprove: async (data) => {
+      const response = await fetch('processmealplanorder/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({order_id: data.orderID, meal_type: document.getElementById("MealType").value})
+      });
+      
+      const responseData = await response.json();
+
+      if (responseData.status === 'COMPLETED') {
+        window.location.href = '/event/';
+      }
+    }
+
+  }).render('#paypal-button-container');
+</script>
