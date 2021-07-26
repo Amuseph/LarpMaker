@@ -48,10 +48,6 @@ class CharacterController < ApplicationController
     redirect_to root_path
   end
 
-  def events
-    
-  end
-
   def viewcourier
     @courier = Courier.find(params[:courier_id])
     respond_to do |format|

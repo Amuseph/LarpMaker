@@ -1,0 +1,45 @@
+<div class="container col-11">
+<div class="pagetitle">Event List</div>
+<div class="pagesubtitle" >A List of All Attended Events</div>
+
+<table class="table table-hover table-bordered table-sm">
+ <thead class="thead-dark">
+  <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Cabin</th>
+      <th>Meal Plan</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @character.events.order('startdate desc').each do |event| %>
+      <tr class="table-light">
+        <td>
+          <%= link_to event.name, event_path(event.id) %>
+        </td>
+        <td><%= event.description %></td>
+        <td><%= event.startdate %></td>
+        <td><%= event.enddate %></td>
+        <td>
+          <%= 
+            if event.eventattendances.find_by(user_id: current_user).cabin.present?
+              event.eventattendances.find_by(user_id: current_user).cabin.name 
+            else
+              'None'
+            end
+          %>
+        </td>
+        <td><%= 
+          if (event.eventattendances.find_by(user_id: current_user).mealplan.nil? || event.eventattendances.find_by(user_id: current_user).mealplan.empty? ) && event.mealplan? && event.startdate > Time.now
+            link_to 'Buy A Meal Plan - $' + event.mealplancost.to_s, event_mealplan_path(event.id)
+          else
+            event.eventattendances.find_by(user_id: current_user).mealplan 
+          end
+        %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
