@@ -29,8 +29,22 @@ class EventController < ApplicationController
         {
           :amount => {
             :currency_code => 'USD',
-            :value => price
-          }
+            :value => price,
+            :breakdown => {
+              :item_total => {
+                :value => price, 
+                :currency_code => 'USD'}
+            }
+          },
+          :items => [{
+            :name => 'Meal Plan',
+            :description => current_user.email + ' purchased mealplan for ' + @event.name,
+            :quantity => '1',
+            :unit_amount => {
+                :currency_code => 'USD',
+                :value => price
+            }
+          }]
         }
       ]
     })
