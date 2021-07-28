@@ -18,6 +18,8 @@ class EventDashboard < Administrate::BaseDashboard
     startdate: Field::Date,
     enddate: Field::Date,
     description: Field::String,
+    playercount: Field::Number,
+    castcount: Field::Number,
     atdoorcost: Field::Number,
     earlybirdcost: Field::Number,
     mealplan: Field::Boolean,
@@ -51,6 +53,8 @@ class EventDashboard < Administrate::BaseDashboard
     startdate
     enddate
     location
+    playercount
+    castcount
     atdoorcost
     earlybirdcost
     mealplan
@@ -74,6 +78,8 @@ class EventDashboard < Administrate::BaseDashboard
     startdate
     enddate
     location
+    playercount
+    castcount
     atdoorcost
     earlybirdcost
     mealplan
