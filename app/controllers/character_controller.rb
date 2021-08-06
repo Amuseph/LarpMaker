@@ -194,9 +194,7 @@ class CharacterController < ApplicationController
     @characterskill = Characterskill.order('acquiredate desc, id desc').find_by(skill_id: params[:skill_id],
                                                                                 character_id: session[:character])
 
-    if @character.events.where('startdate < ?',
-                               Time.now).maximum(:startdate).nil? || @character.events.where('startdate < ?',
-                                                                                             Time.now).maximum(:startdate) <= @characterskill.acquiredate
+    if helpers.refundPrice(@character,@characterskill) < 1
       @characterskill.destroy
     else
       @explog = Explog.new
@@ -204,7 +202,7 @@ class CharacterController < ApplicationController
       @explog.name = 'Skill Refund'
       @explog.acquiredate = Time.now
       @explog.description = "Refunded \"#{@characterskill.skill.name}\" for \"#{@character.name}\""
-      @explog.amount = @characterskill.skill.tier * -25
+      @explog.amount = helpers.refundPrice(@character,@characterskill)
       @explog.grantedby_id = current_user.id
       @explog.save!
       @characterskill.destroy
