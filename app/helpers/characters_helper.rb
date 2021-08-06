@@ -77,7 +77,7 @@ module CharactersHelper
     elsif characterskill.skill.tier.zero?
       # Skill has been used and is tier 0
       false
-    elsif character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) < characterskill.skill.tier * 25
+    elsif character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) < refundPrice(character, characterskill)
       # Player can afford skill
       true
     end
@@ -119,6 +119,9 @@ module CharactersHelper
       # Allowing everyone to reroll
       0
     elsif last_played_event < characterskill.acquiredate
+      # Skill has never been used
+      0
+    elsif Setting.allow_global_reroll
       # Skill has never been used
       0
     else
