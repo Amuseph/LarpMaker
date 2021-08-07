@@ -47,7 +47,9 @@ module CharactersHelper
   def canRefundSkill(character, characterskill)
     last_played_event = lastPlayedEvent(character)
     events_played = character.events.where('startdate < ?', Time.now).count
-
+    if sheetsLocked
+      return false
+    end
     characterskill.skill.skillrequirements.each do |skillreq|
       if character.skills.exists?(id: skillreq.skill_id) && (character.skills.where('skill_id = ?',
                                                                                     skillreq.requiredskill_id).count < 2)
@@ -83,7 +85,9 @@ module CharactersHelper
     last_played_event = lastPlayedEvent(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
-
+    if sheetsLocked
+      return false
+    end
     characterprofession.profession.professionrequirements.each do |profreq|
       if character.professions.exists?(id: profreq.profession_id)
         # Required as part of another profession.
