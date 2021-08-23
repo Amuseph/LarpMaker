@@ -37,8 +37,7 @@ class EventController < ApplicationController
             }
           },
           :items => [{
-            :name => 'Meal Plan',
-            :description => current_user.email + ' purchased mealplan for ' + @event.name,
+            :name => params[:meal_type] + ' Meal Plan for ' + @event.name,
             :quantity => '1',
             :unit_amount => {
                 :currency_code => 'USD',
@@ -53,7 +52,7 @@ class EventController < ApplicationController
       order = Order.new
       order.user_id = current_user.id
       order.amount = price.to_i
-      order.description = 'Purchased meal plan for ' + @event.name
+      order.description = 'Purchased ' + params[:meal_type] + ' meal plan for ' + @event.name
       order.token = response.result.id
       if order.save
         return render :json => {:token => response.result.id}, :status => :ok
