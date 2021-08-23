@@ -24,7 +24,13 @@
   paypal.Buttons({
     env: '<%= escape_javascript ENV['PAYPAL_ENV'] %>',
     createOrder: async () => {
-      const response = await fetch('ordermealplan/', {method: 'POST'});
+      const response = await fetch('ordermealplan/', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({meal_type: document.getElementById("MealType").value})
+      });
       const responseData = await response.json();
       return responseData.token;
     },
