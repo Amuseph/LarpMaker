@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   namespace :character do
     get :getcharacter
     get :editbackstory
-    post :submitbackstory
+    post :savebackstory
     get :events
     get :courier
     get :viewcourier

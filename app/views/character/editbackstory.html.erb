@@ -1,11 +1,11 @@
 <br>
-<%= bootstrap_form_for :backstory, url: character_submitbackstory_path do |f| %>
+<%= bootstrap_form_for :backstory, url: character_savebackstory_path do |f| %>
   <div>
   <%= f.text_area :backstory, :required => true, placeholder: 'Backstory', hide_label: true, :maxlength => 18000 %>
   </div>
 
   <br>
   <%= f.submit 'Save Backstory', class: "btn btn-success" %>
-  <%= f.submit 'Submit Backstory', class: "btn btn-success" %>
+  <%= f.submit 'Submit Backstory', class: "btn btn-success", data: { confirm: 'Are you sure? Submitted backstories cannot be modified.' } %>
   <%= link_to 'Cancel', character_index_path, class: "btn btn-danger" %>
 <% end %>
