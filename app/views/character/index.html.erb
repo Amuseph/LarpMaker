@@ -59,11 +59,11 @@
           <b>Guild:</b> <%= @character.guild.name  %><br>
         <% end %>
         <br>
-        <% if (@character.characterskills.where(skill: Skill.find_by(name: 'Favored Foe'))).count > 0  %>
-          Favored Foe:  <%= @character.characterskills.where(skill: Skill.find_by(name: 'Favored Foe')).pluck('details').join(',') %> <br>
+        <% if (@character.characterskills.where(skill: Skill.where(name: 'Favored Foe'))).count > 0  %>
+          <b>Favored Foe:</b> <%= @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details').join(',') %> <br>
         <% end %>
         <% if (@character.characterskills.where(skill: Skill.find_by(name: 'Alignment Focus'))).count > 0  %> 
-          Alignment Focus:  <%= @character.characterskills.where(skill: Skill.find_by(name: 'Alignment Focus')).pluck('details').join(',') %> <br>
+          <b>Alignment Focus:</b> <%= @character.characterskills.where(skill: Skill.find_by(name: 'Alignment Focus')).pluck('details').join(',') %> <br>
         <% end %>
       </div>
     </div>
@@ -73,12 +73,16 @@
 
 <nav class="navbar py-0 px-0" id='profiletabbar'>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link <%= checkActiveCharacterTab('link', 'backstory') %>" id="backstory-tab" data-toggle="tab" href="#backstory" role="tab" aria-controls="class" aria-selected="false">Backstory</a>
     <a class="nav-link <%= checkActiveCharacterTab('link', 'skills') %>" id="skills-tab" data-toggle="tab" href="#skills" role="tab" aria-controls="skills" aria-selected="true">Skills</a>
     <a class="nav-link <%= checkActiveCharacterTab('link', 'professions') %>" id="professions-tab" data-toggle="tab" href="#professions" role="tab" aria-controls="class" aria-selected="false">Professions</a>
   </div>
 </nav>
 
 <div class="tab-content" id="charTabContent">
+  <div class="tab-pane fade <%= checkActiveCharacterTab('content', 'backstory') %>" id="backstory" role="tabpanel" aria-labelledby="backstory-tab">
+    <%= render partial: 'character/tabs/backstory' %>
+  </div>
   <div class="tab-pane fade <%= checkActiveCharacterTab('content', 'skills') %>" id="skills" role="tabpanel" aria-labelledby="skills-tab">
     <%= render partial: 'character/tabs/skills' %>
   </div>
@@ -86,5 +90,3 @@
     <%= render partial: 'character/tabs/professions' %>
   </div>
 </div>
-
-

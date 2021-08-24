@@ -20,7 +20,6 @@
         <th scope="col">Description</th>
         <th scope="col">Acquire Date</th>
         <th scope="col">Amount</th>
-        <th scope="col">Granted By</th>
     </tr>
   </thead>
   <tbody>
@@ -37,7 +36,6 @@
         <td><%= explog.description %></td>
         <td><%= explog.acquiredate.to_date %></td>
         <td><%= explog.amount %></td>
-        <td><%= explog.grantedby.firstname + ' ' + explog.grantedby.lastname%> </td>
       </tr>
     <% end %>
   </tbody>
