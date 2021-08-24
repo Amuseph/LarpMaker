@@ -79,6 +79,24 @@ module CharactersHelper
     end
   end
 
+  def edit_backstory_link(character)
+    if character.backstory.nil?
+      link_to 'Add A Backstory - ', character_editbackstory_path
+    elsif !character.backstory.locked
+      link_to 'Edit Your Backstory - ', character_editbackstory_path
+    end
+  end
+
+  def backstory_status(character)
+    if !character.backstory.nil?
+      if !character.backstory.locked?
+        return 'Backstory Pending Submission <br>'.html_safe
+      elsif character.backstory.locked? && !character.backstory.approved?
+        return 'Backstory Pending Approval <br>'.html_safe
+      end
+    end
+  end
+
   def canRefundProfession(character, characterprofession)
     last_played_event = lastPlayedEvent(character)
     events_played = character.events.where('startdate < ?', Time.now).count

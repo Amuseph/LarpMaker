@@ -168,7 +168,7 @@ class CharacterController < ApplicationController
 
       
       @favoredfoes = ['Beasts', 'Constructs', 'Elementals', 'Monstrous Humanoids', 'Plants',
-                      'Undead'] - @character.characterskills.where(skill: Skill.find_by(name: 'Favored Foe')).pluck('details')
+                      'Undead'] - @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details')
       @availableskills = []
       @availablegroups = []
 
@@ -266,6 +266,35 @@ class CharacterController < ApplicationController
     end
   end
 
+  def editbackstory
+    @backstory = @character.backstory
+  end
+
+  def submitbackstory
+    if @character.backstory.nil?
+      @backstory = Backstory.new(backstory_params)
+      @backstory.character_id = session[:character]
+      if @backstory.save
+        redirect_to character_index_path
+      end
+    elsif params[:commit] == 'Save Backstory'
+      @backstory = @character.backstory
+      @backstory.update(backstory_params)
+      if @backstory.save
+        redirect_to character_index_path
+      end
+    elsif params[:commit] == 'Submit Backstory'
+      @backstory = @character.backstory
+      @backstory.update(backstory_params)
+      @backstory.locked = true
+      if @backstory.save
+        CharacterMailer.with(backstory: @backstory).send_backstory.deliver_later
+        redirect_to character_index_path
+      end
+
+    end
+  end
+
   def removeprofession
     @characterprofession = Characterprofession.order('acquiredate desc, id desc').find_by(
       profession_id: params[:profession_id], character_id: session[:character]
@@ -298,6 +327,10 @@ class CharacterController < ApplicationController
 
   def sendcourier_params
     params.require(:courier).permit(:type, :recipient, :destination, :message, :skillsused)
+  end
+
+  def backstory_params
+    params.require(:backstory).permit(:backstory)
   end
 
   def check_character_count

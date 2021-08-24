@@ -17,4 +17,10 @@ class CharacterMailer < ApplicationMailer
     @subject = 'Oracle From ' + @courier.character.name + ' to ' + @courier.recipient
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
   end
+
+  def send_backstory
+    @backstory = params[:backstory]
+    @subject = 'Backstory From ' + @backstory.character.name
+    mail(from: 'history@mythlarp.com', to: 'history@mythlarp.com', subject: @subject)
+  end
 end

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :settings
       resources :users
       resources :characters
+      resources :backstories
       resources :events
       resources :guilds
       resources :houses
@@ -46,6 +47,8 @@ Rails.application.routes.draw do
 
   namespace :character do
     get :getcharacter
+    get :editbackstory
+    post :submitbackstory
     get :events
     get :courier
     get :viewcourier
