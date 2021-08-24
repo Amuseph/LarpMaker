@@ -85,21 +85,29 @@ module CharactersHelper
     end
   end
 
-  def edit_backstory_link(character)
-    if character.backstory.nil?
+  def edit_backstory_link
+    if @character.backstory.nil?
       link_to 'Add A Backstory - ', character_editbackstory_path
-    elsif !character.backstory.locked
+    elsif !@character.backstory.locked
       link_to 'Edit Your Backstory - ', character_editbackstory_path
     end
   end
 
-  def backstory_status(character)
-    if !character.backstory.nil?
-      if !character.backstory.locked?
+  def backstory_status
+    if @character.backstory.nil?
+      return 'Backstory Pending Submission <br>'.html_safe
+    else
+      if !@character.backstory.locked?
         return 'Backstory Pending Submission <br>'.html_safe
-      elsif character.backstory.locked? && !character.backstory.approved?
+      elsif @character.backstory.locked? && !@character.backstory.approved?
         return 'Backstory Pending Approval <br>'.html_safe
       end
+    end
+  end
+
+  def display_backstory
+    if !@character.backstory.nil?
+      return simple_format @character.backstory.backstory
     end
   end
 
