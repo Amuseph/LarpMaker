@@ -134,7 +134,7 @@ class EventController < ApplicationController
       order = Order.new
       order.user_id = current_user.id
       order.amount = price.to_i
-      order.description = 'Purchased meal plan for ' + @event.name
+      order.description = 'Purchased ' + params[:meal_type] + ' meal plan for ' + @event.name
       order.token = response.result.id
       if order.save
         return render :json => {:token => response.result.id}, :status => :ok

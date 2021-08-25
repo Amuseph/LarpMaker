@@ -47,7 +47,9 @@ module CharactersHelper
   def canRefundSkill(character, characterskill)
     last_played_event = lastPlayedEvent(character)
     events_played = character.events.where('startdate < ?', Time.now).count
-
+    if sheetsLocked
+      return false
+    end
     characterskill.skill.skillrequirements.each do |skillreq|
       if character.skills.exists?(id: skillreq.skill_id) && (character.skills.where('skill_id = ?',
                                                                                     skillreq.requiredskill_id).count < 2)
@@ -64,6 +66,10 @@ module CharactersHelper
       false
     elsif (characterskill.skill.tier == 5) && (character.skills.where('tier = 5').count <= 2) && (character.skills.where('tier = 6').count >= 1)
       # Required as part of Tier 6 pyramid
+      false
+    elsif (Setting.allow_global_reroll)
+      # Allowing everyone to reroll
+      true
     elsif @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
       # Character has not yet played 3 games
       true
@@ -73,27 +79,35 @@ module CharactersHelper
     elsif characterskill.skill.tier.zero?
       # Skill has been used and is tier 0
       false
-    elsif character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) < characterskill.skill.tier * 25
+    elsif character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) < refundPrice(character, characterskill)
       # Player can afford skill
       true
     end
   end
 
-  def edit_backstory_link(character)
-    if character.backstory.nil?
+  def edit_backstory_link
+    if @character.backstory.nil?
       link_to 'Add A Backstory - ', character_editbackstory_path
-    elsif !character.backstory.locked
+    elsif !@character.backstory.locked
       link_to 'Edit Your Backstory - ', character_editbackstory_path
     end
   end
 
-  def backstory_status(character)
-    if !character.backstory.nil?
-      if !character.backstory.locked?
+  def backstory_status
+    if @character.backstory.nil?
+      return 'Backstory Pending Submission <br>'.html_safe
+    else
+      if !@character.backstory.locked?
         return 'Backstory Pending Submission <br>'.html_safe
-      elsif character.backstory.locked? && !character.backstory.approved?
+      elsif @character.backstory.locked? && !@character.backstory.approved?
         return 'Backstory Pending Approval <br>'.html_safe
       end
+    end
+  end
+
+  def display_backstory
+    if !@character.backstory.nil?
+      return simple_format @character.backstory.backstory
     end
   end
 
@@ -101,7 +115,9 @@ module CharactersHelper
     last_played_event = lastPlayedEvent(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
-
+    if sheetsLocked
+      return false
+    end
     characterprofession.profession.professionrequirements.each do |profreq|
       if character.professions.exists?(id: profreq.profession_id)
         # Required as part of another profession.
@@ -115,8 +131,10 @@ module CharactersHelper
         return false
       end
     end
-
-    if last_played_event < characterprofession.acquiredate
+    if (Setting.allow_global_reroll)
+      # Allowing everyone to reroll
+      true
+    elsif last_played_event < characterprofession.acquiredate
       # Profession has never been used
       true
     end
@@ -127,7 +145,13 @@ module CharactersHelper
     if @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
       # Character has not yet played 3 games
       0
+    elsif (Setting.allow_global_reroll)
+      # Allowing everyone to reroll
+      0
     elsif last_played_event < characterskill.acquiredate
+      # Skill has never been used
+      0
+    elsif Setting.allow_global_reroll
       # Skill has never been used
       0
     else
