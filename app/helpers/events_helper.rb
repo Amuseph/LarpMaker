@@ -67,11 +67,32 @@ module EventsHelper
     end
   end
 
+  def get_event_price(event)
+    puts('TACO')
+    puts('TACO')
+    puts('TACO')
+    puts('TACO')
+    puts('TACO')
+    if ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
+      puts('TACO2')
+      return event.atdoorcost
+      
+    else
+      puts('TACO4')
+      puts(event.earlybirdcost)
+      return event.earlybirdcost
+    end
+  end
+
   def add_user_to_event(user, event)
     @eventattendance = Eventattendance.new
     @eventattendance.event_id = event.id
     @eventattendance.user_id = user.id
     @eventattendance.registrationtype = 'Player'
+
+    if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+      @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
+    end
 
     if @eventattendance.save!
       add_event_xp(event, @eventattendance)

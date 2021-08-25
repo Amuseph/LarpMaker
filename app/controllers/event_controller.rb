@@ -42,7 +42,7 @@ class EventController < ApplicationController
 
   def orderevent
     @event = Event.find(params[:event_id])
-    price = @event.earlybirdcost
+    price = get_event_price(@event)
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
     request.request_body({
       :intent => 'CAPTURE',
