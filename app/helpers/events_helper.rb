@@ -76,7 +76,7 @@ module EventsHelper
   end
 
   def get_event_price(event)
-    if current_user.eventattendances.where(registrationtype: 'Player').count == 0
+    if (current_user.eventattendances.where(registrationtype: 'Player').count == 0) && (user_signed_in?)
       return event.newplayerprice
     elsif ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
       return event.atdoorcost
