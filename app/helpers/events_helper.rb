@@ -33,8 +33,10 @@ module EventsHelper
 
   def getEventPlayLink(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
-    if (attendancecount >= event.playercount)
-      return image_tag("pages/events/register_to_play.png")
+    if get_event_price(event) <= 0
+      return 'An error has occured. Please reach out to support@mythlarp.com'
+    elsif (attendancecount >= event.playercount)
+      return image_tag("pages/events/register_to_play_soldout.png")
     else
       return link_to(image_tag("pages/events/register_to_play.png"), event_playersignup_path(event.id))
     end
@@ -74,10 +76,11 @@ module EventsHelper
   end
 
   def get_event_price(event)
-    if ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
+    if current_user.eventattendances.where(registrationtype: 'Player').count == 0
+      return event.newplayerprice
+    elsif ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
       return event.atdoorcost
     else
-      puts(event.earlybirdcost)
       return event.earlybirdcost
     end
   end
