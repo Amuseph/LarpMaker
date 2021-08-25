@@ -50,15 +50,21 @@ module EventsHelper
   end
 
   def GetCastSignupLink(event)
-    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
-    if @eventattendance.nil?
-      return link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, id: 'signuplink'
-    else
-      return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
+    if !user_signed_in?
+      return 'Please create an account before purchasing an event'
     end
+    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
+      if @eventattendance.nil?
+        return link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, id: 'signuplink'
+      else
+        return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
+      end
   end
 
   def GetPlayerSignupLink(event)
+    if !user_signed_in?
+      return 'Please create an account before purchasing an event'
+    end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if @eventattendance.nil?
       return (render partial: 'event/partials/buyevent')
@@ -68,17 +74,9 @@ module EventsHelper
   end
 
   def get_event_price(event)
-    puts('TACO')
-    puts('TACO')
-    puts('TACO')
-    puts('TACO')
-    puts('TACO')
     if ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
-      puts('TACO2')
       return event.atdoorcost
-      
     else
-      puts('TACO4')
       puts(event.earlybirdcost)
       return event.earlybirdcost
     end
