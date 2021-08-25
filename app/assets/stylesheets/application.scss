@@ -396,9 +396,20 @@ body {
   }
 }
 
+#eventsignup {
+  #eventname {
+    color: black;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  #signuplink {
+    color: red;
+    font-size: 24px;
+  }
+}
 
 #mythologypage {
-
   #DeityLink {
     display:flex;
     align-items:center;

@@ -17,6 +17,19 @@ module Admin
       redirect_to admin_event_path
     end
 
+
+    def order
+      @order ||= Administrate::Order.new(
+        params.fetch(resource_name, {}).fetch(:order, default_sort[:order]),
+        params.fetch(resource_name, {}).fetch(:direction, default_sort[:direction]),
+      )
+    end
+
+    # override this in specific controllers as needed
+    def default_sort
+      { order: :startdate, direction: :desc }
+    end
+
     # Override this method to specify custom lookup behavior.
     # This will be used to set the resource for the `show`, `edit`, and `update`
     # actions.
