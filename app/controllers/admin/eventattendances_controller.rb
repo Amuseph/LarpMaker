@@ -7,9 +7,14 @@ module Admin
       @eventattendance = Eventattendance.new(resource_params)
       @event = Event.find_by(id: @eventattendance.event_id)
 
+      if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+        @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
+      end
+
       if @eventattendance.save!
         helpers.add_event_xp(@event, @eventattendance)
       end
+
       redirect_to admin_eventattendances_path
     end
 
@@ -17,6 +22,11 @@ module Admin
       @eventattendance = Eventattendance.find(params[:id])
       @event = Event.find_by(id: @eventattendance.event_id)
       @eventattendance.update(resource_params)
+
+      if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+        @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
+        @eventattendance.save!
+      end
 
       @explog = Explog.where('acquiredate BETWEEN ? AND ?', @event.startdate.beginning_of_day, @event.startdate.end_of_day).find_by(
         name: 'Event', user_id: @eventattendance.user_id

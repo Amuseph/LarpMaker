@@ -194,9 +194,7 @@ class CharacterController < ApplicationController
     @characterskill = Characterskill.order('acquiredate desc, id desc').find_by(skill_id: params[:skill_id],
                                                                                 character_id: session[:character])
 
-    if @character.events.where('startdate < ?',
-                               Time.now).maximum(:startdate).nil? || @character.events.where('startdate < ?',
-                                                                                             Time.now).maximum(:startdate) <= @characterskill.acquiredate
+    if helpers.refundPrice(@character,@characterskill) < 1
       @characterskill.destroy
     else
       @explog = Explog.new
@@ -204,7 +202,7 @@ class CharacterController < ApplicationController
       @explog.name = 'Skill Refund'
       @explog.acquiredate = Time.now
       @explog.description = "Refunded \"#{@characterskill.skill.name}\" for \"#{@character.name}\""
-      @explog.amount = @characterskill.skill.tier * -25
+      @explog.amount = helpers.refundPrice(@character,@characterskill)
       @explog.grantedby_id = current_user.id
       @explog.save!
       @characterskill.destroy
@@ -270,28 +268,25 @@ class CharacterController < ApplicationController
     @backstory = @character.backstory
   end
 
-  def submitbackstory
+  def savebackstory
     if @character.backstory.nil?
       @backstory = Backstory.new(backstory_params)
       @backstory.character_id = session[:character]
-      if @backstory.save
-        redirect_to character_index_path
-      end
-    elsif params[:commit] == 'Save Backstory'
+    else
       @backstory = @character.backstory
       @backstory.update(backstory_params)
+    end
+
+    if params[:commit] == 'Save Backstory'
       if @backstory.save
         redirect_to character_index_path
       end
     elsif params[:commit] == 'Submit Backstory'
-      @backstory = @character.backstory
-      @backstory.update(backstory_params)
       @backstory.locked = true
       if @backstory.save
         CharacterMailer.with(backstory: @backstory).send_backstory.deliver_later
         redirect_to character_index_path
       end
-
     end
   end
 
