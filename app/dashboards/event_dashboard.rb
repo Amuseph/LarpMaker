@@ -22,6 +22,7 @@ class EventDashboard < Administrate::BaseDashboard
     castcount: Field::Number,
     atdoorcost: Field::Number,
     earlybirdcost: Field::Number,
+    newplayerprice: Field::Number,
     mealplan: Field::Boolean,
     mealplancost: Field::Number,
     mealplandetails: Field::Text,
@@ -57,6 +58,7 @@ class EventDashboard < Administrate::BaseDashboard
     castcount
     atdoorcost
     earlybirdcost
+    newplayerprice
     mealplan
     mealplancost
     mealplandetails
@@ -82,6 +84,7 @@ class EventDashboard < Administrate::BaseDashboard
     castcount
     atdoorcost
     earlybirdcost
+    newplayerprice
     mealplan
     mealplancost
     mealplandetails
