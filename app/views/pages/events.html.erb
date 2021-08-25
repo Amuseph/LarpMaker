@@ -21,10 +21,15 @@ In the meantime, visit the old site here: <a href='https://www.mythlarp.com/regi
   </div>
   <div class="row">
     <div class="container col-6" id="eventplay">
-      <%= getEventPlayLink(event) %>
+      <%= get_event_player_link(event) %>
     </div>
     <div class="container col-6" id="eventcast">
-      <%= getEventCastLink(event) %>
+      <%= get_event_cast_link(event) %>
+    </div>
+  </div>
+  <div class="row" id="eventstatus">
+    <div class="container col-12" id="eventstatus">
+      <%= get_event_status(event) %>
     </div>
   </div>
   <% end %>

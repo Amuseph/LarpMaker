@@ -31,7 +31,7 @@ module EventsHelper
     @explog.save!
   end
 
-  def getEventPlayLink(event)
+  def get_event_player_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
     if get_event_price(event) <= 0
       return 'An error has occured. Please reach out to support@mythlarp.com'
@@ -42,7 +42,7 @@ module EventsHelper
     end
   end
 
-  def getEventCastLink(event)
+  def get_event_cast_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
     if (attendancecount >= event.castcount)
       return image_tag("pages/events/register_to_cast_soldout.png")
@@ -72,6 +72,18 @@ module EventsHelper
       return (render partial: 'event/partials/buyevent')
     else
       return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
+    end
+  end
+
+  def get_event_status(event)
+    if !user_signed_in?
+      return 'Login to the site in order to see your event status and sign up!'
+    end
+    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
+    if @eventattendance.nil?
+      return ('<font color="red" size="5">You are not signed up for this event. Register today!</font>').html_safe
+    else
+      return ("You are already registered to play as " + @eventattendance.registrationtype).html_safe
     end
   end
 
