@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EventController < ApplicationController
+  include EventsHelper
   skip_before_action :verify_authenticity_token
 
   before_action :paypal_init, :except => [:index, :show, :mealplan]
@@ -18,6 +19,87 @@ class EventController < ApplicationController
   def mealplan
     @event = Event.find(params[:event_id])
   end
+
+  def playersignup
+    @event = Event.find(params[:event_id])
+    if request.post?
+      @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
+      if @eventattendance.save!
+        helpers.add_event_xp(@event, @eventattendance)
+      end
+    end
+  end
+
+  def castsignup
+    @event = Event.find(params[:event_id])
+    if request.post?
+      @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
+      if @eventattendance.save!
+        helpers.add_event_xp(@event, @eventattendance)
+      end
+    end
+  end
+
+  def orderevent
+    @event = Event.find(params[:event_id])
+    price = get_event_price(@event)
+    request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
+    request.request_body({
+      :intent => 'CAPTURE',
+      :purchase_units => [
+        {
+          :amount => {
+            :currency_code => 'USD',
+            :value => price,
+            :breakdown => {
+              :item_total => {
+                :value => price, 
+                :currency_code => 'USD'}
+            }
+          },
+          :items => [{
+            :name => 'Purchased event ' + @event.name,
+            :quantity => '1',
+            :unit_amount => {
+                :currency_code => 'USD',
+                :value => price
+            }
+          }]
+        }
+      ]
+    })
+    begin
+      response = @client.execute request
+      order = Order.new
+      order.user_id = current_user.id
+      order.amount = price.to_i
+      order.description = 'Purchased event ' + @event.name
+      order.token = response.result.id
+      if order.save
+        return render :json => {:token => response.result.id}, :status => :ok
+      end
+    rescue PayPalHttp::HttpError => ioe
+      # HANDLE THE ERROR
+    end
+  end
+
+  def processeventorder
+    @event = Event.find_by(id: params[:event_id])
+    request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new params[:order_id]
+    begin
+      response = @client.execute request
+      if response.result.status == 'COMPLETED'
+
+        add_user_to_event(current_user,@event)
+
+        return render :json => {:status => response.result.status}, :status => :ok
+      end
+    rescue PayPalHttp::HttpError => ioe
+      # HANDLE THE ERROR
+    end
+  end
+
+
 
   def ordermealplan
     @event = Event.find(params[:event_id])
