@@ -8,14 +8,7 @@ module Admin
       @event = Event.find_by(id: @eventattendance.event_id)
 
       if @eventattendance.save!
-        @explog = Explog.new
-        @explog.user_id = @eventattendance.user_id
-        @explog.name = 'Event'
-        @explog.acquiredate = @event.startdate
-        @explog.description = "Exp for attending Event \"#{@eventattendance.event.name}\" as a #{@eventattendance.registrationtype}"
-        @explog.amount = @event.eventexp
-        @explog.grantedby_id = current_user.id
-        @explog.save!
+        helpers.add_event_xp(@event, @eventattendance)
       end
       redirect_to admin_eventattendances_path
     end

@@ -31,18 +31,4 @@ module PagesHelper
 
     'show active' if (tabName == requestedTab) && (type == 'content')
   end
-
-  def getEventPlayLink(event)
-    "Sign up by visiting the old website: <a href='https://www.mythlarp.com/register-for-events/'>https://www.mythlarp.com/register-for-events/</a>".html_safe
-  end
-
-  def getEventCastLink(event)
-    attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
-    if (attendancecount >= event.castcount)
-      image_tag("pages/events/register_to_cast_soldout.png")
-    else
-      image_tag("pages/events/register_to_cast.png")
-    end
-  end
-
 end

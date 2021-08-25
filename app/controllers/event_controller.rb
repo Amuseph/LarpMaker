@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EventController < ApplicationController
+  include EventsHelper
   skip_before_action :verify_authenticity_token
 
   before_action :paypal_init, :except => [:index, :show, :mealplan]
@@ -17,6 +18,16 @@ class EventController < ApplicationController
 
   def mealplan
     @event = Event.find(params[:event_id])
+  end
+
+  def castsignup
+    @event = Event.find(params[:event_id])
+    if request.post?
+      @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
+      if @eventattendance.save!
+        helpers.add_event_xp(@event, @eventattendance)
+      end
+    end
   end
 
   def ordermealplan
