@@ -32,7 +32,12 @@ module EventsHelper
   end
 
   def getEventPlayLink(event)
-    return "Sign up by visiting the old website: <a href='https://www.mythlarp.com/register-for-events/'>https://www.mythlarp.com/register-for-events/</a>".html_safe
+    attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
+    if (attendancecount >= event.playercount)
+      return image_tag("pages/events/register_to_play.png")
+    else
+      return link_to(image_tag("pages/events/register_to_play.png"), event_playersignup_path(event.id))
+    end
   end
 
   def getEventCastLink(event)
@@ -50,6 +55,26 @@ module EventsHelper
       return link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, id: 'signuplink'
     else
       return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
+    end
+  end
+
+  def GetPlayerSignupLink(event)
+    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
+    if @eventattendance.nil?
+      return (render partial: 'event/partials/buyevent')
+    else
+      return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
+    end
+  end
+
+  def add_user_to_event(user, event)
+    @eventattendance = Eventattendance.new
+    @eventattendance.event_id = event.id
+    @eventattendance.user_id = user.id
+    @eventattendance.registrationtype = 'Player'
+
+    if @eventattendance.save!
+      add_event_xp(event, @eventattendance)
     end
   end
 end

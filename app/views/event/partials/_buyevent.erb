@@ -1,0 +1,30 @@
+<p>
+  <b>Play Myth today for $<%= @event.earlybirdcost %> </b>
+</p>
+<div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
+<script>
+  paypal.Buttons({
+    env: '<%= escape_javascript ENV['PAYPAL_ENV'] %>',
+    createOrder: async () => {
+      const response = await fetch('orderevent/', {method: 'POST'});
+      const responseData = await response.json();
+      return responseData.token;
+    },
+    onApprove: async (data) => {
+      const response = await fetch('processeventorder/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({order_id: data.orderID})
+      });
+      
+      const responseData = await response.json();
+
+      if (responseData.status === 'COMPLETED') {
+        window.location.href = '/event/';
+      }
+    }
+  }).render('#paypal-button-container');
+</script>

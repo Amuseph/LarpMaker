@@ -6,7 +6,7 @@ module Admin
     def create
       @eventattendance = Eventattendance.new(resource_params)
       @event = Event.find_by(id: @eventattendance.event_id)
-
+      
       if @eventattendance.save!
         helpers.add_event_xp(@event, @eventattendance)
       end

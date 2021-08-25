@@ -77,6 +77,9 @@ Rails.application.routes.draw do
     get :updatecabin
     patch :updatecabin
     get :mealplan
+    get :playersignup
+    post :orderevent
+    post :processeventorder
     get :castsignup
     post :castsignup
     post :ordermealplan
