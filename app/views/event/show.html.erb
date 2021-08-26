@@ -31,24 +31,10 @@
   </div>
   <div class="row">
     <div class="col-6">
-      <% Cabin.all.where(location: 'The Crossing').each do |cabin|  %>
-        <b><%= cabin.name %></b>
-        <ul>
-          <% @event.eventattendances.where(cabin: Cabin.all.find_by(name: cabin.name)).each do |cabinassignment|  %>
-            <li> <%= cabinResident(cabinassignment) %>
-          <% end %>
-        </ul>
-      <% end %>
+      <%= get_resident_players(@event,'The Crossing') %>
     </div>
     <div class="col-6">
-      <% Cabin.all.where(location: 'The Glade').each do |cabin|  %>
-        <b><%= cabin.name %></b>
-        <ul>
-          <% @event.eventattendances.where(cabin: Cabin.all.find_by(name: cabin.name)).each do |cabinassignment|  %>
-            <li> <%= cabinResident(cabinassignment) %>
-          <% end %>
-        </ul>
-      <% end %>
+      <%= get_resident_players(@event,'The Glade') %>
     </div>
   </div>
   <div class="row">
@@ -58,21 +44,10 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <% Cabin.all.where(location: 'Town Proper').where.not(name: 'Cast Cabin').each do |cabin|  %>
-        <b><%= cabin.name %></b>
-        <ul>
-          <% @event.eventattendances.where(cabin: Cabin.all.find_by(name: cabin.name)).each do |cabinassignment|  %>
-            <li> <%= cabinResident(cabinassignment) %>
-          <% end %>
-        </ul>
-      <% end %>
+      <%= get_resident_players(@event,'Town Proper') %>
       <hr>
       The following individuals have not yet selected a cabin<br>
-      <ul>
-        <%  @event.eventattendances.where(cabin: nil).each do |cabinassignment|  %>
-          <li> <%= cabinResident(cabinassignment) %>
-        <% end %>
-      </ul>
+      <%= get_homeless_players(@event) %>
     </div>
   </div>
 </div>

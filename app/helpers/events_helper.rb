@@ -8,7 +8,7 @@ module EventsHelper
     end
   end
 
-  def cabinResident(cabinassignment)
+  def cabin_resident(cabinassignment)
     if (cabinassignment.character) then 
       if cabinassignment.character.alias.present?
         return cabinassignment.character.alias
@@ -49,6 +49,29 @@ module EventsHelper
     else
       return link_to(image_tag("pages/events/register_to_cast.png"), event_castsignup_path(event.id))
     end
+  end
+
+  def get_resident_players(event,area)
+    cabinlist = +""
+    Cabin.all.where(location: area).where.not(name: 'Cast Cabin').each do |cabin|
+      cabinlist.concat('<b>', cabin.name, '</b>')
+      cabinlist.concat('<ul>')
+        event.eventattendances.where(registrationtype: 'Player', cabin: Cabin.all.find_by(name: cabin.name)).each do |cabinassignment|
+          cabinlist.concat('<li>', cabin_resident(cabinassignment))
+        end
+      cabinlist.concat('</ul>')
+    end
+    return cabinlist.html_safe
+  end
+
+  def get_homeless_players(event)
+    cabinlist = +""
+    cabinlist.concat('<ul>')
+      event.eventattendances.where(registrationtype: 'Player', cabin: nil).each do |cabinassignment|
+        cabinlist.concat('<li>', cabin_resident(cabinassignment))
+      end
+    cabinlist.concat('</ul>')
+    return cabinlist.html_safe
   end
 
   def GetCastSignupLink(event)
