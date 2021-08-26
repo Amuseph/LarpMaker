@@ -90,11 +90,6 @@ class EventController < ApplicationController
 
     begin
       response = @client.execute request
-      puts('TACO')
-      puts('TACO')
-      puts(response.result.id)
-      puts('TACO')
-      puts('TACO')
       order = Order.find_by(token: response.result.id)
       order.status = response.result.status
       order.save!
@@ -103,13 +98,6 @@ class EventController < ApplicationController
         add_user_to_event(current_user,@event)
 
         return render :json => {:status => response.result.status}, :status => :ok
-      else
-        
-        puts('TACO1')
-        puts('TACO1')
-        puts(response.result.id)
-        puts('TACO2')
-        puts('TACO2')
       end
     rescue PayPalHttp::HttpError => ioe
 
@@ -166,6 +154,9 @@ class EventController < ApplicationController
     request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new params[:order_id]
     begin
       response = @client.execute request
+      order = Order.find_by(token: response.result.id)
+      order.status = response.result.status
+      order.save!
       if response.result.status == 'COMPLETED'
         @myeventattendance.mealplan = params[:meal_type]
         @myeventattendance.save
