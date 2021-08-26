@@ -74,6 +74,7 @@ class EventController < ApplicationController
       order.user_id = current_user.id
       order.amount = price.to_i
       order.description = 'Purchased event ' + @event.name
+      order.status = response.result.status
       order.token = response.result.id
       if order.save
         return render :json => {:token => response.result.id}, :status => :ok
@@ -86,20 +87,35 @@ class EventController < ApplicationController
   def processeventorder
     @event = Event.find_by(id: params[:event_id])
     request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new params[:order_id]
+
     begin
       response = @client.execute request
+      puts('TACO')
+      puts('TACO')
+      puts(response.result.id)
+      puts('TACO')
+      puts('TACO')
+      order = Order.find_by(token: response.result.id)
+      order.status = response.result.status
+      order.save!
       if response.result.status == 'COMPLETED'
 
         add_user_to_event(current_user,@event)
 
         return render :json => {:status => response.result.status}, :status => :ok
+      else
+        
+        puts('TACO1')
+        puts('TACO1')
+        puts(response.result.id)
+        puts('TACO2')
+        puts('TACO2')
       end
     rescue PayPalHttp::HttpError => ioe
+
       # HANDLE THE ERROR
     end
   end
-
-
 
   def ordermealplan
     @event = Event.find(params[:event_id])
@@ -135,6 +151,7 @@ class EventController < ApplicationController
       order.user_id = current_user.id
       order.amount = price.to_i
       order.description = 'Purchased ' + params[:meal_type] + ' meal plan for ' + @event.name
+      order.status = response.result.status
       order.token = response.result.id
       if order.save
         return render :json => {:token => response.result.id}, :status => :ok
