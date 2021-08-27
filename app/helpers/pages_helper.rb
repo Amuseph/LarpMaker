@@ -34,13 +34,15 @@ module PagesHelper
 
   def display_rulebook_changelog
     changelist = +""
-    puts('taco')
-    puts('taco')
-    puts('taco')
     changelist = +""
-    changelist.concat('<ul>')
-    Rulebookchange.all.order('changedate desc').each do |logentry|
-      changelist.concat('<li><b>', logentry.changedate.to_s, '</b> | <b>Page ', logentry.page.to_s, '</b> | ', logentry.change, '</li>')
+    rulebookversions = Rulebookchange.distinct.order('version desc').pluck(:version)
+    rulebookversions.each do |version|
+      changelist.concat('<p class = "h5">Version ',version,'</p>')
+      changelist.concat('<ul>')
+      Rulebookchange.where(version: version).order('changedate desc').each do |logentry|
+        changelist.concat('<li><b>', logentry.changedate.to_s, '</b> - [Page ', logentry.page.to_s, '] ', logentry.change, '</li>')
+      end
+      changelist.concat('</ul>')
     end
     changelist.concat('</ul>')
     return changelist.html_safe
