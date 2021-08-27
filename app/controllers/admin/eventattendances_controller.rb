@@ -1,8 +1,5 @@
 module Admin
   class EventattendancesController < Admin::ApplicationController
-    # Overwrite any of the RESTful controller actions to implement custom behavior
-    # For example, you may want to send an email after a foo is updated.
-    #
     include EventsHelper
     def create
       @eventattendance = Eventattendance.new(resource_params)
@@ -13,7 +10,7 @@ module Admin
       end
 
       if @eventattendance.save!
-        helpers.add_event_xp(@event, @eventattendance)
+        add_event_xp(@event, @eventattendance)
       end
 
       redirect_to admin_eventattendances_path
