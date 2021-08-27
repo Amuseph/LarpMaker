@@ -110,9 +110,9 @@ class CharacterController < ApplicationController
   end
 
   def levelup
-    @exptolevel = helpers.expToLevel(@character)
+    @exptolevel = expToLevel(@character)
 
-    if helpers.canLevel(@character)
+    if canLevel(@character)
       @character.level = @character.level + 1
       @character.levelupdate = Time.now
 
@@ -194,7 +194,7 @@ class CharacterController < ApplicationController
     @characterskill = Characterskill.order('acquiredate desc, id desc').find_by(skill_id: params[:skill_id],
                                                                                 character_id: session[:character])
 
-    if helpers.refundPrice(@character,@characterskill) < 1
+    if refundPrice(@character,@characterskill) < 1
       @characterskill.destroy
     else
       @explog = Explog.new
@@ -202,7 +202,7 @@ class CharacterController < ApplicationController
       @explog.name = 'Skill Refund'
       @explog.acquiredate = Time.now
       @explog.description = "Refunded \"#{@characterskill.skill.name}\" for \"#{@character.name}\""
-      @explog.amount = helpers.refundPrice(@character,@characterskill)
+      @explog.amount = refundPrice(@character,@characterskill)
       @explog.grantedby_id = current_user.id
       @explog.save!
       @characterskill.destroy
@@ -348,7 +348,7 @@ class CharacterController < ApplicationController
   end
 
   def check_sheets_locked
-    if helpers.sheetsLocked
+    if sheetsLocked
       redirect_to player_characters_path
       return true
     end

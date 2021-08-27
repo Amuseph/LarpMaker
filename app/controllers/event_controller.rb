@@ -25,7 +25,7 @@ class EventController < ApplicationController
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
-        helpers.add_event_xp(@event, @eventattendance)
+        add_event_xp(@event, @eventattendance)
       end
     end
   end
@@ -35,7 +35,7 @@ class EventController < ApplicationController
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
-        helpers.add_event_xp(@event, @eventattendance)
+        add_event_xp(@event, @eventattendance)
       end
     end
   end
