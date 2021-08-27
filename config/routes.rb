@@ -8,8 +8,10 @@ Rails.application.routes.draw do
     get :setting
     get :calendar
     get :mythology
+    get :laws
     get :camp
     get :rulebook
+    get :rulebookchangelog
     get :events
     get :community
   end
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
       resources :houses
       resources :eventattendances
       resources :cabins
+      resources :rulebookchanges
       resources :races
       resources :deities
       resources :characterclasses

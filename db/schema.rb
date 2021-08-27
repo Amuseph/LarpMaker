@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_25_230024) do
+ActiveRecord::Schema.define(version: 2021_08_27_182241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,14 @@ ActiveRecord::Schema.define(version: 2021_08_25_230024) do
     t.string "name", null: false
     t.string "description", null: false
     t.boolean "playeravailable", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "rulebookchanges", force: :cascade do |t|
+    t.integer "page", null: false
+    t.string "change", null: false
+    t.date "changedate", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

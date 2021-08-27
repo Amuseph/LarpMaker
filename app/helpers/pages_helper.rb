@@ -31,4 +31,18 @@ module PagesHelper
 
     'show active' if (tabName == requestedTab) && (type == 'content')
   end
+
+  def display_rulebook_changelog
+    changelist = +""
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    changelist = +""
+    changelist.concat('<ul>')
+    Rulebookchange.all.order('changedate desc').each do |logentry|
+      changelist.concat('<li><b>', logentry.changedate.to_s, '</b> | <b>Page ', logentry.page.to_s, '</b> | ', logentry.change, '</li>')
+    end
+    changelist.concat('</ul>')
+    return changelist.html_safe
+  end
 end
