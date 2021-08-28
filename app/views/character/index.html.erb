@@ -35,7 +35,7 @@
     <div class="col-10">
       <div class="progress position-relative" id="levelbar" style="height: 25px;">
         <div class="progress-bar bg-info" role="progressbar" style="width: <%= percentToLevel(@character) %>%" aria-valuenow="<%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>" aria-valuemin="0" aria-valuemax="<%= expToLevel(@character) %>">
-          <span class="justify-content-center d-flex position-absolute w-100 text-dark font-weight-bold"><%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %> of <%= expToLevel(@character) %> XP to Level <%= @character.level + 1%> </span>
+          <span class="justify-content-center d-flex position-absolute w-100 text-dark font-weight-bold"><%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %> of <%= expToLevel(@character) %> EXP to Level <%= @character.level + 1%> </span>
         </div>
       </div>
       <div class="progress position-relative" id="cpbar" style="height: 25px;">
