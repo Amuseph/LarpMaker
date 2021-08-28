@@ -2,7 +2,7 @@
 
 class CharacterController < ApplicationController
   include CharactersHelper
-
+  include PagesHelper
   before_action :authenticate_user!
   before_action :check_character_user
   before_action :check_sheets_locked, only: %i[edit update trainskill trainprofession]
