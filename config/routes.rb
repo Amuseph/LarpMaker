@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get :rulebookchangelog
     get :events
     get :community
+    get :earnexp
   end
 
   namespace :admin do
