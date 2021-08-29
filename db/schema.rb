@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_27_213014) do
+ActiveRecord::Schema.define(version: 2021_08_28_233116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,33 @@ ActiveRecord::Schema.define(version: 2021_08_27_213014) do
     t.index ["event_id", "user_id"], name: "index_eventattendances_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_eventattendances_on_event_id"
     t.index ["user_id"], name: "index_eventattendances_on_user_id"
+  end
+
+  create_table "eventfeedbacks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "character_id"
+    t.bigint "event_id", null: false
+    t.integer "preeventcommunicationrating", null: false
+    t.integer "eventrating", null: false
+    t.integer "attendnextevent", null: false
+    t.integer "sleepingrating", null: false
+    t.integer "openingmeetingrating", null: false
+    t.integer "closingmeetingrating", null: false
+    t.integer "plotrating", null: false
+    t.string "feedback", null: false
+    t.string "questions", null: false
+    t.string "standoutplayers", null: false
+    t.string "standoutnpc", null: false
+    t.string "charactergoals", null: false
+    t.string "charactergoalactions", null: false
+    t.string "whatdidyoudo", null: false
+    t.string "nexteventplans", null: false
+    t.string "professions", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_eventfeedbacks_on_character_id"
+    t.index ["event_id"], name: "index_eventfeedbacks_on_event_id"
+    t.index ["user_id"], name: "index_eventfeedbacks_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -390,6 +417,9 @@ ActiveRecord::Schema.define(version: 2021_08_27_213014) do
   add_foreign_key "eventattendances", "characters"
   add_foreign_key "eventattendances", "events"
   add_foreign_key "eventattendances", "users"
+  add_foreign_key "eventfeedbacks", "characters"
+  add_foreign_key "eventfeedbacks", "events"
+  add_foreign_key "eventfeedbacks", "users"
   add_foreign_key "explogs", "users"
   add_foreign_key "explogs", "users", column: "grantedby_id"
   add_foreign_key "orders", "users"

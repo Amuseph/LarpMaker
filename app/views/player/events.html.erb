@@ -11,6 +11,7 @@
     <th>Going As</th>
     <th>Meal Plan</th>
     <th>Character</th>
+    <th>Feedback</th>
 </tr>
 </thead>
 <tbody>
@@ -31,7 +32,8 @@
           link_to 'Assign Character',player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
         end
    
-         %></td>
+        %></td>
+      <td><%= get_feedback_link(eventattendance.event) %></td>
     </tr>
   <% end %>
   </tbody>
