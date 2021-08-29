@@ -1,0 +1,27 @@
+<div class="container col-12">
+<div class="pagetitle"><%= @event.name %></div>
+<div class="pagesubtitle" ><%= @event.description %></div>
+<div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
+<hr>
+<%= bootstrap_form_with(model: @eventfeedback, url: event_submitfeedback_path) do |f| %>
+  <%= f.select :preeventcommunicationrating, @ratingoptions, {disabled: true, label: 'How Satisfied Are You With Pre-Event Communication?'}, disabled: true %>
+  <%= f.select :eventrating, @ratingoptions, {prompt: 'Event Overall', label: 'How Satisfied Are You With The Event Overall?'}, disabled: true %>
+  <%= f.select :attendnextevent, [ ['Yes', 0], ['No', 1] ], {prompt: 'Attending Next Event?', label: 'Are You Planning to Attend The Next Event?'}, disabled: true %>
+  <%= f.select :sleepingrating, @ratingoptions, {prompt: 'Sleeping Arrangements', label: 'How Satisfied Are You With Your Sleeping Arrangements?'}, disabled: true %>
+  <%= f.select :openingmeetingrating, @ratingoptions, {prompt: 'Opening Meeting', label: 'How Satisfied Are You With The Opening Meeting?'}, disabled: true %>
+  <%= f.select :closingmeetingrating, @ratingoptions, {prompt: 'Closing Meeting', label: 'How Satisfied Are You With The Closing Meeting?'}, disabled: true %>
+  <%= f.select :plotrating, @ratingoptions, {prompt: 'Plot Rating', label: 'How Satisfied Are You With The Plot For The Event?'}, disabled: true %>
+
+  <%= f.text_area :feedback, :disabled => true, label: 'Do you have any constructive feedback for Myth?' %>
+  <%= f.text_area :questions, :disabled => true, label: 'Anything else you would like to state or questions you might wish to address?' %>
+  <%= f.text_area :standoutplayers, :disabled => true, label: 'What Players Stand Out to You, if Any, And Why?' %>
+  <%= f.text_area :standoutnpc, :disabled => true, label: 'What NPCs Stand Out to You, if Any, And Why?' %>
+  <%= f.text_area :nexteventplans, :disabled => true, label: 'What are your plans for the next event?' %>
+
+  <%= f.text_area :charactergoals, :disabled => true, label: 'What is Your Characters number 1 goal?' %>
+  <%= f.text_area :charactergoalactions, :disabled => true, label: 'What steps have you taken to reach your goal so far?' %>
+  <%= f.text_area :whatdidyoudo, :disabled => true, label: 'What Did Your Character do During The Event?' %>
+  <%= f.text_area :professions, :disabled => true, label: 'Are you doing anything with your profession?' %>
+  <%= link_to 'Close', player_events_path, class: "btn btn-danger" %>
+<% end %>
+<br>

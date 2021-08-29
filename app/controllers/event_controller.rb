@@ -20,6 +20,12 @@ class EventController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
+  def viewfeedback
+    @event = Event.find(params[:event_id])
+    @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+  end
+
   def submitfeedback
     @event = Event.find(params[:event_id])
     @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]

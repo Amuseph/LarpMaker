@@ -28,7 +28,7 @@ module EventsHelper
       if Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
         return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
       else
-        return 'Show Me Feedback! {Eventually}'
+        return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
       end
     else
       return
