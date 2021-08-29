@@ -11,6 +11,7 @@
       <th>End Date</th>
       <th>Cabin</th>
       <th>Meal Plan</th>
+      <th>Feedback</th>
   </tr>
   </thead>
   <tbody>
@@ -39,6 +40,7 @@
           end
         %>
         </td>
+        <td><%= get_feedback_link(event) %></td>
       </tr>
     <% end %>
   </tbody>

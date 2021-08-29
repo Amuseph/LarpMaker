@@ -20,12 +20,33 @@ class EventController < ApplicationController
     @event = Event.find(params[:event_id])
   end
 
+  def viewfeedback
+    @event = Event.find(params[:event_id])
+    @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+  end
+
+  def submitfeedback
+    @event = Event.find(params[:event_id])
+    @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
+    @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
+    if request.post?
+      @eventfeedback = Eventfeedback.create(feedback_params)
+      @eventfeedback.user_id = current_user.id
+      @eventfeedback.event_id = params[:event_id]
+      @eventfeedback.character_id = @eventattendance.character_id
+      if @eventfeedback.save!
+        add_feedback_exp(@event, @eventattendance)
+      end
+    end
+  end
+
   def playersignup
     @event = Event.find(params[:event_id])
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
-        add_event_xp(@event, @eventattendance)
+        add_event_exp(@event, @eventattendance)
       end
     end
   end
@@ -35,7 +56,7 @@ class EventController < ApplicationController
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
-        add_event_xp(@event, @eventattendance)
+        add_event_exp(@event, @eventattendance)
       end
     end
   end
@@ -185,6 +206,10 @@ class EventController < ApplicationController
 
   def eventattendance_params
     params.require(:eventattendance).permit(:event_id, :cabin_id)
+  end
+
+  def feedback_params
+    params.require(:eventfeedback).permit(:preeventcommunicationrating, :eventrating, :attendnextevent, :sleepingrating, :openingmeetingrating, :closingmeetingrating, :plotrating, :feedback, :questions, :standoutplayers, :standoutnpc, :eventrating, :nexteventplans, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions)
   end
 
   def paypal_init

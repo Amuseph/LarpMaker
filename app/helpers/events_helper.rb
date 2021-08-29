@@ -20,7 +20,36 @@ module EventsHelper
     end
   end
 
-  def add_event_xp(event, eventattendance)
+  def get_feedback_link(event)
+    eventattendance = event.eventattendances.find_by(user_id: current_user)
+    if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      return
+    elsif ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -30)
+      if Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
+        return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
+      else
+        return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
+      end
+    else
+      return
+    end
+  end
+
+  def add_feedback_exp(event, eventattendance)
+    if ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -14)
+      @explog = Explog.new
+      @explog.user_id = eventattendance.user_id
+      @explog.name = 'Event'
+      @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      @explog.description = "Exp for Feedback Letter"
+      @explog.amount = event.feedbackexp
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+    end
+  end
+
+
+  def add_event_exp(event, eventattendance)
     @explog = Explog.new
     @explog.user_id = eventattendance.user_id
     @explog.name = 'Event'
@@ -134,7 +163,7 @@ module EventsHelper
     end
 
     if @eventattendance.save!
-      add_event_xp(event, @eventattendance)
+      add_event_exp(event, @eventattendance)
     end
   end
 end
