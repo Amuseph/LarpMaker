@@ -10,7 +10,7 @@ module Admin
       end
 
       if @eventattendance.save!
-        add_event_xp(@event, @eventattendance)
+        add_event_exp(@event, @eventattendance)
       end
 
       redirect_to admin_eventattendances_path

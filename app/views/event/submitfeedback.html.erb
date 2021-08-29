@@ -1,0 +1,46 @@
+<div class="container col-12">
+<div class="pagetitle"><%= @event.name %></div>
+<div class="pagesubtitle" ><%= @event.description %></div>
+<div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
+<hr>
+<div class="container col-12">
+  <div class="row">
+    <p class = "h2 text-center">Your Feedback Is Important</p>
+    <p>Your feedback is essential to us, which is why we award XP for giving it. Telling us about your experience, good or bad, means that we can better understand what is important to you, what we are doing well, and where we need to make improvements.</p>
+    <p>Your feedback helps us to:</p>
+    <ul>
+      <li>Make sure we pay attention to what makes the event fun for our friends.</li>
+      <li>Improve and enhance the Myth experience for everyone involved (players and NPCs).</li>
+      <li>Improve the stories we tell and the decisions we make going forward.</li>
+      <li>Ensure we remain transparent about improvements.</li>
+    </ul>
+    <p>If there is something we are doing well or could do better, we want your constructive feedback. If you didn’t like something? How could we improve upon it in the future?</p>
+    <p class = "h4">Setting Goals</p>
+    <p>Defining your character's number 1 goal helps us to better see the direction you're trying to take your character. 
+    Keep the World Builders informed as to what your current goal is, the steps you took at the event to achieve that goal, and what you plan to do in the future.</p>
+  <hr>
+  </div>
+</div>
+  <%= bootstrap_form_for :eventfeedback, url: event_submitfeedback_path do |f| %>
+    <%= f.select :preeventcommunicationrating, @ratingoptions, {prompt: 'Pre-Event Communication', label: 'How Satisfied Are You With Pre-Event Communication?'}, required: true %>
+    <%= f.select :eventrating, @ratingoptions, {prompt: 'Event Overall', label: 'How Satisfied Are You With The Event Overall?'}, required: true %>
+    <%= f.select :attendnextevent, [ ['Yes', 0], ['No', 1] ], {prompt: 'Attending Next Event?', label: 'Are You Planning to Attend The Next Event?'}, required: true %>
+    <%= f.select :sleepingrating, @ratingoptions, {prompt: 'Sleeping Arrangements', label: 'How Satisfied Are You With Your Sleeping Arrangements?'}, required: true %>
+    <%= f.select :openingmeetingrating, @ratingoptions, {prompt: 'Opening Meeting', label: 'How Satisfied Are You With The Opening Meeting?'}, required: true %>
+    <%= f.select :closingmeetingrating, @ratingoptions, {prompt: 'Closing Meeting', label: 'How Satisfied Are You With The Closing Meeting?'}, required: true %>
+    <%= f.select :plotrating, @ratingoptions, {prompt: 'Plot Rating', label: 'How Satisfied Are You With The Plot For The Event?'}, required: true %>
+
+    <%= f.text_area :feedback, :required => true, label: 'Do you have any constructive feedback for Myth?' %>
+    <%= f.text_area :questions, :required => true, label: 'Anything else you would like to state or questions you might wish to address?' %>
+    <%= f.text_area :standoutplayers, :required => true, label: 'What Players Stand Out to You, if Any, And Why?' %>
+    <%= f.text_area :standoutnpc, :required => true, label: 'What NPCs Stand Out to You, if Any, And Why?' %>
+    <%= f.text_area :nexteventplans, :required => true, label: 'What are your plans for the next event?' %>
+
+    <%= f.text_area :charactergoals, :required => true, label: 'What is Your Characters number 1 goal?' %>
+    <%= f.text_area :charactergoalactions, :required => true, label: 'What steps have you taken to reach your goal so far?' %>
+    <%= f.text_area :whatdidyoudo, :required => true, label: 'What Did Your Character do During The Event?' %>
+    <%= f.text_area :professions, :required => true, label: 'Are you doing anything with your profession?' %>
+    <%= f.submit 'Submit Feedback', class: "btn btn-success" %>
+    <%= link_to 'Cancel', root_path, class: "btn btn-danger" %>
+  <% end %>
+<br>

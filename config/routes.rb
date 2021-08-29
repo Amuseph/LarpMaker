@@ -86,6 +86,9 @@ Rails.application.routes.draw do
     post :orderevent
     post :processeventorder
     get :castsignup
+    get :viewfeedback
+    get :submitfeedback
+    post :submitfeedback
     post :castsignup
     post :ordermealplan
     post :processmealplanorder
