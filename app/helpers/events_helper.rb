@@ -39,7 +39,7 @@ module EventsHelper
     if ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -14)
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
-      @explog.name = 'Event'
+      @explog.name = 'Feedback'
       @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
       @explog.description = "Exp for Feedback Letter"
       @explog.amount = event.feedbackexp
