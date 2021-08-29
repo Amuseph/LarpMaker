@@ -20,12 +20,23 @@ module EventsHelper
     end
   end
 
-  def get_feedback_link(eventattendance)
-    return 'Link Goes Here'
+  def get_feedback_link(event)
+    eventattendance = event.eventattendances.find_by(user_id: current_user)
+    if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      return
+    elsif ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -30)
+      if Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
+        return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
+      else
+        return 'Show Me Feedback! {Eventually}'
+      end
+    else
+      return
+    end
   end
 
   def add_feedback_exp(event, eventattendance)
-    if((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -14)
+    if ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -14)
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Event'
