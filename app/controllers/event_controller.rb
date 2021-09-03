@@ -18,6 +18,14 @@ class EventController < ApplicationController
 
   def mealplan
     @event = Event.find(params[:event_id])
+    @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
+    
+    if @myeventattendance.mealplan.nil? or @myeventattendance.mealplan.empty?
+      @mealoptions = [['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,@myeventattendance).to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,@myeventattendance).to_s, 'Vegan']]
+    elsif @myeventattendance.mealplan = 'Brew of the Month Club'
+      @mealoptions = [['Meat - $' + get_mealplan_cost(@event,@myeventattendance).to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,@myeventattendance).to_s, 'Vegan']]
+    end
+    
   end
 
   def viewfeedback
@@ -129,7 +137,18 @@ class EventController < ApplicationController
 
   def ordermealplan
     @event = Event.find(params[:event_id])
-    price = @event.mealplancost
+    @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
+    if params[:meal_type] == 'Brew of the Month Club'
+      price = 5
+    else
+      price = get_mealplan_cost(@event,@myeventattendance)
+    end
+    puts('TACO')
+    puts('TACO')
+    puts(price.to_s)
+    puts('TACO')
+    puts('TACO')
+      price = @event.mealplancost
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
     request.request_body({
       :intent => 'CAPTURE',

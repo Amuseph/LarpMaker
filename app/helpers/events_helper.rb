@@ -103,6 +103,15 @@ module EventsHelper
     return cabinlist.html_safe
   end
 
+  def get_mealplan_cost(event,eventattendance)
+    if eventattendance.mealplan.nil? or eventattendance.mealplan.empty?
+      return event.mealplancost
+    elsif eventattendance.mealplan = 'Brew of the Month Club'
+      return event.mealplancost - 5
+    end
+    return event.mealplancost
+  end
+
   def GetCastSignupLink(event)
     if !user_signed_in?
       return 'Please create an account before purchasing an event'
