@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_one :explog, foreign_key: 'grantedby_id'
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-         #,:confirmable
+         :recoverable, :rememberable, :validatable,
+         :confirmable
 
   validates :usertype,
             inclusion: { in: %w[Cast Staff Player Admin],
