@@ -143,11 +143,6 @@ class EventController < ApplicationController
     else
       price = get_mealplan_cost(@event,@myeventattendance)
     end
-    puts('TACO')
-    puts('TACO')
-    puts(price.to_s)
-    puts('TACO')
-    puts('TACO')
       price = @event.mealplancost
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
     request.request_body({
