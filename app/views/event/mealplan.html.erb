@@ -12,10 +12,9 @@
 </p>
 
 <%= bootstrap_form_for :mealplan, url: event_submitfeedback_path do |f| %>
-  <%= f.select :mealchoice, @mealoptions, {prompt: 'Choose a meal plan', hide_label: true}, required: true %>
+  <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
 <% end %>
 
-<p>
   <b>Purchase a meal plan today! </b>
 </p>
 <div id="paypal-button-container"></div>

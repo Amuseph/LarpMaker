@@ -34,7 +34,7 @@
         </td>
         <td><%= 
           if (event.eventattendances.find_by(user_id: current_user).mealplan.nil? || event.eventattendances.find_by(user_id: current_user).mealplan.empty? ) && event.mealplan? && event.startdate > Time.now
-            link_to 'Buy A Meal Plan - $' + event.mealplancost.to_s, event_mealplan_path(event.id)
+            link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
           else
             event.eventattendances.find_by(user_id: current_user).mealplan 
           end
