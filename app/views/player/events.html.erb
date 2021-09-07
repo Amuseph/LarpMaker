@@ -23,16 +23,11 @@
           
           <td><%= event.startdate %></td>
           <td><%= eventattendance.registrationtype %></td>
-          <td><%= 
-            if (eventattendance.mealplan.nil? || eventattendance.mealplan.empty? ) && event.mealplan? && event.startdate > Time.now && eventattendance.registrationtype == 'Player'
-              link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
-            else
-              eventattendance.mealplan 
-            end
-            %>
+          <td><%= get_mealplan_link(event) %>
           </td>
           <td>
-            <%= if ( eventattendance.character && event.startdate < Time.now) then
+            <%= 
+            if ( eventattendance.character && event.startdate < Time.now) then
               eventattendance.character.name
 
             elsif (eventattendance.character && eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
