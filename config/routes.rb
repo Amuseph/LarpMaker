@@ -83,6 +83,9 @@ Rails.application.routes.draw do
     get :updatecabin
     patch :updatecabin
     get :mealplan
+    post :ordermealplan
+    post :preparemealplanorder
+    post :processmealplanorder
     get :playersignup
     post :orderevent
     post :processeventorder
@@ -91,8 +94,6 @@ Rails.application.routes.draw do
     get :submitfeedback
     post :submitfeedback
     post :castsignup
-    post :ordermealplan
-    post :processmealplanorder
   end
 
   namespace :player do

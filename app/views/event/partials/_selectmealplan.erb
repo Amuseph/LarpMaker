@@ -1,0 +1,8 @@
+<p>
+  <b>Purchase or upgrade your meal plan today! </b>
+</p>
+<%= bootstrap_form_for :mealplan, url: event_ordermealplan_path do |f| %>
+  <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
+  <%= f.submit 'Purchase Meal Plan', class: "btn btn-success" %>
+  <%= link_to 'Cancel', player_events_path, class: "btn btn-danger" %>
+<% end %>

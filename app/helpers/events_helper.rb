@@ -97,9 +97,9 @@ module EventsHelper
   def get_mealplan_signup(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now && @eventattendance.registrationtype == 'Player'
-      return (render partial: 'event/partials/buymealplan')
+      return (render partial: 'event/partials/selectmealplan')
     elsif @eventattendance.mealplan. == 'Brew of the Month Club'
-      return (render partial: 'event/partials/buymealplan')
+      return (render partial: 'event/partials/selectmealplan')
     end
   end
 
@@ -126,10 +126,12 @@ module EventsHelper
     return cabinlist.html_safe
   end
 
-  def get_mealplan_cost(event,eventattendance)
-    if eventattendance.mealplan.nil? or eventattendance.mealplan.empty?
+  def get_mealplan_cost(event, eventattendance, option)
+    if (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && (option == 'Meat' or option == 'Vegan')
       return event.mealplancost
-    elsif eventattendance.mealplan = 'Brew of the Month Club'
+    elsif (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && option == 'Brew of the Month Club'
+      return 5
+    elsif eventattendance.mealplan == 'Brew of the Month Club'
       return event.mealplancost - 5
     end
     return event.mealplancost

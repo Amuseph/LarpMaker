@@ -1,14 +1,2 @@
-<h3>Brew of the Month Club</h3>
-<p>
-  The brew of the month club is a great way to get free drinks in the tavern for the event. Buying this ticket allows you access to soda, coffee and powdered drink mixes.
-</p>
-<h3>Meal Plan</h3>
-<p>
-  The meal includes breakfast on Saturday and Sunday along with dinner on Saturday evening.
-  It also includes a ticket into the brew of the month club for free drinks game.
-</p>
-<p>
-  <%= simple_format(@event.mealplandetails.html_safe)%>
-</p>
-
+<%= render partial: 'event/partials/mealplanoptions' %>
 <%= get_mealplan_signup(@event) %>
