@@ -80,6 +80,27 @@ module EventsHelper
     end
   end
 
+  def get_mealplan_link(event)
+    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
+    if @eventattendance.registrationtype == 'Cast'
+      return link_to 'Meal Provided', event_mealplan_path(event.id)
+    elsif (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now
+      return link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
+    else
+      return link_to @eventattendance.mealplan, event_mealplan_path(event.id)
+    end
+
+  end
+
+  def get_mealplan_signup(event)
+    @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
+    if (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now && @eventattendance.registrationtype == 'Player'
+      return (render partial: 'event/partials/buymealplan')
+    elsif @eventattendance.mealplan. == 'Brew of the Month Club'
+      return (render partial: 'event/partials/buymealplan')
+    end
+  end
+
   def get_resident_players(event,area)
     cabinlist = +""
     Cabin.all.where(location: area).where.not(name: 'Cast Cabin').each do |cabin|
@@ -103,7 +124,16 @@ module EventsHelper
     return cabinlist.html_safe
   end
 
-  def GetCastSignupLink(event)
+  def get_mealplan_cost(event,eventattendance)
+    if eventattendance.mealplan.nil? or eventattendance.mealplan.empty?
+      return event.mealplancost
+    elsif eventattendance.mealplan = 'Brew of the Month Club'
+      return event.mealplancost - 5
+    end
+    return event.mealplancost
+  end
+
+  def get_cast_signup(event)
     if !user_signed_in?
       return 'Please create an account before purchasing an event'
     end
@@ -115,7 +145,7 @@ module EventsHelper
       end
   end
 
-  def GetPlayerSignupLink(event)
+  def get_player_signup(event)
     if !user_signed_in?
       return 'Please create an account before purchasing an event'
     end
