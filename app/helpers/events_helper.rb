@@ -82,7 +82,9 @@ module EventsHelper
 
   def get_mealplan_link(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
-    if @eventattendance.registrationtype == 'Cast'
+    if !event.mealplan?
+      return
+    elsif @eventattendance.registrationtype == 'Cast'
       return link_to 'Meal Provided', event_mealplan_path(event.id)
     elsif (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now
       return link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
