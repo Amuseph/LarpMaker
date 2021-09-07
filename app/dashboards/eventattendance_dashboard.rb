@@ -23,7 +23,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
       collection: ['Player', 'Cast', 'Staff'],
     ),
     mealplan: Field::Select.with_options(
-      collection: ['', 'Meat', 'Vegan'],
+      collection: ['', 'Brew of the Month Club', 'Meat', 'Vegan'],
     ),
     registerdate: Field::DateTime,
     created_at: Field::DateTime,

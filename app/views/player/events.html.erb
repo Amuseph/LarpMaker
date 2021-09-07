@@ -3,39 +3,43 @@
 <div class="pagesubtitle" >A Record of All Events Attended</div>
 
 <table class="table table-striped table-bordered table-sm ">
-<thead class = 'thead-dark'>
-<tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Date</th>
-    <th>Going As</th>
-    <th>Meal Plan</th>
-    <th>Character</th>
-    <th>Feedback</th>
-</tr>
-</thead>
-<tbody>
-<% current_user.eventattendances.joins(:event).order('startdate desc').each do |eventattendance| %>
-    <tr class="table-light">
-      <td><%= eventattendance.event.name %></td>
-      <td><%= eventattendance.event.description %></td>
+  <thead class = 'thead-dark'>
+  <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Going As</th>
+      <th>Meal Plan</th>
+      <th>Character</th>
+      <th>Feedback</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% current_user.events.order('startdate desc').each do |event| %>
+      <% eventattendance =  event.eventattendances.find_by(user_id: current_user) %>
+        <tr class="table-light">
+          <td><%= event.name %></td>
+          <td><%= event.description %></td>
+          
+          <td><%= event.startdate %></td>
+          <td><%= eventattendance.registrationtype %></td>
+          <td><%= get_mealplan_link(event) %>
+          </td>
+          <td>
+            <%= 
+            if ( eventattendance.character && event.startdate < Time.now) then
+              eventattendance.character.name
+
+            elsif (eventattendance.character && eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
+              link_to eventattendance.character.name, player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
+            elsif (eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
+              link_to 'Assign Character',player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
+            end
       
-      <td><%= eventattendance.event.startdate %></td>
-      <td><%= eventattendance.registrationtype %></td>
-      <td><%= eventattendance.mealplan %></td>
-      <td>
-        <%= if (eventattendance.character && eventattendance.event.startdate < Time.now) then
-          eventattendance.character.name 
-        elsif (eventattendance.character && eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
-          link_to eventattendance.character.name, player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
-        elsif (eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
-          link_to 'Assign Character',player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
-        end
-   
-        %></td>
-      <td><%= get_feedback_link(eventattendance.event) %></td>
-    </tr>
-  <% end %>
+            %></td>
+          <td><%= get_feedback_link(eventattendance.event) %></td>
+        </tr>
+      <% end %>
   </tbody>
 </table>
 
