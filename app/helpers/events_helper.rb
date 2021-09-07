@@ -86,7 +86,7 @@ module EventsHelper
       return
     elsif @eventattendance.registrationtype == 'Cast'
       return link_to 'Meal Provided', event_mealplan_path(event.id)
-    elsif (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now
+    elsif (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.startdate > Time.now
       return link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
     else
       return link_to @eventattendance.mealplan, event_mealplan_path(event.id)
