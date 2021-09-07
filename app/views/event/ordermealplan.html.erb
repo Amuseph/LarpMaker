@@ -1,24 +1,21 @@
-<%= bootstrap_form_for :mealplan, url: event_submitfeedback_path do |f| %>
-  <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
-<% end %>
-<p>
-  <b>Purchase or upgrade your meal plan today! </b>
-</p>
+<%= render partial: 'event/partials/mealplanoptions' %>
+
+<b>Ordering: <%= @mealchoice %></b><br>
+<b>Cost: $<%= @mealcost.to_s %></b>
 <div id="paypal-button-container"></div>
 <script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
 <script>
   paypal.Buttons({
     env: '<%= escape_javascript ENV['PAYPAL_ENV'] %>',
     createOrder: async () => {
-      const response = await fetch('ordermealplan/', {
+      const response = await fetch('preparemealplanorder/', {
         method: 'POST', 
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({meal_type: document.getElementById("mealplan_mealchoice").value})
+        body: JSON.stringify({meal_type: '<%= escape_javascript @mealchoice %>'})
       });
       const responseData = await response.json();
-      $('#mealplan_mealchoice').prop('disabled',true)
       return responseData.token;
     },
     onApprove: async (data) => {
@@ -27,7 +24,7 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({order_id: data.orderID, meal_type: document.getElementById("mealplan_mealchoice").value})
+        body: JSON.stringify({order_id: data.orderID, meal_type: '<%= escape_javascript @mealchoice %>'})
       });
       
       const responseData = await response.json();
