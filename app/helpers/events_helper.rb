@@ -59,7 +59,7 @@ module EventsHelper
     @explog.grantedby_id = current_user.id
     @explog.save!
   end
-
+  
   def get_event_player_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
     if get_event_price(event) <= 0
@@ -67,7 +67,7 @@ module EventsHelper
     elsif (attendancecount >= event.playercount)
       return image_tag("pages/events/register_to_play_soldout.png")
     else
-      return link_to(image_tag("pages/events/register_to_play.png"), event_playersignup_path(event.id))
+      return (link_to(image_tag("pages/events/register_to_play.png"), event_playersignup_path(event.id))) + ('<br> Only ' + (event.playercount - attendancecount).to_s + ' slots remain').html_safe
     end
   end
 
@@ -183,6 +183,14 @@ module EventsHelper
       return event.atdoorcost
     else
       return event.earlybirdcost
+    end
+  end
+
+  def get_early_bird_price_details(event)
+    days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+    early_bird_date = event.startdate - Setting.sheets_auto_lock_day
+    if (days_till_lockout > 0)
+      return ('<b>Early Bird Pricing:</b> $'+ event.earlybirdcost.to_s + ' till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + days_till_lockout.to_s + ' days remain!)<br>').html_safe
     end
   end
 
