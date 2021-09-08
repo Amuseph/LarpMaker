@@ -60,9 +60,6 @@ module EventsHelper
     @explog.save!
   end
   
-  def get_player_slots(event)
-    return 10.to_s
-  end
   def get_event_player_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
     if get_event_price(event) <= 0
