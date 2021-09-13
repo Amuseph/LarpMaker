@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module EventsHelper
   def canUpdateCabin()
-    if !sheetsLocked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Time.now
+    if !sheetsLocked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Date.today
       true
     else
       false
@@ -21,26 +21,29 @@ module EventsHelper
   end
 
   def get_feedback_link(event)
+    feedback_start_date = Date.new(2021,9,1) # Do not touch. This is when feedback got migrated to the new site
     eventattendance = event.eventattendances.find_by(user_id: current_user)
-    if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+   
+    if event.startdate > Date.today.in_time_zone('Eastern Time (US & Canada)').to_date
       return
-    elsif ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -5) #change this to 30 later
-      if Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
+    elsif event.startdate < feedback_start_date # Remove me after 30 days
+      return
+    elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
+      return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
+    elsif ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) #change this to 30 later
         return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
-      else
-        return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
-      end
     else
       return
     end
   end
 
   def add_feedback_exp(event, eventattendance)
-    if ((event.enddate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i >= -14)
+    event_feedback_exp_days = 14
+    if ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i >= event_feedback_exp_days)
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Feedback'
-      @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      @explog.acquiredate = Date.today.in_time_zone('Eastern Time (US & Canada)').to_date
       @explog.description = "Exp for Feedback Letter"
       @explog.amount = event.feedbackexp
       @explog.grantedby_id = current_user.id
@@ -84,10 +87,8 @@ module EventsHelper
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if !event.mealplan?
       return
-    elsif @eventattendance.registrationtype == 'Cast'
-      return link_to 'Meal Provided', event_mealplan_path(event.id)
-    elsif (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.startdate > Time.now
-      return link_to 'Buy A Meal Plan', event_mealplan_path(event.id)
+    elsif @eventattendance.registrationtype == 'Cast' || @eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?
+      return link_to 'View Meal Plan', event_mealplan_path(event.id)
     else
       return link_to @eventattendance.mealplan, event_mealplan_path(event.id)
     end
@@ -96,9 +97,9 @@ module EventsHelper
 
   def get_mealplan_signup(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
-    if (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?) && event.mealplan? && event.startdate > Time.now && @eventattendance.registrationtype == 'Player'
-      return (render partial: 'event/partials/selectmealplan')
-    elsif @eventattendance.mealplan. == 'Brew of the Month Club'
+    meal_plan_cutoff_days = 5
+
+    if (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty? || @eventattendance.mealplan == 'Brew of the Month Club' ) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/selectmealplan')
     end
   end
@@ -174,24 +175,31 @@ module EventsHelper
   end
 
   def get_event_price(event)
+    days_till_lockout = (event.startdate - Date.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
     if user_signed_in?
-      if (current_user.eventattendances.where(registrationtype: 'Player').count == 0) && (user_signed_in?)
+      if (days_till_lockout <= 0)
+        return event.atdoorcost
+      elsif (current_user.eventattendances.where(registrationtype: 'Player').count == 0)
         return event.newplayerprice
+      else
+        return event.earlybirdcost
       end
-    end
-    if ((event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
-      return event.atdoorcost
     else
-      return event.earlybirdcost
+      return event.atdoorcost
     end
   end
 
-  def get_early_bird_price_details(event)
-    days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+  def get_event_price_details(event)
+    days_till_lockout = (event.startdate - Date.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
     early_bird_date = event.startdate - Setting.sheets_auto_lock_day
+    event_price_html = ''
     if (days_till_lockout > 0)
-      return ('<b>Early Bird Pricing:</b> $'+ event.earlybirdcost.to_s + ' till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + days_till_lockout.to_s + ' days remain!)<br>').html_safe
+      event_price_html += '<b>New Player Early Bird Rate:</b> $' + event.newplayerprice.to_s + '<br>'
+      event_price_html += '<b>Early Bird Pricing:</b> $'+ event.earlybirdcost.to_s + '<br>'
+      event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + days_till_lockout.to_s + ' days remain!)<br>'
     end
+    event_price_html += '<b>Standard Pricing:</b> $' + event.atdoorcost.to_s + '<br>'
+    return event_price_html.html_safe      
   end
 
   def add_user_to_event(user, event)

@@ -15,9 +15,7 @@
   <div class="row">
     <div class="container col-12" id="eventdetails">
       <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
-      <%= get_early_bird_price_details(event) %>
-      <b>Standard Pricing:</b> $<%= event.atdoorcost.to_s %><br>
-      <b>New Player Rate:</b> $<%= event.newplayerprice.to_s %><br>
+      <%= get_event_price_details(event) %>
     </div>
   </div>
   <div class="row">
