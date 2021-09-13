@@ -14,7 +14,7 @@ class ExplogDashboard < Administrate::BaseDashboard
     ),
     grantedby: Field::BelongsTo,
     id: Field::Number,
-    acquiredate: Field::DateTime,
+    acquiredate: Field::Date,
     name: Field::String,
     description: Field::String,
     amount: Field::Number,
