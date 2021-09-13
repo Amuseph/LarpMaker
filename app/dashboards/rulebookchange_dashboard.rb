@@ -11,7 +11,7 @@ class RulebookchangeDashboard < Administrate::BaseDashboard
     change: Field::String,
     page: Field::Number,
     version: Field::String,
-    changedate: Field::DateTime,
+    changedate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
