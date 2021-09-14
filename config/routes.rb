@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     patch :updatecabin
     get :mealplan
     post :ordermealplan
+    post :updatemealplan
     post :preparemealplanorder
     post :processmealplanorder
     get :playersignup
