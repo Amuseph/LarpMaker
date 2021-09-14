@@ -18,14 +18,8 @@ class EventController < ApplicationController
 
   def mealplan
     @event = Event.find(params[:event_id])
-    @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
-    
-    if @myeventattendance.mealplan.nil? or @myeventattendance.mealplan.empty?
-      @mealoptions = [['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,@myeventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,@myeventattendance, 'Vegan').to_s, 'Vegan']]
-    elsif @myeventattendance.mealplan = 'Brew of the Month Club'
-      @mealoptions = [['Meat - $' + get_mealplan_cost(@event,@myeventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,@myeventattendance, 'Vegan').to_s, 'Vegan']]
-    end
-    
+    myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
+    @mealoptions = get_meal_options(@event, myeventattendance)
   end
 
   def viewfeedback
@@ -135,12 +129,20 @@ class EventController < ApplicationController
     end
   end
 
+  def updatemealplan
+    @event = Event.find_by(id: params[:event_id])
+    @eventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
+    @eventattendance.mealplan = params[:mealplan][:mealchoice]
+    if @eventattendance.save
+      redirect_to player_events_path(params[:event_id])
+    end
+  end
+
   def ordermealplan
     @event = Event.find_by(id: params[:event_id])
     @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
     @mealchoice = params[:mealplan][:mealchoice]
     @mealcost = get_mealplan_cost(@event,@myeventattendance, @mealchoice)
-
   end
 
   def preparemealplanorder

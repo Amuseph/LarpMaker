@@ -1,0 +1,10 @@
+<p>
+  <b>Thank you for participating in our meal plan. </b><br>
+  You are currently registered for: <%= @selected_meal %><br>
+  If you would like to update this selection please do so below.
+</p>
+<%= bootstrap_form_for :mealplan, url: event_updatemealplan_path do |f| %>
+  <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
+  <%= f.submit 'Update Meal Plan', class: "btn btn-success" %>
+  <%= link_to 'Cancel', :back, class: "btn btn-danger" %>
+<% end %>

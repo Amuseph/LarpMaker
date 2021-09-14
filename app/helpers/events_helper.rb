@@ -87,7 +87,7 @@ module EventsHelper
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if !event.mealplan?
       return
-    elsif @eventattendance.registrationtype == 'Cast' || @eventattendance.mealplan.nil? || @eventattendance.mealplan.empty?
+    elsif @eventattendance.mealplan.in?([nil, ''])
       return link_to 'View Meal Plan', event_mealplan_path(event.id)
     else
       return link_to @eventattendance.mealplan, event_mealplan_path(event.id)
@@ -95,12 +95,31 @@ module EventsHelper
 
   end
 
+  def get_meal_options(event, eventattendance)
+    if eventattendance.registrationtype == 'Cast'
+      return [['Meat', 'Meat'], ['Vegan', 'Vegan']]
+    elsif eventattendance.mealplan.in?(['Meat', 'Vegan'])
+      return [['Meat', 'Meat'], ['Vegan', 'Vegan']]
+    elsif eventattendance.mealplan.in?([nil, ''])
+      return [['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(event,eventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(event,eventattendance, 'Vegan').to_s, 'Vegan']]
+    elsif eventattendance.mealplan = 'Brew of the Month Club'
+      return [['Meat - $' + get_mealplan_cost(event,eventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(event,eventattendance, 'Vegan').to_s, 'Vegan']]
+    end
+  end
+
   def get_mealplan_signup(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     meal_plan_cutoff_days = 5
-
-    if (@eventattendance.mealplan.nil? || @eventattendance.mealplan.empty? || @eventattendance.mealplan == 'Brew of the Month Club' ) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
-      return (render partial: 'event/partials/selectmealplan')
+    @selected_meal = @eventattendance.mealplan
+    if @selected_meal.in?([nil, ''])
+      @selected_meal = 'None'
+    end
+    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
+      return (render partial: 'event/partials/purchasemealplan')
+    elsif (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Cast')
+      return (render partial: 'event/partials/updatemealplan')
+    elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
+      return (render partial: 'event/partials/updatemealplan')
     end
   end
 
