@@ -23,7 +23,7 @@ module EventsHelper
   def get_feedback_link(event)
     feedback_start_date = Date.new(2021,9,1) # Do not touch. This is when feedback got migrated to the new site
     eventattendance = event.eventattendances.find_by(user_id: current_user)
-   
+
     if event.startdate > Date.today.in_time_zone('Eastern Time (US & Canada)').to_date
       return
     elsif event.startdate < feedback_start_date # Remove me after 30 days
@@ -39,7 +39,8 @@ module EventsHelper
 
   def add_feedback_exp(event, eventattendance)
     event_feedback_exp_days = 14
-    if ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i >= event_feedback_exp_days)
+    
+    if ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i <= event_feedback_exp_days)
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Feedback'
