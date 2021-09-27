@@ -38,7 +38,7 @@
     </div>
   <% end %>
 
-  <% if canEdit(@character) %>
+  <% if !sheetsLocked %>
     <div class='sideSubLink'>
       <%= link_to 'Train Skill', character_trainskill_path, remote: true %>
     </div>
