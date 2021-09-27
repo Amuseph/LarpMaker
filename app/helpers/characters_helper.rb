@@ -13,7 +13,7 @@ module CharactersHelper
 
   def canLevel(character)
     unless sheetsLocked
-      last_played_event = lastPlayedEvent(character)
+      last_played_event = last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       if character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) >= expToLevel(character)
         if last_played_event > character.levelupdate
@@ -27,7 +27,7 @@ module CharactersHelper
 
   def canBuyProfession(character)
     if !sheetsLocked
-      last_played_event = lastPlayedEvent(character)
+      last_played_event = last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       max_profession_date = character.characterprofessions.maximum('acquiredate')
       max_profession_date = '1900-01-01'.to_date if max_profession_date.nil?
@@ -45,7 +45,7 @@ module CharactersHelper
   end
 
   def canRefundSkill(character, characterskill)
-    last_played_event = lastPlayedEvent(character)
+    last_played_event = last_played_event(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     if sheetsLocked
       return false
@@ -112,7 +112,7 @@ module CharactersHelper
   end
 
   def canRefundProfession(character, characterprofession)
-    last_played_event = lastPlayedEvent(character)
+    last_played_event = last_played_event(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
     if sheetsLocked
@@ -141,7 +141,7 @@ module CharactersHelper
   end
 
   def refundPrice(character, characterskill)
-    last_played_event = lastPlayedEvent(character)
+    last_played_event = last_played_event(character)
     if @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
       # Character has not yet played 3 games
       0
@@ -159,7 +159,7 @@ module CharactersHelper
     end
   end
 
-  def lastPlayedEvent(character)
+  def last_played_event(character)
     if character.events.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate).nil?
       return '1900-01-01'.to_date
     end
@@ -169,7 +169,7 @@ module CharactersHelper
 
   def oraclesAvailable(character)
     purchasedOracles = @character.skills.where(name: 'Oracle').count 
-    usedOracles = @character.courier.where('senddate > ? and couriertype = ?', lastPlayedEvent(@character), 'Oracle').count
+    usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').count
     return purchasedOracles - usedOracles
   end
 
