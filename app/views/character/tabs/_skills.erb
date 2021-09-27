@@ -23,8 +23,8 @@
         <td><%= characterskill.skill.description %> </td>
         <td>
           <%=
-            if(canRefundSkill(@character, characterskill))
-              refundprice = refundPrice(@character, characterskill)
+            if(can_refund_skill(characterskill))
+              refundprice = skill_refund_price(characterskill)
               if (refundprice == 0)
                 link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post do 
                   fa_icon "trash" 
