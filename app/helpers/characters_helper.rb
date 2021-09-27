@@ -44,44 +44,43 @@ module CharactersHelper
     end
   end
 
-  def canRefundSkill(character, characterskill)
-    last_played_event = last_played_event(character)
-    events_played = character.events.where('startdate < ?', Time.now).count
+  def can_refund_skill(characterskill)
+    last_played_event = last_played_event(@character)
+    events_played = @character.events.where('startdate < ?', Time.now).count
     if sheetsLocked
       return false
     end
     characterskill.skill.skillrequirements.each do |skillreq|
-      if character.skills.exists?(id: skillreq.skill_id) && (character.skills.where('skill_id = ?',
-                                                                                    skillreq.requiredskill_id).count < 2)
+      if @character.skills.exists?(id: skillreq.skill_id) && (@character.skills.where('skill_id = ?', skillreq.requiredskill_id).count < 2)
         # Required as part of another skill. Don't delete if you only own 1.
         return false
       end
     end
 
-    if (characterskill.skill.tier == 4) && (character.skills.where('tier = 4').count <= 2) && (character.skills.where('tier = 5').count >= 1)
+    if (characterskill.skill.tier == 4) && (@character.skills.where('tier = 4').count <= 2) && (@character.skills.where('tier = 5').count >= 1)
       # Required as part of Tier 5 pyramid
-      false
-    elsif (characterskill.skill.tier == 4) && (character.skills.where('tier = 4').count <= 3) && (character.skills.where('tier = 6').count >= 1)
+      return false
+    elsif (characterskill.skill.tier == 4) && (@character.skills.where('tier = 4').count <= 3) && (@character.skills.where('tier = 6').count >= 1)
       # Required as part of Tier 6 pyramid
-      false
-    elsif (characterskill.skill.tier == 5) && (character.skills.where('tier = 5').count <= 2) && (character.skills.where('tier = 6').count >= 1)
+      return false
+    elsif (characterskill.skill.tier == 5) && (@character.skills.where('tier = 5').count <= 2) && (@character.skills.where('tier = 6').count >= 1)
       # Required as part of Tier 6 pyramid
-      false
+      return false
     elsif (Setting.allow_global_reroll)
       # Allowing everyone to reroll
-      true
+      return true
     elsif @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
       # Character has not yet played 3 games
-      true
+      return true
     elsif last_played_event < characterskill.acquiredate
       # Skill has never been used
-      true
+      return true
     elsif characterskill.skill.tier.zero?
       # Skill has been used and is tier 0
-      false
-    elsif character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) < refundPrice(character, characterskill)
+      return false
+    elsif @character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) > skill_refund_price(characterskill)
       # Player can afford skill
-      true
+      return true
     end
   end
 
@@ -140,8 +139,8 @@ module CharactersHelper
     end
   end
 
-  def refundPrice(character, characterskill)
-    last_played_event = last_played_event(character)
+  def skill_refund_price(characterskill)
+    last_played_event = last_played_event(@character)
     if @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
       # Character has not yet played 3 games
       0

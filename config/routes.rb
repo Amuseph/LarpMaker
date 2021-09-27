@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       resources :skillrequirements
       resources :characterclassskillgroups, except: :index
       resources :characterprofessions
-      resources :characterskills, except: :index
+      resources :characterskills#, except: :index
       resources :couriers
       resources :professions
       resources :professiongroups
