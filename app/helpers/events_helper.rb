@@ -75,6 +75,31 @@ module EventsHelper
     end
   end
 
+  def get_feedback_rank_string(ranking, type)
+    if type == 'YesNo'
+      case ranking
+      when 0
+        "Yes"
+      when 1
+        "No"
+      end
+    else
+      case ranking
+      when 1
+        "Very Satisfied"
+      when 2
+        "Somewhat Satisfied"
+      when 3
+        "Neither Satisfied or Dissatisfied"
+      when 4
+        "Somewhat Dissatisfied"
+      when 5
+        "Very Dissatisfied"
+      end
+    end
+    
+  end
+
   def get_event_cast_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
     if (attendancecount >= event.castcount)

@@ -39,6 +39,7 @@ class EventController < ApplicationController
       @eventfeedback.character_id = @eventattendance.character_id
       if @eventfeedback.save!
         add_feedback_exp(@event, @eventattendance)
+        EventMailer.with(eventfeedback: @eventfeedback).send_event_feedback.deliver_later
         redirect_to event_viewfeedback_path(params[:event_id])
       end
     end
