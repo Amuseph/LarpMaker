@@ -1,0 +1,51 @@
+<div id="eventsignup">
+    <p id="eventname"><%= @event.name %></p>
+
+    <p>If you've played Myth in the past, you are already aware it is a lot of fun. It is like a mini-vacation, and that's why you are back for more. If you've never tried anything like this before, you're about to experience the adventure of a lifetime.</p> 
+
+    <p>Myth is a fantastic creative outlet where you'll make a lot of new friends from a variety of professions and age groups. The game keeps you active and on the go with dynamic adventures, treasure hunts, battles, and more. </p> 
+    
+    <p>If you have any questions, contact us at support@mythlarp.com or visit our Facebook Group, Mythgnomers, for advice from other players.</p> 
+    
+    <p><b>Note: You must be 16-years-old or older to participate in Myth.</b></p> 
+    
+    <%= render partial: 'event/partials/mealplanoptions' %>
+    
+</div>
+
+<b>Selected Mealplan: <%= @mealchoice %></b><br>
+<b>Cost: $<%= @eventprice.to_s %></b>
+
+<div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
+<script>
+  paypal.Buttons({
+    env: '<%= escape_javascript ENV['PAYPAL_ENV'] %>',
+    createOrder: async () => {
+      const response = await fetch('prepareeventorder/', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({meal_type: '<%= escape_javascript @mealchoice %>'})
+      });
+      const responseData = await response.json();
+      return responseData.token;
+    },
+    onApprove: async (data) => {
+      const response = await fetch('processeventorder/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({order_id: data.orderID, meal_type: '<%= escape_javascript @mealchoice %>'})
+      });
+      
+      const responseData = await response.json();
+
+      if (responseData.status === 'COMPLETED') {
+        window.location.href = '/event/';
+      }
+    }
+  }).render('#paypal-button-container');
+</script>

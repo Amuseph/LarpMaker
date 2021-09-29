@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  def index; end
-
-
-  def events
-
+  def index
   end
+
+  
 end
