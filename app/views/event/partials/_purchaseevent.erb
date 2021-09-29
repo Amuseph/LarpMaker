@@ -1,0 +1,9 @@
+<p>
+  <b>Play Myth today for $<%= get_event_price(@event) %></b>
+</p>
+<%= bootstrap_form_for :mealplan, url: event_orderevent_path do |f| %>
+  <%= f.check_box :acceptterms, required: true, label: ("I agree to the #{link_to 'Terms of Service', pages_termsofservice_path, target: '_blank'} and #{link_to 'waiver policy', pages_waiver_path, target: '_blank'}.").html_safe %>
+  <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
+  <%= f.submit 'Purchase Event', class: "btn btn-success" %>
+  <%= link_to 'Cancel', :back, class: "btn btn-danger" %>
+<% end %>

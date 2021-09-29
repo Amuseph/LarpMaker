@@ -47,6 +47,15 @@ class EventController < ApplicationController
 
   def playersignup
     @event = Event.find(params[:event_id])
+    if user_signed_in?
+      myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
+      if @event.mealplan
+        @mealoptions = [['None', 'None'], ['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
+      else
+        @mealoptions = [['None', 'None']]
+      end
+    end
+
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
@@ -67,38 +76,90 @@ class EventController < ApplicationController
 
   def orderevent
     @event = Event.find(params[:event_id])
-    price = get_event_price(@event)
+    @mealchoice = params[:mealplan][:mealchoice]
+    
+    @eventprice = get_event_price(@event)
+    if @mealchoice != 'None'
+      @eventprice = @eventprice + get_mealplan_cost(@event,@myeventattendance, @mealchoice)
+    end
+  end
+
+  def prepareeventorder
+    @event = Event.find(params[:event_id])
+    
+    mealchoice = params[:meal_type]
+    totalprice = get_event_price(@event)
+    if mealchoice != 'None'
+      totalprice = totalprice + get_mealplan_cost(@event,@myeventattendance, mealchoice)
+    end
     request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
-    request.request_body({
-      :intent => 'CAPTURE',
-      :purchase_units => [
-        {
-          :amount => {
-            :currency_code => 'USD',
-            :value => price,
-            :breakdown => {
-              :item_total => {
-                :value => price, 
-                :currency_code => 'USD'}
-            }
-          },
-          :items => [{
-            :name => 'Purchased event ' + @event.name,
-            :quantity => '1',
-            :unit_amount => {
-                :currency_code => 'USD',
-                :value => price
-            }
-          }]
-        }
-      ]
-    })
+    
+    if mealchoice != 'None'
+      request.request_body({
+        :intent => 'CAPTURE',
+        :purchase_units => [
+          {
+            :amount => {
+              :currency_code => 'USD',
+              :value => totalprice,
+              :breakdown => {
+                :item_total => {
+                  :value => totalprice, 
+                  :currency_code => 'USD'}
+              }
+            },
+            :items => [{
+              :name => 'Purchased event ' + @event.name,
+              :quantity => '1',
+              :unit_amount => {
+                  :currency_code => 'USD',
+                  :value => get_event_price(@event)
+              }
+            },{
+              :name => 'Purchased meal plan ' + mealchoice,
+              :quantity => '1',
+              :unit_amount => {
+                  :currency_code => 'USD',
+                  :value => get_mealplan_cost(@event,@myeventattendance, mealchoice)
+              }
+            }]
+          }
+        ]
+      })
+    else
+      request.request_body({
+        :intent => 'CAPTURE',
+        :purchase_units => [
+          {
+            :amount => {
+              :currency_code => 'USD',
+              :value => totalprice,
+              :breakdown => {
+                :item_total => {
+                  :value => totalprice, 
+                  :currency_code => 'USD'}
+              }
+            },
+            :items => [{
+              :name => 'Purchased event ' + @event.name,
+              :quantity => '1',
+              :unit_amount => {
+                  :currency_code => 'USD',
+                  :value => get_event_price(@event)
+              }
+            }]
+          }
+        ]
+      })
+    end
+    
+    
     begin
       response = @client.execute request
       order = Order.new
       order.user_id = current_user.id
-      order.amount = price.to_i
-      order.description = 'Purchased event ' + @event.name
+      order.amount = totalprice.to_i
+      order.description = 'Purchased event ' + @event.name + ' with mealplan: ' + mealchoice
       order.status = response.result.status
       order.token = response.result.id
       if order.save
@@ -107,6 +168,7 @@ class EventController < ApplicationController
     rescue PayPalHttp::HttpError => ioe
       # HANDLE THE ERROR
     end
+    
   end
 
   def processeventorder

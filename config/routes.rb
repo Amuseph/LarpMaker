@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     get :events
     get :community
     get :earnexp
+    get :waiver
+    get :termsofservice
   end
 
   namespace :admin do
@@ -90,6 +92,7 @@ Rails.application.routes.draw do
     post :processmealplanorder
     get :playersignup
     post :orderevent
+    post :prepareeventorder
     post :processeventorder
     get :castsignup
     get :viewfeedback
