@@ -173,7 +173,11 @@ module EventsHelper
   end
 
   def get_mealplan_cost(event, eventattendance, option)
-    if (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && (option == 'Meat' or option == 'Vegan')
+    if option == 'Brew of the Month Club'
+      return 5
+    elsif eventattendance.nil?
+      return event.mealplancost
+    elsif (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && (option == 'Meat' or option == 'Vegan')
       return event.mealplancost
     elsif (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && option == 'Brew of the Month Club'
       return 5
@@ -201,7 +205,7 @@ module EventsHelper
     end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if @eventattendance.nil?
-      return (render partial: 'event/partials/buyevent')
+      return (render partial: 'event/partials/purchaseevent')
     else
       return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
     end
