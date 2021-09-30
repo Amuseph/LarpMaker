@@ -11,6 +11,11 @@ class HouseDashboard < Administrate::BaseDashboard
     characters: Field::HasMany,
     id: Field::Number,
     name: Field::String,
+    thane: Field::BelongsTo,
+    fledglingbenefit: Field::String,
+    fledglingplot: Field::String,
+    establishedbenefit: Field::String,
+    establishedplot: Field::String,
     createdate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -23,12 +28,18 @@ class HouseDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     name
+    thane
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     name
+    thane
+    fledglingbenefit
+    establishedbenefit
+    fledglingplot
+    establishedplot
     characters
     createdate
     created_at
@@ -40,6 +51,11 @@ class HouseDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     name
+    thane
+    fledglingbenefit
+    establishedbenefit
+    fledglingplot
+    establishedplot
     characters
     createdate
   ].freeze
