@@ -202,7 +202,7 @@ class CharacterController < ApplicationController
       @explog.name = 'Skill Refund'
       @explog.acquiredate = Time.now
       @explog.description = "Refunded \"#{@characterskill.skill.name}\" for \"#{@character.name}\""
-      @explog.amount = skill_refund_price(@characterskill)
+      @explog.amount = skill_refund_price(@characterskill) * -1
       @explog.grantedby_id = current_user.id
       @explog.save!
       @characterskill.destroy
