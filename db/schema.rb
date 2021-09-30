@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_28_233116) do
+ActiveRecord::Schema.define(version: 2021_09_30_015508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,12 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
     t.date "createdate", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fledglingbenefit"
+    t.string "fledglingplot"
+    t.string "establishedbenefit"
+    t.string "establishedplot"
+    t.string "bannerbenefit"
+    t.integer "thane_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -422,6 +428,7 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
   add_foreign_key "eventfeedbacks", "users"
   add_foreign_key "explogs", "users"
   add_foreign_key "explogs", "users", column: "grantedby_id"
+  add_foreign_key "houses", "characters", column: "thane_id"
   add_foreign_key "orders", "users"
   add_foreign_key "professionrequirements", "professions"
   add_foreign_key "professionrequirements", "professions", column: "requiredprofession_id"

@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     get :viewcourier
     get :sendcourier
     post :sendcourier
+    get :house
     get :sendprayer
     post :sendprayer
     get :sendoracle
