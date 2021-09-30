@@ -212,6 +212,14 @@ module CharactersHelper
     currentCP / totalCP * 100.0
   end
 
+  def get_house_details()
+    if @character.house.nil?
+      return 'Join a house in-game! See the rulebook for more details.'
+    else
+      return render 'character/housedetails'
+    end
+  end
+
   def get_house_members(house)
     memberlist = +""
     house.characters.each do |member|
