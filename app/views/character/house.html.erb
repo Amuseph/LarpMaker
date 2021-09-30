@@ -1,0 +1,19 @@
+<div class="container col-12">
+  <div class="row">
+    <div class="container col-12">
+
+    <%
+      if @character.house.nil?
+    %>
+      Join a house in-game! See the rulebook for more details.
+    <% 
+      else
+        render 'character/housedetails'
+      end
+    
+    %>
+      
+      
+    </div>
+  </div>
+</div>
