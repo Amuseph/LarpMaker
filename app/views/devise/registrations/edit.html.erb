@@ -17,7 +17,19 @@
   <%= f.text_field :lastname, autocomplete: "family-name", label: 'Last Name' %>
   <%= f.text_field :aliaslastname, label: 'Alias Last Name' %><i>Populate to Hide Real Last Name</i><br/><br/>
   <%= f.text_field :address, label: 'Address' %>
+  <%= f.text_field :address2, label: 'Address - Part2' %>
+  <%= f.text_field :city, label: 'City' %>
+  <%= f.select :state, ['Alabama' ,'Alaska' ,'Arizona' ,'Arkansas' ,'California' ,'Colorado' ,'Connecticut' ,'Delaware' ,'Florida' ,'Georgia' ,'Hawaii' ,'Idaho' ,'Illinois' ,'Indiana' ,'Iowa' ,'Kansas' ,'Kentucky' ,'Louisiana' ,'Maine' ,'Maryland' ,'Massachusetts' ,'Michigan' ,'Minnesota' ,'Mississippi' ,'Missouri' ,'Montana' ,'Nebraska' ,'Nevada' ,'New Hampshire' ,'New Jersey' ,'New Mexico' ,'New York' ,'North Carolina' ,'North Dakota' ,'Ohio' ,'Oklahoma' ,'Oregon' ,'Pennsylvania' ,'Rhode Island' ,'South Carolina' ,'South Dakota' ,'Tennessee' ,'Texas' ,'Utah' ,'Vermont' ,'Virginia' ,'Washington' ,'West Virginia' ,'Wisconsin' ,'Wyoming'], label: 'State' %>
   <%= f.text_field :phonenumber, label: 'Phone Number' %><br/><br/><br/>
+
+
+ 
+
+
+
+
+
+
 
 
   <%= f.password_field :current_password, autocomplete: "current-password", label: 'Current Password' %>
