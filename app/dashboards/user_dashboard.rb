@@ -21,6 +21,8 @@ class UserDashboard < Administrate::BaseDashboard
     usertype: Field::Select.with_options(
       collection: ['Player', 'Cast', 'Admin'],
     ),
+    address: Field::String,
+    phonenumber: Field::String,
     charactercount: Field::Number,
     reset_password_token: Field::String,
     reset_password_sent_at: Field::DateTime,
@@ -59,6 +61,8 @@ class UserDashboard < Administrate::BaseDashboard
     aliaslastname
     email
     usertype
+    address
+    phonenumber
     charactercount
     created_at
     explogs
@@ -74,6 +78,8 @@ class UserDashboard < Administrate::BaseDashboard
     firstname
     lastname
     usertype
+    address
+    phonenumber
     charactercount
     aliaslastname
   ].freeze
