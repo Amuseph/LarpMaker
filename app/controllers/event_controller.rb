@@ -83,13 +83,13 @@ class EventController < ApplicationController
     @eventprice = get_event_price(@event)
 
     if @mealchoice != 'None'
-      @eventprice = @eventprice + get_mealplan_cost(@event,@myeventattendance, @mealchoice)
+      return @eventprice = @eventprice + get_mealplan_cost(@event,@myeventattendance, @mealchoice)
     end
   end
 
   def prepareeventorder
     if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
-      redirect_to player_events_path
+      return redirect_to player_events_path
     end
     @event = Event.find(params[:event_id])
     
