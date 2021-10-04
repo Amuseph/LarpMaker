@@ -48,7 +48,6 @@ class EventController < ApplicationController
   def playersignup
     @event = Event.find(params[:event_id])
     if user_signed_in?
-      myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
       if @event.mealplan
         @mealoptions = [['None', 'None'], ['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
       else
@@ -75,16 +74,23 @@ class EventController < ApplicationController
   end
 
   def orderevent
+    if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
+      redirect_to player_events_path
+    end
     @event = Event.find(params[:event_id])
     @mealchoice = params[:mealplan][:mealchoice]
-    
+
     @eventprice = get_event_price(@event)
+
     if @mealchoice != 'None'
       @eventprice = @eventprice + get_mealplan_cost(@event,@myeventattendance, @mealchoice)
     end
   end
 
   def prepareeventorder
+    if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
+      redirect_to player_events_path
+    end
     @event = Event.find(params[:event_id])
     
     mealchoice = params[:meal_type]
