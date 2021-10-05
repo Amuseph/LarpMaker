@@ -208,6 +208,9 @@ class EventController < ApplicationController
   end
 
   def ordermealplan
+    if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id, mealplan: params[:mealplan][:mealchoice]).nil?
+      return redirect_to player_events_path
+    end
     @event = Event.find_by(id: params[:event_id])
     @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
     @mealchoice = params[:mealplan][:mealchoice]
@@ -215,6 +218,9 @@ class EventController < ApplicationController
   end
 
   def preparemealplanorder
+    if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id, mealplan: params[:meal_type]).nil?
+      return redirect_to player_events_path
+    end
     @event = Event.find(params[:event_id])
     @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
     price = get_mealplan_cost(@event,@myeventattendance, params[:meal_type])
