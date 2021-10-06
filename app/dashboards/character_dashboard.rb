@@ -93,6 +93,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     alias
     pronouns
     level
+    levelupdate
     race
     characterclass
     totem
