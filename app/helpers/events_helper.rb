@@ -193,7 +193,10 @@ module EventsHelper
     end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
       if @eventattendance.nil?
-        return link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, id: 'signuplink'
+        return  link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, :class => 'btn btn-success' 
+        
+        
+        
       else
         return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
       end
