@@ -69,6 +69,7 @@ class EventController < ApplicationController
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
       if @eventattendance.save!
         add_event_exp(@event, @eventattendance)
+        redirect_to player_events_path
       end
     end
   end
