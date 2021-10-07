@@ -254,11 +254,15 @@ module EventsHelper
     return event_price_html.html_safe      
   end
 
-  def add_user_to_event(user, event)
+  def add_user_to_event(user, event, mealplan)
     @eventattendance = Eventattendance.new
     @eventattendance.event_id = event.id
     @eventattendance.user_id = user.id
     @eventattendance.registrationtype = 'Player'
+    if mealplan == 'None'
+      mealplan = nil 
+    end
+    @eventattendance.mealplan = mealplan
 
     if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
       @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
