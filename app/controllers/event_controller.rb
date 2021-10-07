@@ -189,7 +189,7 @@ class EventController < ApplicationController
       order.save!
       if response.result.status == 'COMPLETED'
 
-        add_user_to_event(current_user,@event)
+        add_user_to_event(current_user,@event, params[:meal_type])
 
         return render :json => {:status => response.result.status}, :status => :ok
       end
