@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CharactersHelper
-  def canEdit(_character)
+  def can_edit_character()
     if !sheetsLocked 
       if Setting.allow_global_reroll
         true
@@ -68,9 +68,6 @@ module CharactersHelper
       return false
     elsif (Setting.allow_global_reroll)
       # Allowing everyone to reroll
-      return true
-    elsif @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
-      # Character has not yet played 3 games
       return true
     elsif last_played_event < characterskill.acquiredate
       # Skill has never been used
@@ -141,10 +138,7 @@ module CharactersHelper
 
   def skill_refund_price(characterskill)
     last_played_event = last_played_event(@character)
-    if @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
-      # Character has not yet played 3 games
-      0
-    elsif (Setting.allow_global_reroll)
+    if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       0
     elsif last_played_event < characterskill.acquiredate
