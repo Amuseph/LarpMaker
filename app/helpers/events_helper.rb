@@ -24,13 +24,13 @@ module EventsHelper
     feedback_start_date = Date.new(2021,9,1) # Do not touch. This is when feedback got migrated to the new site
     eventattendance = event.eventattendances.find_by(user_id: current_user)
 
-    if event.startdate > Date.today.in_time_zone('Eastern Time (US & Canada)').to_date
+    if event.startdate > Time.today.in_time_zone('Eastern Time (US & Canada)').to_date
       return
     elsif event.startdate < feedback_start_date # Remove me after 30 days
       return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
       return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
-    elsif ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) #change this to 30 later
+    elsif ((Time.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) #change this to 30 later
         return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
     else
       return
@@ -40,11 +40,11 @@ module EventsHelper
   def add_feedback_exp(event, eventattendance)
     event_feedback_exp_days = 14
     
-    if ((Date.today.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i <= event_feedback_exp_days)
+    if ((Time.today.in_time_zone(' Time (US & Canada)').to_date - event.enddate).to_i <= event_feedback_exp_days)
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Feedback Letter'
-      @explog.acquiredate = Date.today.in_time_zone('Eastern Time (US & Canada)').to_date
+      @explog.acquiredate = Time.today.in_time_zone('Eastern Time (US & Canada)').to_date
       @explog.description = "Exp for Feedback Letter"
       @explog.amount = event.feedbackexp
       @explog.grantedby_id = current_user.id
@@ -227,7 +227,7 @@ module EventsHelper
   end
 
   def get_event_price(event)
-    days_till_lockout = (event.startdate - Date.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+    days_till_lockout = (event.startdate - Time.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
     if user_signed_in?
       if (days_till_lockout <= 0)
         return event.atdoorcost
@@ -242,7 +242,7 @@ module EventsHelper
   end
 
   def get_event_price_details(event)
-    days_till_lockout = (event.startdate - Date.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+    days_till_lockout = (event.startdate - Time.today.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
     early_bird_date = event.startdate - Setting.sheets_auto_lock_day
     event_price_html = ''
     if (days_till_lockout > 0)
