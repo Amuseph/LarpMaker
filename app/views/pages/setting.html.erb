@@ -27,12 +27,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="container col-8 mt-2" id="regioninfo">
+  <div class="container col-12 mt-2" id="regioninfo">
       <p>The Kingdom of Cantara has existed for nearly 1,500 years under the rule of Marielle family. It begins with its capital city of Braeburn and stretches northward to the boundaries of the Northern Kingdoms between the Frozen Bluffs on the east and the Vloh’s Highlands on the west.  Cantara also lays claim to a series of large islands that create the boundary for Deepwater Sound. This series of islands expand from town growing town of Oakstar Beacon to bustling city of Calendor found at the base of the Valda peninsula. Cantara has 241 active castles and 93 ruined. Of these, 193 castles dot the eastern shores of Deepwater Sound and 66 ruined are along the northern portions of Moonfell Wood. The Lonely Isles house another 48 castles and 27 ruined dispersed amongst them.The Kingdom is currently ruled by his Highness, Markel Marielle, who has been one of the most respected leaders of the family in many generations. While his motivation has been unclear, King Marielle continues to use diplomacy in an effort to extend the reach of his kingdom into the Freelands where he desires to lay claim to the territories along the southern shores of The Sea of Trath to the Overwatch peaks.</p>
       <p>The symbol of Cantara is a crowned lion with the words honor, virtue, and ferocity embedded in the crown.</p>
-    </div>
-    <div class="container col-4 mt-2" id="regionslideshow">
-      Slideshow goes here
     </div>
   </div>
   <div class="row">
@@ -89,11 +86,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="container col-8 mt-2" id="regioninfo">
+    <div class="container col-12 mt-2" id="regioninfo">
 
-    </div>
-    <div class="container col-4 mt-2" id="regionslideshow">
-      Slideshow goes here
     </div>
   </div>
   <div class="row">
@@ -195,7 +189,7 @@
   <div class="row">
     <div class="container col-12" id="SavageHeightsAreas">
       <% Worldarea.all.where(region: 'The Savage Heights').each do |area|  %>
-        <%= simple_format(area.name.html_safe, class: 'areaname')%></td><td>test
+        <%= simple_format(area.name.html_safe, class: 'areaname')%></td><td>
         <%= simple_format(area.description.html_safe, class: 'areadescription')%>
       <% end %>
     </div>
