@@ -1,3 +1,5 @@
 $('#sendCourierModalBody').html("<%= escape_javascript( render partial: 'modals/sendprayer' ) %>")
-
-$('#sendCourierModal').modal('show');
+$('#sendCourierModal').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: true});
