@@ -163,12 +163,6 @@ module CharactersHelper
   def oracles_available()
     purchasedOracles = @character.skills.where(name: 'Oracle').count 
     usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
-    puts('taco')
-    puts('taco')
-    puts(purchasedOracles)
-    puts(usedOracles)
-    puts('taco')
-    puts('taco')
     return purchasedOracles - usedOracles
   end
 
