@@ -84,7 +84,7 @@
     <div class='sideSubLink'>
       <%= link_to 'Send Prayer', character_sendprayer_path, remote: true %>
     </div>
-    <% if oraclesAvailable(@character) > 0 %>
+    <% if oracles_available() > 0 %>
       <div class='sideSubLink'>
         <%= link_to 'Send Oracle', character_sendoracle_path, remote: true %>
       </div>
