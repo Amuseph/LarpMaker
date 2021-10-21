@@ -91,7 +91,7 @@ class CharacterController < ApplicationController
   end
 
   def sendoracle
-    @oraclecount =  oraclesAvailable(@character)
+    @oraclecount =  oracles_available()
     if request.post?
       @courier = Courier.new(sendcourier_params)
       @courier.couriertype = 'Oracle'
