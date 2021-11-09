@@ -4,12 +4,19 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p>Player: Andrew Warzocha | Character: Atrius Athear</p>
+    <p>
+      Player: <%= @feedback.user.firstname + ' ' + @feedback.user.lastname %> | 
+      Character: <%= if !@feedback.character.nil?
+        @feedback.character.name
+      else
+        'Cast'
+      end %>    
+    </p>
 
-    --------------------
-    EVENT INFO
-    For Event: 2021-08-21
-    --------------------
+    --------------------<br>
+    EVENT INFO<br>
+    For Event: <%= @feedback.event.startdate.strftime("%m/%d/%Y") %><br>
+    --------------------<br>
     
     <p>How Satisfied Are You With Pre-Event Communication?</p>
     <%= get_feedback_rank_string(@feedback.preeventcommunicationrating, 'Satisfaction') %>
