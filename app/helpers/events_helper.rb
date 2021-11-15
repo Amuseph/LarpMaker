@@ -70,7 +70,7 @@ module EventsHelper
 
     if eventattendance.registrationtype == 'Player' and days_till_first_lockout > 0
       event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
-      player_event_count_of_season = Event.joins(:eventattendances).where("user_id = ? and season = ? and extract(year from startdate) = ?", current_user, @event.season, year_of_season).count
+      player_event_count_of_season = Event.joins(:eventattendances).where("user_id = ? and season = ? and registrationtype = ? and extract(year from startdate) = ?", current_user, @event.season, 'Player', year_of_season).count
       if event_count_of_season == player_event_count_of_season
         @explog = Explog.new
         @explog.user_id = eventattendance.user_id
