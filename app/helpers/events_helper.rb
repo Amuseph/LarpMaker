@@ -54,6 +54,11 @@ module EventsHelper
 
 
   def add_event_exp(event, eventattendance)
+    season_pass_exp = 100
+    year_of_season = event.startdate.year
+    first_event_of_season = Event.order(:startdate).find_by("season = ? and extract(year from startdate) = ?", event.season, year_of_season)
+    days_till_first_lockout = (first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+
     @explog = Explog.new
     @explog.user_id = eventattendance.user_id
     @explog.name = 'Event'
@@ -62,6 +67,21 @@ module EventsHelper
     @explog.amount = event.eventexp
     @explog.grantedby_id = current_user.id
     @explog.save!
+
+    if eventattendance.registrationtype == 'Player' and days_till_first_lockout > 0
+      event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
+      player_event_count_of_season = Event.joins(:eventattendances).where("user_id = ? and season = ? and extract(year from startdate) = ?", current_user, @event.season, year_of_season).count
+      if event_count_of_season == player_event_count_of_season
+        @explog = Explog.new
+        @explog.user_id = eventattendance.user_id
+        @explog.name = 'Season Pass'
+        @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+        @explog.description = "Season Pass Bonus"
+        @explog.amount = season_pass_exp * player_event_count_of_season
+        @explog.grantedby_id = current_user.id
+        @explog.save!
+      end
+    end
   end
   
   def get_event_player_link(event)
@@ -135,16 +155,15 @@ module EventsHelper
 
   def get_mealplan_signup(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
-    meal_plan_cutoff_days = 5
     @selected_meal = @eventattendance.mealplan
     if @selected_meal.in?([nil, ''])
       @selected_meal = 'None'
     end
-    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
+    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/purchasemealplan')
-    elsif (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Cast')
+    elsif (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Cast')
       return (render partial: 'event/partials/updatemealplan')
-    elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - meal_plan_cutoff_days > Date.today) && (@eventattendance.registrationtype == 'Player')
+    elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/updatemealplan')
     end
   end

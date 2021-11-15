@@ -31,6 +31,9 @@ class EventDashboard < Administrate::BaseDashboard
     levelingevent: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    season: Field::Select.with_options(
+      collection: ['Spring','Fall','N/A'],
+    ),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,6 +56,7 @@ class EventDashboard < Administrate::BaseDashboard
     eventtype
     startdate
     enddate
+    season
     location
     playercount
     castcount
@@ -79,6 +83,7 @@ class EventDashboard < Administrate::BaseDashboard
     eventtype
     startdate
     enddate
+    season
     location
     playercount
     castcount
