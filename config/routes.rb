@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get :setting
     get :calendar
     get :mythology
+    get :races
     get :laws
     get :camp
     get :rulebook

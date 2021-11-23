@@ -409,6 +409,7 @@ body {
   }
 }
 
+
 #mythologypage {
   #DeityLink {
     display:flex;
@@ -500,6 +501,74 @@ body {
   #eventstatus {
     text-align: center;
     font-weight: bold;
+  }
+
+}
+
+#racespage {
+  #RaceLink {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #RacePreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #DaleElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #DeepElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #DedrotDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #EnoonDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #IxbusDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #NaenyaDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #OroroDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #RyknosDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
+  }
+  #ScandelenDetails {
+  display: none;
+  border-style: none solid solid solid; 
+  border-width: 1px;
   }
 
 }
