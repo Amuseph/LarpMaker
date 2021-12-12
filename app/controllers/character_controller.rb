@@ -174,9 +174,13 @@ class CharacterController < ApplicationController
 
       @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
         skilllist = []
-
-        @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?',
-                                               skillgroup.id).each do |skill|
+        if (skillgroup.name == 'Druid' && @character.totem == '')
+          totemskills = ['Totemic Gift', 'Totemic Blessing', 'Totemic Protection']
+          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and skills.name NOT IN (?)', skillgroup.id, totemskills)
+        else
+          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?', skillgroup.id)
+        end
+        skills.each do |skill|
           skilllist.push([skill.name, skill.id]) if can_purchase_skill(@character, skill)
         end
         unless skilllist.empty?
