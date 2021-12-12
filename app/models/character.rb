@@ -27,6 +27,13 @@ class Character < ApplicationRecord
   validates :photo, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
 
   def check_class
+    if saved_change_to_totem
+      if self.totem == ''
+        characterskills.each do |charskill|
+          charskill.destroy if ['Totemic Gift', 'Totemic Blessing', 'Totemic Protection'].include?(charskill.skill.name )
+        end
+      end
+    end
     if saved_change_to_characterclass_id?
       characterskills.each do |charskill|
         charskill.destroy if charskill.skill.tier >= 4

@@ -23,7 +23,8 @@
       <div class="col-2 my-5 p-auto align-middle ">
         <%= f.collection_select :characterclass_id, @characterclass, :id, :name, {prompt: 'Class', hide_label: true }, required: true  %>
       <div id='totemselect'>
-        <%= f.select :totem, [ 'Bear', 'Lizard', 'Rat', 'Raven', 'Snake', 'Spider', 'Wolf' ], {prompt: 'Totem', hide_label: true } %>
+        <%= f.select :totem, ['Bear', 'Lizard', 'Rat', 'Raven', 'Snake', 'Spider', 'Wolf' ], {include_blank: 'Totem', prompt: 'Totem', hide_label: true } %>
+        <p class = "small font-italic">Totems can only be selected at character creation. Once selected, they cannot be changed.</p>
       </div> 
     </div>
     <div class="col-10 align-self-center",  id='ClassDescDiv'>

@@ -40,11 +40,9 @@ function classValidation() {
 
   if (characterclass == 'Druid') {
     $('#totemselect').show()
-    $("#character_totem").prop('required',true);
   }  else {
     document.getElementById('character_totem').selectedIndex = 0
     $('#totemselect').hide()
-    $("#character_totem").prop('required',false);
   }
 
   if (characterclass == 'Cleric' || characterclass == 'Paladin') {
