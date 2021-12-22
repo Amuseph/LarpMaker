@@ -59,6 +59,12 @@
     <% end %>
   </div>
 
+  <% if !sheetsLocked %>
+    <div class='sideSubLink'>
+      <%= link_to 'XP Store', character_xpstore_path %>
+    </div>
+  <% end %>
+
   <div class='sideLink'>
     <%= link_to event_index_path do %>
       <div>
