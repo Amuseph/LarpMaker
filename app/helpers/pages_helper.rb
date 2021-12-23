@@ -49,7 +49,7 @@ module PagesHelper
   end
 
   def gravencost
-    if current_user.explogs.where('name = ? and description = ?', 'XP Store', 'Graven Miracle')
+    if current_user.explogs.where('name = ? and description = ?', 'XP Store', 'Graven Miracle').exists?
       return current_user.explogs.where('name = ? and description = ?', 'XP Store', 'Graven Miracle').minimum('amount') * -2
     else
       return 500
