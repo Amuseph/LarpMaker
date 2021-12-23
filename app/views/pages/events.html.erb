@@ -6,30 +6,76 @@
   </div>
   <p><b>You must present proof of vaccination in order to attend a Myth event at check-in. Please be sure to be up to date and have it available as you will be turned away should you not be able to present it.<br>
   For any questions, please reach out to support@mythlarp.com</b></p>
-  <% Event.all.where('startdate > ?', DateTime.now).order('startdate asc').each do |event|  %>
-  <div class="row" id="eventspace">
-    <div class="container col-12" id="eventname">
-      <%= event.name  %>
-    </div>
+  
+  <div id="seasonheader">
+    Spring Season
   </div>
-  <div class="row">
-    <div class="container col-12" id="eventdetails">
-      <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
-      <%= get_event_price_details(event) %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="container col-6" id="eventplay">
-      <%= get_event_player_link(event) %><br>
-    </div>
-    <div class="container col-6" id="eventcast">
-      <%= get_event_cast_link(event) %>
-    </div>
-  </div>
-  <div class="row" id="eventstatus">
-    <div class="container col-12" id="eventstatus">
-      <%= get_event_status(event) %>
-    </div>
-  </div>
+  <% if (Event.all.where('season = ? and startdate > ?', 'Spring', DateTime.now).count == 0)  %>
+    This season does not have any upcoming games. Please check back later!
   <% end %>
+
+  <% Event.all.where('season = ? and startdate > ?', 'Spring', DateTime.now).order('startdate asc').each do |event|  %>
+    <div class="row" id="eventspace">
+      <div class="container col-12" id="eventname">
+        <%= event.name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container col-12" id="eventdetails">
+        <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
+        <%= get_event_price_details(event) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container col-6" id="eventplay">
+        <%= get_event_player_link(event) %><br>
+      </div>
+      <div class="container col-6" id="eventcast">
+        <%= get_event_cast_link(event) %>
+      </div>
+    </div>
+    <div class="row" id="eventstatus">
+      <div class="container col-12" id="eventstatus">
+        <%= get_event_status(event) %>
+      </div>
+    </div>
+  <% end %>
+  
+  <div id="seasonheader">
+    Fall Season
+  </div>
+  <% if (Event.all.where('season = ? and startdate > ?', 'Fall', DateTime.now).count == 0)  %>
+    This season does not have any upcoming games. Please check back later!
+  <% end %>
+  <% Event.all.where('season = ? and startdate > ?', 'Fall', DateTime.now).order('startdate asc').each do |event|  %>
+    <div class="row" id="eventspace">
+      <div class="container col-12" id="eventname">
+        <%= event.name  %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container col-12" id="eventdetails">
+        <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
+        <%= get_event_price_details(event) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container col-6" id="eventplay">
+        <%= get_event_player_link(event) %><br>
+      </div>
+      <div class="container col-6" id="eventcast">
+        <%= get_event_cast_link(event) %>
+      </div>
+    </div>
+    <div class="row" id="eventstatus">
+      <div class="container col-12" id="eventstatus">
+        <%= get_event_status(event) %>
+      </div>
+    </div>
+  <% end %>
+
+
+
+
+
 </div>

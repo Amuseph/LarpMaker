@@ -5,10 +5,10 @@
 <div class="container">
   <div class="row bg-light">
     <div class="col-sm">
-      Total Available EXP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
+      Total Available XP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
     </div>
     <div class="col-sm">
-      Total Earned EXP: <%= current_user.explogs.where('amount > 0').sum(:amount) %>
+      Total Earned XP: <%= current_user.explogs.where('amount > 0').sum(:amount) %>
     </div>
   </div>
 </div>

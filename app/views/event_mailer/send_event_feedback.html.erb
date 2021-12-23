@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Player: <%= @feedback.user.firstname + ' ' + @feedback.user.lastname %> | 
+      Character: <%= if !@feedback.character.nil?
+        @feedback.character.name
+      else
+        'Cast'
+      end %>    
+    </p>
+
+    --------------------<br>
+    EVENT INFO<br>
+    For Event: <%= @feedback.event.startdate.strftime("%m/%d/%Y") %><br>
+    --------------------<br>
+    
+    <p>How Satisfied Are You With Pre-Event Communication?</p>
+    <%= get_feedback_rank_string(@feedback.preeventcommunicationrating, 'Satisfaction') %>
+    
+    <p>How Satisfied Are You With The Event Overall?</p>
+    <%= get_feedback_rank_string(@feedback.eventrating, 'Satisfaction') %>
+    
+    <p>Are You Planning to Attend The Next Event?</p>
+    <%= get_feedback_rank_string(@feedback.attendnextevent, 'YesNo') %>    
+    
+    <p>How Satisfied Are You With Your Sleeping Arrangements?</p>
+    <%= get_feedback_rank_string(@feedback.sleepingrating, 'Satisfaction') %>
+    
+    <p>How Satisfied Are You With The Opening Meeting?</p>
+    <%= get_feedback_rank_string(@feedback.openingmeetingrating, 'Satisfaction') %>
+    
+    <p>How Satisfied Are You With The Plot For The Event?</p>
+    <%= get_feedback_rank_string(@feedback.plotrating, 'Satisfaction') %>
+    
+    <p>How Satisfied Are You With The Closing Meeting?</p>
+    <%= get_feedback_rank_string(@feedback.closingmeetingrating, 'Satisfaction') %>
+    
+    <p>Do you have any constructive feedback for Myth?</p>
+    <%= simple_format(@feedback.feedback) %>
+    
+    <p>Anything else you would like to state or questions you might wish to address?</p>
+    <%= simple_format(@feedback.questions) %>
+    
+    <p>What Players Stand Out to You, if Any, And Why?</p>
+    <%= simple_format(@feedback.standoutplayers) %>
+
+    <p>What NPCs Stand Out to You, if Any, And Why?</p>
+    <%= simple_format(@feedback.standoutnpc) %>
+
+    <p>What are your plans for the next event?</p>
+    <%= simple_format(@feedback.nexteventplans) %>
+    
+    <p>What is Your Characters Number 1 Goal?</p>
+    <%= simple_format(@feedback.charactergoals) %>
+    
+    <p>What steps have you taken to reach your goal so far?</p>
+    <%= simple_format(@feedback.charactergoalactions) %>
+    
+    <p>What Did Your Character do During The Event?</p>
+    <%= simple_format(@feedback.whatdidyoudo) %>
+    
+    <p>Are you doing anything with your profession?</p>
+    <%= simple_format(@feedback.professions) %>
+
+
+  </body>
+</html>

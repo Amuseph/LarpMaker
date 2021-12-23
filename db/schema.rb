@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_28_233116) do
+ActiveRecord::Schema.define(version: 2021_11_15_021221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
     t.integer "mealplancost"
     t.text "mealplandetails"
     t.integer "newplayerprice", null: false
+    t.string "season", null: false
   end
 
   create_table "explogs", force: :cascade do |t|
@@ -244,6 +245,12 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
     t.date "createdate", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fledglingbenefit"
+    t.string "fledglingplot"
+    t.string "establishedbenefit"
+    t.string "establishedplot"
+    t.string "bannerbenefit"
+    t.integer "thane_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -383,6 +390,12 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "last_character"
     t.string "aliaslastname"
+    t.string "address"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.integer "zipcode"
+    t.bigint "phonenumber"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -422,6 +435,7 @@ ActiveRecord::Schema.define(version: 2021_08_28_233116) do
   add_foreign_key "eventfeedbacks", "users"
   add_foreign_key "explogs", "users"
   add_foreign_key "explogs", "users", column: "grantedby_id"
+  add_foreign_key "houses", "characters", column: "thane_id"
   add_foreign_key "orders", "users"
   add_foreign_key "professionrequirements", "professions"
   add_foreign_key "professionrequirements", "professions", column: "requiredprofession_id"

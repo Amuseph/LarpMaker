@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CharactersHelper
-  def canEdit(_character)
+  def can_edit_character()
     if !sheetsLocked 
       if Setting.allow_global_reroll
         true
@@ -68,9 +68,6 @@ module CharactersHelper
       return false
     elsif (Setting.allow_global_reroll)
       # Allowing everyone to reroll
-      return true
-    elsif @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
-      # Character has not yet played 3 games
       return true
     elsif last_played_event < characterskill.acquiredate
       # Skill has never been used
@@ -141,10 +138,7 @@ module CharactersHelper
 
   def skill_refund_price(characterskill)
     last_played_event = last_played_event(@character)
-    if @character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count < 3
-      # Character has not yet played 3 games
-      0
-    elsif (Setting.allow_global_reroll)
+    if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       0
     elsif last_played_event < characterskill.acquiredate
@@ -166,9 +160,9 @@ module CharactersHelper
     character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
   end
 
-  def oraclesAvailable(character)
+  def oracles_available()
     purchasedOracles = @character.skills.where(name: 'Oracle').count 
-    usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').count
+    usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
     return purchasedOracles - usedOracles
   end
 
@@ -210,5 +204,25 @@ module CharactersHelper
     currentCP = ((@character.skills.sum(:tier) * 10)).to_f
 
     currentCP / totalCP * 100.0
+  end
+
+  def get_house_details()
+    if @character.house.nil?
+      return 'Join a house in-game! See the rulebook for more details.'
+    else
+      return render 'character/housedetails'
+    end
+  end
+
+  def get_house_members(house)
+    memberlist = +""
+    house.characters.each do |member|
+      if member.alias.present?
+        memberlist.concat(member.alias, '<br>')
+      else
+        memberlist.concat(member.name.partition(" ").first , '<br>')
+      end
+    end
+    return memberlist.html_safe
   end
 end

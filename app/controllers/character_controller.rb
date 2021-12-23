@@ -91,7 +91,7 @@ class CharacterController < ApplicationController
   end
 
   def sendoracle
-    @oraclecount =  oraclesAvailable(@character)
+    @oraclecount =  oracles_available()
     if request.post?
       @courier = Courier.new(sendcourier_params)
       @courier.couriertype = 'Oracle'
@@ -174,9 +174,13 @@ class CharacterController < ApplicationController
 
       @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
         skilllist = []
-
-        @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?',
-                                               skillgroup.id).each do |skill|
+        if (skillgroup.name == 'Druid' && @character.totem == '')
+          totemskills = ['Totemic Gift', 'Totemic Blessing', 'Totemic Protection']
+          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and skills.name NOT IN (?)', skillgroup.id, totemskills)
+        else
+          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?', skillgroup.id)
+        end
+        skills.each do |skill|
           skilllist.push([skill.name, skill.id]) if can_purchase_skill(@character, skill)
         end
         unless skilllist.empty?
@@ -202,7 +206,7 @@ class CharacterController < ApplicationController
       @explog.name = 'Skill Refund'
       @explog.acquiredate = Time.now
       @explog.description = "Refunded \"#{@characterskill.skill.name}\" for \"#{@character.name}\""
-      @explog.amount = skill_refund_price(@characterskill)
+      @explog.amount = skill_refund_price(@characterskill) * -1
       @explog.grantedby_id = current_user.id
       @explog.save!
       @characterskill.destroy
@@ -304,6 +308,33 @@ class CharacterController < ApplicationController
     @explog&.destroy
     @characterprofession.destroy
     redirect_to character_index_path({ tab: 'professions' })
+  end
+
+  def spendxp
+    item = params[:item]
+
+    case item
+    when 'GoodFortune'
+      @explog = Explog.new
+      @explog.user_id = @character.user_id
+      @explog.name = 'XP Store'
+      @explog.acquiredate = Time.now
+      @explog.description = 'Good Fortune'
+      @explog.amount = -250
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+      redirect_to player_explog_path
+    when 'GravenMiracle'
+      @explog = Explog.new
+      @explog.user_id = @character.user_id
+      @explog.name = 'XP Store'
+      @explog.acquiredate = Time.now
+      @explog.description = 'Graven Miracle'
+      @explog.amount = gravencost() * -1
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+      redirect_to player_explog_path
+    end
   end
 
   private

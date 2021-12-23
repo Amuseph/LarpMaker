@@ -47,4 +47,31 @@ module PagesHelper
     changelist.concat('</ul>')
     return changelist.html_safe
   end
+
+  def gravencost
+    if current_user.explogs.where('name = ? and description = ?', 'XP Store', 'Graven Miracle')
+      return current_user.explogs.where('name = ? and description = ?', 'XP Store', 'Graven Miracle').minimum('amount') * -2
+    else
+      return 500
+    end
+  end
+
+  def get_xpstore_link(item)
+    availablexp = current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount)
+    case item
+      when 'GoodFortune'
+        if (availablexp >= 250)
+          return link_to 'Purchase for 250 XP', character_spendxp_path(item: 'GoodFortune'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
+        else
+          return "Not enough XP to purchase. Requires 250 XP."
+        end
+      when 'GravenMiracle'
+        gravencost = gravencost()
+        if availablexp >= gravencost
+          return link_to "Purchase for #{gravencost} XP", character_spendxp_path(item: 'GravenMiracle'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
+        else
+          return "Not enough XP to purchase. Requires #{gravencost} XP."
+        end
+    end
+  end
 end

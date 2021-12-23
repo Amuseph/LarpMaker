@@ -19,6 +19,32 @@
   </div>
 
   <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address2 %><br />
+    <%= f.text_field :address2, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.select :state, ['Alabama' ,'Alaska' ,'Arizona' ,'Arkansas' ,'California' ,'Colorado' ,'Connecticut' ,'Delaware' ,'Florida' ,'Georgia' ,'Hawaii' ,'Idaho' ,'Illinois' ,'Indiana' ,'Iowa' ,'Kansas' ,'Kentucky' ,'Louisiana' ,'Maine' ,'Maryland' ,'Massachusetts' ,'Michigan' ,'Minnesota' ,'Mississippi' ,'Missouri' ,'Montana' ,'Nebraska' ,'Nevada' ,'New Hampshire' ,'New Jersey' ,'New Mexico' ,'New York' ,'North Carolina' ,'North Dakota' ,'Ohio' ,'Oklahoma' ,'Oregon' ,'Pennsylvania' ,'Rhode Island' ,'South Carolina' ,'South Dakota' ,'Tennessee' ,'Texas' ,'Utah' ,'Vermont' ,'Virginia' ,'Washington' ,'West Virginia' ,'Wisconsin' ,'Wyoming'], autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phonenumber %><br />
+    <%= f.text_field :phonenumber, autofocus: true %>
+  </div>
+  <i>Numbers only. No spaces or dashes</i><br/><br/>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
