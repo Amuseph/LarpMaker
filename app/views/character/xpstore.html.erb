@@ -1,0 +1,35 @@
+<div class="container col-12 mt-4 mb-2" id="xpstore">
+Available EXP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
+  <div class="mb-2" id="xpstorecategory">
+    Items for Arcanestå
+  </div>
+
+
+  <div class="row">
+    <div class="container col-6" id="itemcontainer">
+      <%= image_tag("pages/xpstore/good_fortune.jpg", :class => "img-fluid") %><br>
+      <h3>Description</h3>
+      Remove one die from your total roll. You can remove one die for each Good Fortune card you redeem before you start rolling.
+      <h3>Information</h3>
+      <b>Cost:</b> This card costs 250 XP and remains the same with each purchase.<br>
+      <b>Game Status:</b> This card is considered to be "Out of Game" and is NOT stealable.<br>
+      <b>Treasure:</b> This card may be found as treasure or kept if found on the ground.<br>
+      <b>Card Availability:</b> You MUST have this card with you when you enter Arcanestå realm or it cannot be used.<br>
+      <b>Sharing Cards:</b> You may share this card with someone else as long as they have not already become a spirit.<br>
+      <br>
+      <%= get_xpstore_link('GoodFortune') %>
+    </div>
+    <div class="container col-6" id="itemcontainer">
+      <%= image_tag("pages/xpstore/graven_miracle.jpg", :class => "img-fluid") %><br>
+      <h3>Description</h3>
+      If you reach or exceed 15 points and perish during your time in realm, you may start your rolls over by redeeming this card.
+      <h3>Information</h3>
+      <b>Cost:</b> This card cost 500 XP and doubles with each purchase.<br>
+      <b>Game Status:</b> This card is considered to be "Out of Game" and is NOT stealable.<br>
+      <b>Card Lost & Found:</b> If you find a Graven Miracle, please turn it in. If you lose a Graven Miracle and do not find it, you will need to purchase a new one.<br>
+      <b>Card Availability:</b> You MUST have this card with you when you enter Arcanestå realm or it cannot be used.<br>
+      <b>Sharing Cards:</b> You may NOT share this card with someone else.<br>
+      <br>
+      <%= get_xpstore_link('GravenMiracle') %>
+    </div>
+</div>

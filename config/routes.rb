@@ -58,6 +58,8 @@ Rails.application.routes.draw do
     get :editbackstory
     post :savebackstory
     get :banklog
+    get :xpstore
+    post :spendxp
     get :events
     get :courier
     get :viewcourier
