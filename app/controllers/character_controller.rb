@@ -310,6 +310,33 @@ class CharacterController < ApplicationController
     redirect_to character_index_path({ tab: 'professions' })
   end
 
+  def spendxp
+    item = params[:item]
+
+    case item
+    when 'GoodFortune'
+      @explog = Explog.new
+      @explog.user_id = @character.user_id
+      @explog.name = 'XP Store'
+      @explog.acquiredate = Time.now
+      @explog.description = 'Good Fortune'
+      @explog.amount = -250
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+      redirect_to player_explog_path
+    when 'GravenMiracle'
+      @explog = Explog.new
+      @explog.user_id = @character.user_id
+      @explog.name = 'XP Store'
+      @explog.acquiredate = Time.now
+      @explog.description = 'Graven Miracle'
+      @explog.amount = gravencost() * -1
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+      redirect_to player_explog_path
+    end
+  end
+
   private
 
   def character_params
