@@ -1,5 +1,5 @@
 <div class="container col-12 mt-4 mb-2" id="xpstore">
-Available EXP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
+Available XP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
   <div class="mb-2" id="xpstorecategory">
     Items for Arcanestå
   </div>
