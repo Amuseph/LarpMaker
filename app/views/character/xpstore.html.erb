@@ -22,7 +22,7 @@ Available XP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(
     <div class="container col-6" id="itemcontainer">
       <%= image_tag("pages/xpstore/graven_miracle.jpg", :class => "img-fluid") %><br>
       <h3>Description</h3>
-      If you reach or exceed 15 points and perish during your time in realm, you may start your rolls over by redeeming this card.
+      If you reach or exceed 15 points and perish, you may turn in this card to escape dying.
       <h3>Information</h3>
       <b>Cost:</b> This card cost 500 XP and doubles with each purchase.<br>
       <b>Game Status:</b> This card is considered to be "Out of Game" and is NOT stealable.<br>

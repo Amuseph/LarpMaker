@@ -39,7 +39,7 @@ module PagesHelper
     rulebookversions.each do |version|
       changelist.concat('<p class = "h5">Version ',version,'</p>')
       changelist.concat('<ul>')
-      Rulebookchange.where(version: version).order('changedate desc').each do |logentry|
+      Rulebookchange.where(version: version).order('changedate desc, page asc').each do |logentry|
         changelist.concat('<li><b>', logentry.changedate.strftime("%m/%d/%Y"), '</b> - [Page ', logentry.page.to_s, '] ', logentry.change, '</li>')
       end
       changelist.concat('</ul>')
