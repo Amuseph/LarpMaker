@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable
+         :confirmable, :trackable
 
   validates :usertype,
             inclusion: { in: %w[Cast Staff Player Admin],
