@@ -88,6 +88,8 @@ module EventsHelper
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
     if get_event_price(event) <= 0
       return 'An error has occured. Please reach out to support@mythlarp.com'
+    elsif current_user.usertype == 'Banned'
+      return 'An error has occured. Please reach out to support@mythlarp.com'
     elsif (attendancecount >= event.playercount)
       return image_tag("pages/events/register_to_play_soldout.png")
     else
@@ -124,6 +126,8 @@ module EventsHelper
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
     if (attendancecount >= event.castcount)
       return image_tag("pages/events/register_to_cast_soldout.png")
+    elsif current_user.usertype == 'Banned'
+      return 'An error has occured. Please reach out to support@mythlarp.com'
     else
       return link_to(image_tag("pages/events/register_to_cast.png"), event_castsignup_path(event.id))
     end

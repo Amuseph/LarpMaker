@@ -12,6 +12,6 @@ class User < ApplicationRecord
          :confirmable, :trackable
 
   validates :usertype,
-            inclusion: { in: %w[Cast Staff Player Admin],
+            inclusion: { in: %w[Cast Player Admin Banned],
                          message: '%{value} is not a valid Player Type' }
 end
