@@ -19,7 +19,7 @@ class UserDashboard < Administrate::BaseDashboard
     firstname: Field::String,
     lastname: Field::String,
     usertype: Field::Select.with_options(
-      collection: ['Player', 'Cast', 'Admin'],
+      collection: ['Player', 'Cast', 'Admin', 'Banned'],
     ),
     address: Field::String,
     address2: Field::String,
