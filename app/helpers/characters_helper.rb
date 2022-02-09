@@ -214,9 +214,29 @@ module CharactersHelper
     end
   end
 
+  def get_guild_details()
+    if @character.guild.nil?
+      return 'Join a guild in-game! See the rulebook for more details.'
+    else
+      return render 'character/guilddetails'
+    end
+  end
+
   def get_house_members(house)
     memberlist = +""
     house.characters.each do |member|
+      if member.alias.present?
+        memberlist.concat(member.alias, '<br>')
+      else
+        memberlist.concat(member.name.partition(" ").first , '<br>')
+      end
+    end
+    return memberlist.html_safe
+  end
+
+  def get_guild_members(guild)
+    memberlist = +""
+    guild.characters.each do |member|
       if member.alias.present?
         memberlist.concat(member.alias, '<br>')
       else

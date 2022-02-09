@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_021221) do
+ActiveRecord::Schema.define(version: 2022_02_09_033811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_021221) do
     t.date "createdate", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "guildmaster_id"
   end
 
   create_table "houses", force: :cascade do |t|
@@ -435,6 +436,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_021221) do
   add_foreign_key "eventfeedbacks", "users"
   add_foreign_key "explogs", "users"
   add_foreign_key "explogs", "users", column: "grantedby_id"
+  add_foreign_key "guilds", "characters", column: "guildmaster_id"
   add_foreign_key "houses", "characters", column: "thane_id"
   add_foreign_key "orders", "users"
   add_foreign_key "professionrequirements", "professions"
