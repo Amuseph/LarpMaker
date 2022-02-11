@@ -88,8 +88,6 @@ module EventsHelper
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Player').count
     if get_event_price(event) <= 0
       return 'An error has occured. Please reach out to support@mythlarp.com'
-    elsif current_user.usertype == 'Banned'
-      return 'An error has occured. Please reach out to support@mythlarp.com'
     elsif (attendancecount >= event.playercount)
       return image_tag("pages/events/register_to_play_soldout.png")
     else
@@ -126,8 +124,6 @@ module EventsHelper
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
     if (attendancecount >= event.castcount)
       return image_tag("pages/events/register_to_cast_soldout.png")
-    elsif current_user.usertype == 'Banned'
-      return 'An error has occured. Please reach out to support@mythlarp.com'
     else
       return link_to(image_tag("pages/events/register_to_cast.png"), event_castsignup_path(event.id))
     end
@@ -214,6 +210,8 @@ module EventsHelper
     if !user_signed_in?
       return 'Please create an account before purchasing an event'
     end
+    if current_user.usertype == 'Banned'
+      return 'An error has occured. Please reach out to support@mythlarp.com'
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
       if @eventattendance.nil?
         return  link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, :class => 'btn btn-success'        
@@ -226,6 +224,8 @@ module EventsHelper
     if !user_signed_in?
       return 'Please create an account before purchasing an event'
     end
+    if current_user.usertype == 'Banned'
+      return 'An error has occured. Please reach out to support@mythlarp.com'
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if @eventattendance.nil?
       return (render partial: 'event/partials/purchaseevent')
