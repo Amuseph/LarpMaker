@@ -212,6 +212,7 @@ module EventsHelper
     end
     if current_user.usertype == 'Banned'
       return 'An error has occured. Please reach out to support@mythlarp.com'
+    end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
       if @eventattendance.nil?
         return  link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, :class => 'btn btn-success'        
@@ -226,6 +227,7 @@ module EventsHelper
     end
     if current_user.usertype == 'Banned'
       return 'An error has occured. Please reach out to support@mythlarp.com'
+    end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     if @eventattendance.nil?
       return (render partial: 'event/partials/purchaseevent')
