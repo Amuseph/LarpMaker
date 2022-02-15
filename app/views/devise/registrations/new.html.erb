@@ -1,65 +1,27 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :firstname %><br />
-    <%= f.text_field :firstname, autocomplete: "given-name" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :lastname %><br />
-    <%= f.text_field :lastname, autocomplete: "family-name" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_field :address, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address2 %><br />
-    <%= f.text_field :address2, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.select :state, ['Alabama' ,'Alaska' ,'Arizona' ,'Arkansas' ,'California' ,'Colorado' ,'Connecticut' ,'Delaware' ,'Florida' ,'Georgia' ,'Hawaii' ,'Idaho' ,'Illinois' ,'Indiana' ,'Iowa' ,'Kansas' ,'Kentucky' ,'Louisiana' ,'Maine' ,'Maryland' ,'Massachusetts' ,'Michigan' ,'Minnesota' ,'Mississippi' ,'Missouri' ,'Montana' ,'Nebraska' ,'Nevada' ,'New Hampshire' ,'New Jersey' ,'New Mexico' ,'New York' ,'North Carolina' ,'North Dakota' ,'Ohio' ,'Oklahoma' ,'Oregon' ,'Pennsylvania' ,'Rhode Island' ,'South Carolina' ,'South Dakota' ,'Tennessee' ,'Texas' ,'Utah' ,'Vermont' ,'Virginia' ,'Washington' ,'West Virginia' ,'Wisconsin' ,'Wyoming'], autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phonenumber %><br />
-    <%= f.text_field :phonenumber, autofocus: true %>
-  </div>
-  <i>Numbers only. No spaces or dashes</i><br/><br/>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+ 
+  
+  <div class="card mx-auto">
+    <div class="card-body">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", :readonly => f.object.persisted? %>
+      <%= f.text_field :firstname, autocomplete: "given-name", label: 'First Name' %>
+      <%= f.text_field :lastname, autocomplete: "family-name", label: 'Last Name' %>
+      <%= f.text_field :aliaslastname, label: 'Alias Last Name' %><i>Populate to Hide Real Last Name</i><br/><br/>
+      <%= f.text_field :address, label: 'Address' %>
+      <%= f.text_field :address2, label: 'Address - Part2' %>
+      <%= f.text_field :city, label: 'City' %>
+      <%= f.select :state, ['Alabama' ,'Alaska' ,'Arizona' ,'Arkansas' ,'California' ,'Colorado' ,'Connecticut' ,'Delaware' ,'Florida' ,'Georgia' ,'Hawaii' ,'Idaho' ,'Illinois' ,'Indiana' ,'Iowa' ,'Kansas' ,'Kentucky' ,'Louisiana' ,'Maine' ,'Maryland' ,'Massachusetts' ,'Michigan' ,'Minnesota' ,'Mississippi' ,'Missouri' ,'Montana' ,'Nebraska' ,'Nevada' ,'New Hampshire' ,'New Jersey' ,'New Mexico' ,'New York' ,'North Carolina' ,'North Dakota' ,'Ohio' ,'Oklahoma' ,'Oregon' ,'Pennsylvania' ,'Rhode Island' ,'South Carolina' ,'South Dakota' ,'Tennessee' ,'Texas' ,'Utah' ,'Vermont' ,'Virginia' ,'Washington' ,'West Virginia' ,'Wisconsin' ,'Wyoming'], label: 'State' %>
+      <%= f.text_field :zipcode, :maxlength => 5, label: 'Zip Code' %>
+      <%= f.text_field :phonenumber, :maxlength => 10, label: 'Phone Number' %><i>Numbers only. No spaces or dashes</i><br/><br/>
+  
+      <div class="field">
+        <%= f.password_field :password, autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+      <%= f.submit "Sign Up", class: "btn btn-success" %> <%= link_to "Back", :root, class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
