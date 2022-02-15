@@ -19,7 +19,7 @@
     <% @character.events.order('startdate desc').each do |event| %>
       <tr class="table-light">
         <td>
-          <%= link_to event.name, event_path(event.id) %>
+          <%= event.name %>
         </td>
         <td><%= event.description %></td>
         <td><%= event.startdate %></td>
@@ -27,9 +27,9 @@
         <td>
           <%= 
             if event.eventattendances.find_by(user_id: current_user).cabin.present?
-              event.eventattendances.find_by(user_id: current_user).cabin.name 
+              link_to event.eventattendances.find_by(user_id: current_user).cabin.name , event_path(event.id)
             else
-              'None'
+              link_to 'None - Update Today!', event_path(event.id)
             end
           %>
         </td>
