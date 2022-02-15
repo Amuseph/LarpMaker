@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   root 'pages#index'
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
 
   namespace :pages do
     get :setting
@@ -66,6 +68,7 @@ Rails.application.routes.draw do
     get :sendcourier
     post :sendcourier
     get :house
+    get :guild
     get :sendprayer
     post :sendprayer
     get :sendoracle

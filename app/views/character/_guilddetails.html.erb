@@ -1,0 +1,13 @@
+<center><h2 id='name'><%= @character.guild.name %></h2><br></center>
+<b>Thane:</b> <%= 
+  if @character.guild.guildmaster.alias.present?
+    @character.guild.guildmaster.alias
+  else
+    @character.guild.guildmaster.name.partition(" ").first 
+  end
+ %><br>
+
+<b>Members:</b><br>
+<%=
+  get_guild_members(@character.guild)
+%>

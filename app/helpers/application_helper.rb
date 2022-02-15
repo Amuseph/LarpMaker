@@ -40,4 +40,35 @@ module ApplicationHelper
       "#{ page_title } | #{ base_title }"
     end
   end
+
+  def update_mailchimp(user)
+    begin
+      if user.aliaslastname.present?
+        lastname = user.aliaslastname
+      else
+        lastname = user.lastname
+      end
+
+      mailchimp = MailchimpMarketing::Client.new
+      mailchimp.set_config({
+        :api_key => ENV['MAILCHIMP_API'],
+        :server => ENV['MAILCHIMP_SERVER']
+      })
+
+      mailchimp.lists.set_list_member(
+        ENV['MAILCHIMP_LIST'],
+          user.email,
+          {
+            'email_address' => user.email,
+            'status_if_new': 'subscribed',
+            'merge_fields': {
+              FNAME: user.firstname,
+              LNAME: lastname
+            }
+          }
+        )
+    rescue MailchimpMarketing::ApiError => e
+      puts "Error: #{e}"
+    end
+  end
 end

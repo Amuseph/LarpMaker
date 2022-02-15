@@ -9,7 +9,11 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :trackable
+         :trackable
+
+  validates_presence_of :firstname, :lastname
+
+  validates :zipcode, :format => { :with => %r{\d{5}(-\d{4})?} }
 
   validates :usertype,
             inclusion: { in: %w[Cast Player Admin Banned],
