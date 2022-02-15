@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   root 'pages#index'
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
 
   namespace :pages do
     get :setting
