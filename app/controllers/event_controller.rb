@@ -5,6 +5,7 @@ class EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_action :paypal_init, :except => [:index, :show, :mealplan]
+  before_action :authenticate_user!, except: [:playersignup, :castsignup]
 
   def index
 
