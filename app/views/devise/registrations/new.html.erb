@@ -21,6 +21,10 @@
         <%= f.password_field :password, autocomplete: "new-password" %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
+
+      <%= flash[:recaptcha_error] %>
+      <%= recaptcha_tags %>
+
       <%= f.submit "Sign Up", class: "btn btn-success" %> <%= link_to "Back", :root, class: "btn btn-primary" %>
     </div>
   </div>

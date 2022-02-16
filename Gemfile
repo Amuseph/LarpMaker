@@ -25,6 +25,7 @@ gem 'webpacker', '~> 5.x'
 gem 'jbuilder', '~> 2.7'
 # Use devise for user auth
 gem 'devise'
+gem "recaptcha"
 # Administrate for easy data tables
 gem "administrate"
 

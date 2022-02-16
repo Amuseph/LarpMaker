@@ -3,22 +3,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :update_allowed_parameters, if: :devise_controller?
   before_action :check_character_session
 
   def index
   end
 
   protected
-
-  def update_allowed_parameters
-    devise_parameter_sanitizer.permit(:sign_up) do |u|
-      u.permit(:firstname, :lastname, :aliaslastname, :email, :password, :password_confirmation, :address, :address2, :city, :state, :zipcode, :phonenumber)
-    end
-    devise_parameter_sanitizer.permit(:account_update) do |u|
-      u.permit(:firstname, :lastname, :aliaslastname, :email, :password, :password_confirmation, :address, :address2, :city, :state, :zipcode, :phonenumber, :current_password )
-    end
-  end
 
   def check_character_session
     if !user_signed_in?

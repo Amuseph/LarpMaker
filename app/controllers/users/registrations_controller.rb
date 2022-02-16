@@ -2,8 +2,9 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
 include ApplicationHelper
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  prepend_before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   # def new
@@ -43,18 +44,20 @@ include ApplicationHelper
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :aliaslastname, :address, :address2, :city, :state, :zipcode, :phonenumber])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :aliaslastname, :address, :address2, :city, :state, :zipcode, :phonenumber])
+  end
+
+ 
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    update_mailchimp(resource)
+    #update_mailchimp(resource)
     super(resource)
   end
 
@@ -62,4 +65,20 @@ include ApplicationHelper
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def check_captcha
+    unless verify_recaptcha
+      self.resource = resource_class.new configure_sign_up_params
+      resource.validate
+      set_minimum_password_length
+      respond_with_navigational(resource) do
+        flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
+        render :new
+      end
+    end
+
+  end
+
 end
