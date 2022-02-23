@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   validates_presence_of :firstname, :lastname
 
-  validates :zipcode, :format => { :with => %r{\d{5}(-\d{4})?} }
+  validates :zipcode, :format => { :with => %r{\d{5}(-\d{4})?} }, :allow_nil => true
 
   validates :usertype,
             inclusion: { in: %w[Cast Player Admin Banned],
