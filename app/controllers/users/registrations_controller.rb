@@ -69,16 +69,17 @@ include ApplicationHelper
   private
 
   def check_captcha
-    unless verify_recaptcha
-      self.resource = resource_class.new configure_sign_up_params
-      resource.validate
-      set_minimum_password_length
-      respond_with_navigational(resource) do
-        flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
-        render :new
+    if Rails.env.production?
+      unless verify_recaptcha
+        self.resource = resource_class.new configure_sign_up_params
+        resource.validate
+        set_minimum_password_length
+        respond_with_navigational(resource) do
+          flash.discard(:recaptcha_error) # We need to discard flash to avoid showing it on the next page reload
+          render :new
+        end
       end
     end
-
   end
 
 end

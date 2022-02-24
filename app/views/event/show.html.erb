@@ -11,11 +11,17 @@
     <div class="col-12">
       <b>Your Cabin: </b><%= 
         if @myeventattendance.cabin.present?
-         if canUpdateCabin()
+          if canUpdateCabin()
             link_to @myeventattendance.cabin.name, event_updatecabin_path(@event), remote: true
+          else
+            @myeventattendance.cabin.name
           end
         else
-          link_to 'None - Update Now', event_updatecabin_path(@event), remote: true
+          if canUpdateCabin()
+            link_to 'None - Update Now', event_updatecabin_path(@event), remote: true
+          else
+            'None'
+          end
         end
       %>
         

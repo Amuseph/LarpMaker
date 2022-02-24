@@ -29,7 +29,11 @@
             if event.eventattendances.find_by(user_id: current_user).cabin.present?
               link_to event.eventattendances.find_by(user_id: current_user).cabin.name , event_path(event.id)
             else
-              link_to 'None - Update Today!', event_path(event.id)
+              if event.startdate > Date.today
+                link_to 'None - Update Today!', event_path(event.id)
+              else
+                'None'
+              end
             end
           %>
         </td>

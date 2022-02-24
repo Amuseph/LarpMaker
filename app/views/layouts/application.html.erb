@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'changecharacter' %>
     
     <script src="https://unpkg.com/@popperjs/core@2"></script>  
-
+    <% if Rails.env.production? %>
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PT1X8ZKV6"></script>
       <script>
@@ -20,7 +20,7 @@
       
         gtag('config', 'G-7PT1X8ZKV6');
       </script>
-
+    <% end %>
         <script src="https://unpkg.com/@popperjs/core@2"></script>  
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
