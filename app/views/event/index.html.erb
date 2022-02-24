@@ -32,7 +32,7 @@
               if event.startdate > Date.today
                 link_to 'None - Update Today!', event_path(event.id)
               else
-                'None'
+                link_to 'None', event_path(event.id)
               end
             end
           %>
