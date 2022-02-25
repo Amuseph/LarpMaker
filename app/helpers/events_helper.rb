@@ -125,7 +125,7 @@ module EventsHelper
     if (attendancecount >= event.castcount)
       return image_tag("pages/events/register_to_cast_soldout.png")
     else
-      return link_to(image_tag("pages/events/register_to_cast.png"), event_castsignup_path(event.id))
+      return link_to(image_tag("pages/events/register_to_cast.png"), event_castsignup_path(event.id)) + ('<br> Only ' + (event.castcount - attendancecount).to_s + ' slots remain').html_safe
     end
   end
 
