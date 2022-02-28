@@ -18,7 +18,7 @@ class Event < ApplicationRecord
     cabins.distinct.pluck(:location).each do |cabin_location|
       cabin_list = []
       cabins.where(location: cabin_location).each do |cabin|
-        if (event.eventattendances.where(cabin_id: cabin.id).count <= cabin.maxplayers) || cabin.maxplayers = -1
+        if (event.eventattendances.where(cabin_id: cabin.id).count < cabin.maxplayers) || cabin.maxplayers == -1
           cabin_list.push([cabin.name, cabin.id])
         end
       end
