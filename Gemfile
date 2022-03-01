@@ -32,7 +32,7 @@ gem "administrate"
 # Use Active Storage variant
 gem "aws-sdk-s3", require: false
 gem 'active_storage_validations'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.12'
 gem "mini_magick"
 
 #Paypal Plugin
