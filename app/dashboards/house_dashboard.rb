@@ -12,9 +12,7 @@ class HouseDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     thane: Field::BelongsTo,
-    fledglingbenefit: Field::String,
     fledglingplot: Field::String,
-    establishedbenefit: Field::String,
     establishedplot: Field::String,
     createdate: Field::Date,
     created_at: Field::DateTime,
@@ -36,8 +34,6 @@ class HouseDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     name
     thane
-    fledglingbenefit
-    establishedbenefit
     fledglingplot
     establishedplot
     characters
@@ -52,8 +48,6 @@ class HouseDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     thane
-    fledglingbenefit
-    establishedbenefit
     fledglingplot
     establishedplot
     characters

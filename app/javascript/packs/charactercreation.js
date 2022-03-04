@@ -17,7 +17,6 @@ $(document ).ready(function() {
 });
   
 function classValidation() {
-  var firstdeityoption = $('#character_deity_id').find("option:first-child").text()
   var characterclass = $('#character_characterclass_id option:selected').text()
   var classTokenFileName = '/images/classtoken/' + characterclass.toLowerCase() + '.png'
   if (characterclass != 'Class') {
@@ -47,14 +46,10 @@ function classValidation() {
 
   if (characterclass == 'Cleric' || characterclass == 'Paladin') {
     $("#character_deity_id").prop('required',true);
-    if (firstdeityoption == 'Deity') {
-      $('#character_deity_id').find("option:first-child").remove();
-    }
+    $('#deityRow').show()
   }  else {
     $("#character_deity_id").prop('required',false);
-    if (firstdeityoption != 'Deity') {
-      $("#character_deity_id").prepend("<option value='' selected='Deity'>Deity</option>");
-    }
+    $('#deityRow').hide()
     
   }
   
