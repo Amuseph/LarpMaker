@@ -52,7 +52,9 @@
           <b>Totem:</b> <%= @character.totem  %><br>
         <% end %>
 
-        <b>Deity:</b> <%= if(@character.deity) then @character.deity.name end %><br>
+        <% if(@character.deity_id) %>
+          <b>Deity:</b> <%= if(@character.deity) then @character.deity.name end %><br>
+        <% end %>
         <% if(@character.house_id) %>
           <b>House:</b> <%= @character.house.name %> <br>
         <% end %>

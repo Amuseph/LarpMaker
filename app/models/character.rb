@@ -42,6 +42,11 @@ class Character < ApplicationRecord
         self.totem = nil
         save!
       end
+      if characterclass.name != 'Paladin' && characterclass.name != 'Cleric'
+        self.deity_id = nil
+        save!
+      end
+
     end
   end
 end
