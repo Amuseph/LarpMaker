@@ -9,7 +9,10 @@ class BackstoryDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    character: Field::BelongsTo,
+    character: Field::BelongsTo.with_options(
+      searchable: true,
+      searchable_fields: ['name', 'alias'],
+    ),
     backstory: Field::Text,
     locked: Field::Boolean,
     approved: Field::Boolean,
