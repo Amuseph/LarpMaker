@@ -27,6 +27,21 @@ class Character < ApplicationRecord
   validates :photo, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
 
   def check_class
+
+    if characterclass.name != 'Paladin' && characterclass.name != 'Cleric'
+      unless self.deity_id == nil
+        self.deity_id = nil
+        save!
+      end
+    end
+
+    if characterclass.name != 'Druid'
+      unless self.deity_id == nil
+        self.totem = nil
+        save!
+      end
+    end
+
     if saved_change_to_totem
       if self.totem == ''
         characterskills.each do |charskill|
@@ -34,19 +49,11 @@ class Character < ApplicationRecord
         end
       end
     end
+
     if saved_change_to_characterclass_id?
       characterskills.each do |charskill|
         charskill.destroy if charskill.skill.tier >= 4
       end
-      if characterclass.name != 'Druid'
-        self.totem = nil
-        save!
-      end
-      if characterclass.name != 'Paladin' && characterclass.name != 'Cleric'
-        self.deity_id = nil
-        save!
-      end
-
     end
   end
 end
