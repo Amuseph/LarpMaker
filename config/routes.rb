@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get :calendar
     get :mythology
     get :laws
+    get :townpositions
     get :camp
     get :rulebook
     get :rulebookchangelog
