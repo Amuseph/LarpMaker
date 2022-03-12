@@ -29,13 +29,17 @@ class Character < ApplicationRecord
   def check_class
 
     if characterclass.name != 'Paladin' && characterclass.name != 'Cleric'
-      self.deity_id = nil
-      save!
+      unless self.deity_id == nil
+        self.deity_id = nil
+        save!
+      end
     end
 
     if characterclass.name != 'Druid'
-      self.totem = nil
-      save!
+      unless self.totem == nil
+        self.totem = nil
+        save!
+      end
     end
 
     if saved_change_to_totem
