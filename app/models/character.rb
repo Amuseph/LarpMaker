@@ -36,7 +36,7 @@ class Character < ApplicationRecord
     end
 
     if characterclass.name != 'Druid'
-      unless self.deity_id == nil
+      unless self.totem == nil
         self.totem = nil
         save!
       end
