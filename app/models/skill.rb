@@ -34,7 +34,7 @@ class Skill < ApplicationRecord
             return 'Sacred Toast'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Inspiration'
         case character.deity.name
           when 'Adara'
             return 'Aforetime Blessing'
@@ -56,7 +56,7 @@ class Skill < ApplicationRecord
             return 'Sleep it Off'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Authority'
         case character.deity.name
           when 'Adara'
             return 'Imprison'
@@ -191,7 +191,7 @@ class Skill < ApplicationRecord
           may affect up to 5 individuals.'
       end
 
-    when 'Channel Inspiration'
+    when 'Divine Inspiration'
       case character.deity.name
         when 'Adara'
           return 'Roleplay Required: 2 minutes of giving a rousing speech or going over
@@ -221,7 +221,7 @@ class Skill < ApplicationRecord
           Cure Disease, and Bestow 5 Temporary Hit Points.”'
       end
 
-    when 'Channel Inspiration'
+    when 'Divine Authority'
       case character.deity.name
         when 'Adara'
           return '"Through Fire, Paralyze 1 Minute.”'
@@ -386,7 +386,7 @@ class Skill < ApplicationRecord
             return 'Long Rest'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Inspiration'
         case character.deity.name
           when 'Enoon', 'Naenya', 'Ororo', 'Scandelen'
             return 'Short Rest'
@@ -398,7 +398,7 @@ class Skill < ApplicationRecord
             return 'Event '
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Authority'
         case character.deity.name
           when 'Amitel'
             return 'Short Rest'
@@ -455,7 +455,7 @@ class Skill < ApplicationRecord
             return 'Through Scandelen, Heal 5 Hit Points'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Inspiration'
         case character.deity.name
           when 'Adara'
             return 'Through Adara, Divine Blessing, should you die in the next
@@ -477,7 +477,7 @@ class Skill < ApplicationRecord
             Cure Disease, and Bestow 5 Temporary Hit Points'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Authority'
         case character.deity.name
           when 'Adara'
             return 'Through Fire, Paralyze 1 Minute'
@@ -545,13 +545,13 @@ class Skill < ApplicationRecord
             return 'Up to 5 People'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Inspiration'
         case character.deity.name
           when 'Adara'
             return 'Up to 5 People'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Authority'
         case character.deity.name
           when 'Dedrot'
             return 'Self Only'
@@ -590,7 +590,7 @@ class Skill < ApplicationRecord
             return 'Voice'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Inspiration'
         case character.deity.name
           when 'Amitel', 'Naenya'
             return 'Packet'
@@ -604,7 +604,7 @@ class Skill < ApplicationRecord
             return 'Burst'
         end
 
-      when 'Channel Inspiration'
+      when 'Divine Authority'
         case character.deity.name
           when 'Adara', 'Amitel'
             return 'Packet'
