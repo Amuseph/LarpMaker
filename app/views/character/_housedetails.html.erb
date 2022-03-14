@@ -1,11 +1,5 @@
 <center><h2 id='name'><%= @character.house.name %></h2><br></center>
-<b>Thane:</b> <%= 
-  if @character.house.thane.alias.present?
-    @character.house.thane.alias
-  else
-    @character.house.thane.name.partition(" ").first 
-  end
- %><br>
+<b>Thane:</b> <%= @character.house.thane.get_name %><br>
 <b>Fledgling Plot:</b> <%= @character.house.fledglingplot %><br>
 <b>Established Plot:</b> <%= @character.house.establishedplot %><br>
 <br>

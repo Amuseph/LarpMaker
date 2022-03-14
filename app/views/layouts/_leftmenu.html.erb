@@ -12,11 +12,7 @@
       <div>
         <%= image_tag("leftmenu/profile.png") %>
         <span id='name'>
-          <%= if @character.alias.present?
-                  @character.alias
-              else
-                @character.name.partition(" ").first 
-            end %>
+          <%= @character.get_name %>
         </span>
       </div>
     <% end %>

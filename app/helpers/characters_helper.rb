@@ -225,11 +225,7 @@ module CharactersHelper
   def get_house_members(house)
     memberlist = +""
     house.characters.each do |member|
-      if member.alias.present?
-        memberlist.concat(member.alias, '<br>')
-      else
-        memberlist.concat(member.name.partition(" ").first , '<br>')
-      end
+      memberlist.concat(member.get_name, '<br>')
     end
     return memberlist.html_safe
   end
@@ -237,11 +233,7 @@ module CharactersHelper
   def get_guild_members(guild)
     memberlist = +""
     guild.characters.each do |member|
-      if member.alias.present?
-        memberlist.concat(member.alias, '<br>')
-      else
-        memberlist.concat(member.name.partition(" ").first , '<br>')
-      end
+      memberlist.concat(member.get_name, '<br>')
     end
     return memberlist.html_safe
   end
