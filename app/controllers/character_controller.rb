@@ -6,6 +6,7 @@ class CharacterController < ApplicationController
   before_action :authenticate_user!
   before_action :check_character_user
   before_action :check_sheets_locked, only: %i[edit update trainskill trainprofession]
+  layout 'print_view', only: [:printablesheet]
 
   def index
     
@@ -29,7 +30,6 @@ class CharacterController < ApplicationController
       redirect_to character_index_path
     end
   end
-
   def edit
     @race = Race.all.where('playeravailable = true')
     @characterclass = Characterclass.all.where('playeravailable = true')
