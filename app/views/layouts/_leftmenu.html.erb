@@ -18,6 +18,11 @@
     <% end %>
   </div>
 
+  
+  <div class='sideSubLink'>
+    <%= link_to 'Printable Sheet', character_printablesheet_path(session[:character]), target: :_blank %>
+  </div>
+
   <div class='sideSubLink'>
     <% #= link_to 'Update Photo', character_changephoto_path, remote: true 
     %>
