@@ -5,8 +5,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.1'
 
-gem 'tzinfo-data'
-
 # Bootstrap makes things pretty
 gem 'bootstrap_form', '~> 4.0'
 gem 'bootstrap-sass'
@@ -65,6 +63,9 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data'
 
 gem 'rails-settings-cached', '~> 2.5'
+gem 'net-smtp', require: false
+gem 'net-pop', require: false
+gem 'net-imap', require: false
