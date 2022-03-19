@@ -6,13 +6,25 @@ default: &default
   user: postgres
 
 development:
-  <<: *default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: ''
+  timeout: 5000
+  user: postgres
   database: larpdb_development
 
 test:
-  <<: *default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: ''
+  timeout: 5000
+  user: postgres
   database: larpdb_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: ''
+  timeout: 5000
+  user: postgres
   database: larpdb_production

@@ -3,7 +3,9 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.5'
+ruby '3.1.1'
+
+gem 'tzinfo-data'
 
 # Bootstrap makes things pretty
 gem 'bootstrap_form', '~> 4.0'
