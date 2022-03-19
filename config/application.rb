@@ -18,3 +18,11 @@ module Larpmaker
     # the framework and any gems in your application.
   end
 end
+
+module URI
+  #Fix until https://github.com/paypal/paypalhttp_ruby/pull/4 is resolved
+  def self.escape(*args)
+    URI.encode_www_form_component(*args)
+  end
+end
+
