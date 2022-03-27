@@ -22,6 +22,7 @@ class Character < ApplicationRecord
   validates :name, presence: true
 
   after_update :check_class
+  after_create :check_class
 
   has_one_attached :photo
   validates :photo, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
