@@ -18,7 +18,7 @@
         <div class="dropdown-menu dropdown-menu-right">
           <%= link_to 'Camp', pages_camp_path, class: 'dropdown-item' %>
           <%= link_to 'Rulebook', pages_rulebook_path, class: 'dropdown-item' %>
-          <%= link_to 'Events', pages_events_path, class: 'dropdown-item' %>
+          <%= link_to 'Register For Events', pages_events_path, class: 'dropdown-item' %>
           <%= link_to 'Join The Community', pages_community_path, class: 'dropdown-item' %>
           <%= link_to 'Help Myth - Earn XP', pages_earnexp_path, class: 'dropdown-item' %>
         </div>
@@ -36,7 +36,7 @@
               <%= link_to "Change Character", "#changeCharacterModal", :class => 'dropdown-item', "data-toggle" => "modal", 'data-target' => '#changeCharacterModal' %>
             <% end %>
             <%= link_to 'EXP Log', player_explog_path, :class => 'dropdown-item' %>
-            <%= link_to 'Events', player_events_path, :class => 'dropdown-item' %>
+            <%= link_to 'My Events', player_events_path, :class => 'dropdown-item' %>
             <div class="dropdown-divider"></div>
             <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'dropdown-item' %>
             <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => 'dropdown-item' %>
