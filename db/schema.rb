@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_04_144622) do
+ActiveRecord::Schema.define(version: 2022_04_07_031020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 2022_03_04_144622) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "cabin_id"
     t.string "mealplan"
+    t.boolean "noshow", default: false
     t.index ["character_id", "event_id"], name: "index_eventattendances_on_character_id_and_event_id", unique: true
     t.index ["character_id"], name: "index_eventattendances_on_character_id"
     t.index ["event_id", "user_id"], name: "index_eventattendances_on_event_id_and_user_id", unique: true
@@ -394,6 +395,7 @@ ActiveRecord::Schema.define(version: 2022_03_04_144622) do
     t.string "state"
     t.string "zipcode"
     t.bigint "phonenumber"
+    t.boolean "mealexempt", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
