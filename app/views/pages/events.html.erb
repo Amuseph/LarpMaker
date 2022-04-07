@@ -23,6 +23,7 @@
     </div>
     <div class="row">
       <div class="container col-12" id="eventdetails">
+        <%= event.description %><br>
         <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
         <%= get_event_price_details(event) %>
       </div>
@@ -56,6 +57,7 @@
     </div>
     <div class="row">
       <div class="container col-12" id="eventdetails">
+        <%= event.description %><br>
         <b>Event Dates:</b> <%= event.startdate.strftime("%m/%d/%Y")  %> - <%= event.enddate.strftime("%m/%d/%Y") %><br>
         <%= get_event_price_details(event) %>
       </div>
