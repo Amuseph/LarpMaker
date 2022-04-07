@@ -28,6 +28,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     registerdate: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    noshow: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -56,6 +57,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     registerdate
     created_at
     updated_at
+    noshow
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -69,6 +71,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     registrationtype
     mealplan
     registerdate
+    noshow
   ].freeze
 
   # COLLECTION_FILTERS
