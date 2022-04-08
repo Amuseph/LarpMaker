@@ -89,9 +89,9 @@ module EventsHelper
     if get_event_price(event) <= 0
       return 'An error has occured. Please reach out to support@mythlarp.com'
     elsif (attendancecount >= event.playercount)
-      return image_tag("pages/events/register_to_play_soldout.png", :class => "img-fluid mx-auto d-block")
+      return image_tag("pages/events/register_to_play_soldout.png", :class => "img-fluid mx-auto")
     else
-      return (link_to(image_tag("pages/events/register_to_play.png", :class => "img-fluid mx-auto d-block"), event_playersignup_path(event.id))) + ('<br> Only ' + (event.playercount - attendancecount).to_s + ' slots remain').html_safe
+      return (link_to(image_tag("pages/events/register_to_play.png", :class => "img-fluid mx-auto"), event_playersignup_path(event.id))) + ('<br> Only ' + (event.playercount - attendancecount).to_s + ' slots remain').html_safe
     end
   end
 
@@ -123,9 +123,9 @@ module EventsHelper
   def get_event_cast_link(event)
     attendancecount = Eventattendance.all.where('event_id = ? and Registrationtype = ?', event.id, 'Cast').count
     if (attendancecount >= event.castcount)
-      return image_tag("pages/events/register_to_cast_soldout.png", :class => "img-fluid mx-auto d-block")
+      return image_tag("pages/events/register_to_cast_soldout.png", :class => "img-fluid mx-auto")
     else
-      return link_to(image_tag("pages/events/register_to_cast.png", :class => "img-fluid mx-auto d-block"), event_castsignup_path(event.id)) + ('<br> Only ' + (event.castcount - attendancecount).to_s + ' slots remain').html_safe
+      return link_to(image_tag("pages/events/register_to_cast.png", :class => "img-fluid mx-auto"), event_castsignup_path(event.id)) + ('<br> Only ' + (event.castcount - attendancecount).to_s + ' slots remain').html_safe
     end
   end
 
