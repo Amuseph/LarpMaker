@@ -1,5 +1,6 @@
 <%= provide(:title, 'Character Sheet') %>
 
+<h2>Player ID: <%= current_user.id %></h2>
 <h2><%= @character.name %></h2>
 
 <%= @character.race.name %> <%= @character.characterclass.name %> <br>
