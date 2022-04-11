@@ -12,6 +12,7 @@
 
 <div class="card mx-auto">
   <div class="card-body">
+  Player ID: <%= current_user.id %>
   <%= f.email_field :email, autofocus: true, autocomplete: "email", :readonly => f.object.persisted? %>
   <%= f.text_field :firstname, autocomplete: "given-name", label: 'First Name' %>
   <%= f.text_field :lastname, autocomplete: "family-name", label: 'Last Name' %>
