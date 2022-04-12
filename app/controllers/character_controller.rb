@@ -218,8 +218,15 @@ class CharacterController < ApplicationController
     if request.post?
       @characterprofession = Characterprofession.new(addprof_params)
       @characterprofession.character_id = session[:character]
+      puts('taco')
+      puts('taco')
+      puts(last_played_event(@characterprofession.character))
+      puts(@characterprofession.character.createdate)
+      puts('taco')
+      puts('taco')
+      puts('taco')
       if @characterprofession.save!
-        if @character.characterprofessions.count > 2
+        if (@character.characterprofessions.count > 2) || (last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
           @explog = Explog.new
           @explog.user_id = @character.user_id
           @explog.name = 'Profession Purchase'

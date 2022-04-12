@@ -32,7 +32,7 @@ module CharactersHelper
       max_profession_date = character.characterprofessions.maximum('acquiredate')
       max_profession_date = '1900-01-01'.to_date if max_profession_date.nil?
 
-      if character.characterprofessions.count < 2
+      if character.characterprofessions.count < 2 && last_played_event < character.createdate
         # Buy 2 professions your first game
         true
       elsif character.characterprofessions.where('acquiredate > ?',
@@ -111,6 +111,7 @@ module CharactersHelper
     last_played_event = last_played_event(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
+
     if sheetsLocked
       return false
     end
@@ -121,18 +122,12 @@ module CharactersHelper
       end
     end
 
-    character.characterprofessions.order('characterprofessions.acquiredate asc').first(2).each do |starter_prof|
-      if starter_prof.profession_id == characterprofession.profession_id && character.characterprofessions.count > 2
-        # We own more than the novice professions
-        return false
-      end
-    end
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       true
     elsif last_played_event < characterprofession.acquiredate
       # Profession has never been used
-      true
+      return true
     end
   end
 
