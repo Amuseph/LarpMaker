@@ -2,11 +2,12 @@
   <div>
     <div class="row characterCreateForm">
       <div class="col-12 my-2">
-        <%= f.text_field :name, :required => true, placeholder: 'Character Name', hide_label: true %>
+        <%= f.text_field :name, :required => true, placeholder: 'Character Name', maxlength: 40, hide_label: true %>
       </div>
       <div class="col-6 my-2">
-        <%= f.text_field :alias, placeholder: 'Character Alias', hide_label: true %>
+        <%= f.text_field :alias, placeholder: 'Character Alias', maxlength: 40, hide_label: true %>
       </div>
+      <p class = "small font-italic">Alias is displayed in place of your character name on the site. Please use this in instances where you want your real name hidden</p>
       <div class="col-6 my-2 p-auto">
         <%= f.select :pronouns, [ 'He/Him', 'She/Her','They/Them' ], {prompt: 'Pronouns', hide_label: true }, required: true %>
       </div>
@@ -41,7 +42,6 @@
       <span id='DeityDesc'></span>
     </div>
   </div>
-
 
   <br><br>
   <%= f.submit 'Save Character', class: "btn btn-success" %>
