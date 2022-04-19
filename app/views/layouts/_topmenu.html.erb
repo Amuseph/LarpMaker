@@ -26,6 +26,14 @@
     </div>
 
     <div class="navbar-nav ml-auto align-items-end">
+    <div class='nav-item dropdown'>
+      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Help</a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <%= link_to 'FAQ', pages_faq_path, class: 'dropdown-item' %>
+      </div>
+    </div>
+
+
       <% if user_signed_in? %>
         <div class='nav-item dropdown'>
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Profile</a>

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get :earnexp
     get :waiver
     get :termsofservice
+    get :faq
   end
 
   namespace :admin do

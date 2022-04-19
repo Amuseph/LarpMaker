@@ -175,7 +175,7 @@ module EventsHelper
     Cabin.all.where(location: area).where.not(name: 'Cast Cabin').each do |cabin|
       cabinlist.concat('<b>', cabin.name, '</b>')
       cabinlist.concat('<ul>')
-        event.eventattendances.where(registrationtype: 'Player', cabin: Cabin.all.find_by(name: cabin.name)).each do |cabinassignment|
+        event.eventattendances.where(registrationtype: 'Player', cabin: Cabin.all.find_by(name: cabin.name)).joins(:character).merge(Character.order(name: :asc)).each do |cabinassignment|
           cabinlist.concat('<li>', cabin_resident(cabinassignment))
         end
       cabinlist.concat('</ul>')
@@ -186,7 +186,7 @@ module EventsHelper
   def get_homeless_players(event)
     cabinlist = +""
     cabinlist.concat('<ul>')
-      event.eventattendances.where(registrationtype: 'Player', cabin: nil).each do |cabinassignment|
+      event.eventattendances.where(registrationtype: 'Player', cabin: nil).includes(:character).references(:character).order("characters.name ASC").each do |cabinassignment|
         cabinlist.concat('<li>', cabin_resident(cabinassignment))
       end
     cabinlist.concat('</ul>')
