@@ -23,17 +23,8 @@
   </div>
 </div>
   <%= bootstrap_form_for :eventfeedback, url: event_submitfeedback_path do |f| %>
-    <%= f.select :preeventcommunicationrating, @ratingoptions, {prompt: 'Pre-Event Communication', label: 'How Satisfied Are You With Pre-Event Communication?'}, required: true %>
-    <%= f.select :eventrating, @ratingoptions, {prompt: 'Event Overall', label: 'How Satisfied Are You With The Event Overall?'}, required: true %>
-    <%= f.select :attendnextevent, [ ['Yes', 0], ['No', 1] ], {prompt: 'Attending Next Event?', label: 'Are You Planning to Attend The Next Event?'}, required: true %>
-    <%= f.select :sleepingrating, @ratingoptions, {prompt: 'Sleeping Arrangements', label: 'How Satisfied Are You With Your Sleeping Arrangements?'}, required: true %>
-    <%= f.select :openingmeetingrating, @ratingoptions, {prompt: 'Opening Meeting', label: 'How Satisfied Are You With The Opening Meeting?'}, required: true %>
-    <%= f.select :closingmeetingrating, @ratingoptions, {prompt: 'Closing Meeting', label: 'How Satisfied Are You With The Closing Meeting?'}, required: true %>
-    <%= f.select :plotrating, @ratingoptions, {prompt: 'Plot Rating', label: 'How Satisfied Are You With The Plot For The Event?'}, required: true %>
-
+    
     <%= f.text_area :feedback, :required => true, label: 'Do you have any constructive feedback for Myth?' %>
-    <%= f.text_area :questions, :required => true, label: 'Anything else you would like to state or questions you might wish to address?' %>
-    <%= f.text_area :standoutplayers, :required => true, label: 'What Players Stand Out to You, if Any, And Why?' %>
     <%= f.text_area :standoutnpc, :required => true, label: 'What NPCs Stand Out to You, if Any, And Why?' %>
     <%= f.text_area :nexteventplans, :required => true, label: 'What are your plans for the next event?' %>
 
