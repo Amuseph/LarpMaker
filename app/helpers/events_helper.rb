@@ -21,12 +21,9 @@ module EventsHelper
   end
 
   def get_feedback_link(event)
-    feedback_start_date = Date.new(2021,9,1) # Do not touch. This is when feedback got migrated to the new site
     eventattendance = event.eventattendances.find_by(user_id: current_user)
 
     if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
-      return
-    elsif event.startdate < feedback_start_date # Remove me after 30 days
       return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
       return link_to 'View Your Feedback', event_viewfeedback_path(event.id)

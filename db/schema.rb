@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_07_031020) do
+ActiveRecord::Schema.define(version: 2022_04_19_234439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,16 +175,16 @@ ActiveRecord::Schema.define(version: 2022_04_07_031020) do
     t.bigint "user_id", null: false
     t.bigint "character_id"
     t.bigint "event_id", null: false
-    t.integer "preeventcommunicationrating", null: false
-    t.integer "eventrating", null: false
-    t.integer "attendnextevent", null: false
-    t.integer "sleepingrating", null: false
-    t.integer "openingmeetingrating", null: false
-    t.integer "closingmeetingrating", null: false
-    t.integer "plotrating", null: false
+    t.integer "preeventcommunicationrating"
+    t.integer "eventrating"
+    t.integer "attendnextevent"
+    t.integer "sleepingrating"
+    t.integer "openingmeetingrating"
+    t.integer "closingmeetingrating"
+    t.integer "plotrating"
     t.string "feedback", null: false
-    t.string "questions", null: false
-    t.string "standoutplayers", null: false
+    t.string "questions"
+    t.string "standoutplayers"
     t.string "standoutnpc", null: false
     t.string "charactergoals", null: false
     t.string "charactergoalactions", null: false
