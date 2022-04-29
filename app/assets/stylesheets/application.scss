@@ -408,6 +408,7 @@ body {
   }
 }
 
+
 #mythologypage {
   #DeityLink {
     display:flex;
@@ -517,5 +518,72 @@ body {
     font-size: 24px;
     border-radius: 25px 25px 25px 25px;
 
+  }
+}
+
+#racespage {
+  #RaceLink {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #RacePreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #DaleElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #DeepElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #DwarvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #GoblinsDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #HalfElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #HighElvesDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #HumansDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #SuhkDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  #WildrenDetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
   }
 }
