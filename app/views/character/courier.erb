@@ -26,7 +26,7 @@
           end
           %>
         </td>
-        <td><%= courier.senddate %></td>
+        <td><%= courier.senddate.in_time_zone('Eastern Time (US & Canada)').strftime('%m/%d/%Y') %></td>
         <td>
           <%= link_to 'Read Message', character_viewcourier_path(courier_id: courier.id), remote: true  %>
         </td>
