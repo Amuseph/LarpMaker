@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get :setting
     get :calendar
     get :mythology
+    get :races
     get :laws
     get :townpositions
     get :camp
