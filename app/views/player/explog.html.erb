@@ -35,7 +35,7 @@
       
         <td><%= explog.name %></td>
         <td><%= explog.description %></td>
-        <td><%= explog.acquiredate.to_date %></td>
+        <td><%= explog.acquiredate.in_time_zone('Eastern Time (US & Canada)').strftime('%m/%d/%Y') %></td>
         <td><%= explog.amount %></td>
       </tr>
     <% end %>
