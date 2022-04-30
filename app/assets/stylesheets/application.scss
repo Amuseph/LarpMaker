@@ -115,7 +115,7 @@ body {
       #characterphoto {
         z-index: 0;
         position: absolute;
-        width: 90%;
+
       }
     }
     
@@ -143,6 +143,7 @@ body {
       font-weight: bold;
       font-family: 'Copperplate Gothic Light';
     }
+  padding: 0px;
   }
   #profiledata {
     color: black;
@@ -207,7 +208,7 @@ body {
     color: white;
   }
   .nav-tabs {
-    border-bottom: 1px solid#343a40
+    border-bottom: 1px solid #343a40
   }
 }
 
@@ -375,7 +376,7 @@ body {
       color: white;
     }
     .nav-tabs {
-      border-bottom: 1px solid#343a40
+      border-bottom: 1px solid #343a40
     }
   }
 
