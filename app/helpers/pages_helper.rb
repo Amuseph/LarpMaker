@@ -10,6 +10,17 @@ module PagesHelper
     end
   end
 
+  def betweenGameSkillsLocked
+    bgs_lock_time = 14
+
+    last_event = Event.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate)
+    if Setting.sheets_locked
+      true
+    elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i >= bgs_lock_time)
+      true
+    end
+  end
+
   def checkActiveCharacterTab(type, tabName)
     requestedTab = if params[:tab].nil?
                      'skills'
