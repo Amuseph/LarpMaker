@@ -9,7 +9,7 @@
 <div class="container col-12" id = "cabinmap">
   <div class="row">
     <div class="col-12">
-      <b>Your Cabin: </b><%= 
+      <b>Your Sleeping Arrangement: </b><%= 
         if @myeventattendance.cabin.present?
           if canUpdateCabin()
             link_to @myeventattendance.cabin.name, event_updatecabin_path(@event), remote: true
@@ -53,7 +53,7 @@
     <div class="col-12">
       <%= get_resident_players(@event,'Town Proper') %>
       <hr>
-      The following individuals have not yet selected a cabin<br>
+      The following individuals have not yet selected a sleeping arrangement<br>
       <%= get_homeless_players(@event) %>
     </div>
   </div>
@@ -62,7 +62,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateCabinModalLabel">Update Cabin</h5>
+        <h5 class="modal-title" id="updateCabinModalLabel">Update Sleeping Arrangement</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
