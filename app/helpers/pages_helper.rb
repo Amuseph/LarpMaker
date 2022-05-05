@@ -16,6 +16,8 @@ module PagesHelper
     last_event = Event.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate)
     if Setting.sheets_locked
       true
+    elsif sheetsLocked
+      true
     elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i >= bgs_lock_time)
       true
     end
