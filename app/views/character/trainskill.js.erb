@@ -51,11 +51,11 @@ function skillListValidation() {
         $('#modalskilldescription').html('<b>Description:</b> ' + data.all_data.skill.description)
 
         if (data.all_data.skilldelivery == null) {
-          document.getElementById('modalskilltarget').style.display  = 'none';
-          $('#modalskilltarget').html('')
+          document.getElementById('modalskilldelivery').style.display  = 'none';
+          $('#modalskilldelivery').html('')
         } else {
-          $('#modalskilltarget').html('<b>Delivery:</b> ' + data.all_data.skilldelivery.name)
-          document.getElementById('modalskilltarget').style.display  = 'block';
+          $('#modalskilldelivery').html('<b>Delivery:</b> ' + data.all_data.skilldelivery.name)
+          document.getElementById('modalskilldelivery').style.display  = 'block';
         }
 
         if (data.all_data.skill.target == null) {
