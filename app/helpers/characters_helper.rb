@@ -12,7 +12,7 @@ module CharactersHelper
   end
 
   def canLevel(character)
-    unless sheetsLocked
+    unless sheetsLocked || character.level >= 20
       last_played_event = last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       if character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) >= expToLevel(character)
@@ -159,6 +159,14 @@ module CharactersHelper
     purchasedOracles = @character.skills.where(name: 'Oracle').count 
     usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
     return purchasedOracles - usedOracles
+  end
+
+  def ravens_available(character)
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Raven').sum(:skillsused) < 1)
+      return 1
+    else
+      return 0
+    end
   end
 
   def expToLevel(character)

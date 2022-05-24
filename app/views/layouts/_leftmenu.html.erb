@@ -96,6 +96,11 @@
         <%= link_to 'Send Oracle', character_sendoracle_path, remote: true %>
       </div>
     <% end %>
+    <% if ravens_available(@character) > 0 %>
+      <div class='sideSubLink'>
+        <%= link_to 'Send Raven', character_sendraven_path, remote: true %>
+      </div>
+  <% end %>
   <% end %>
 
   <div class='sideLink'>

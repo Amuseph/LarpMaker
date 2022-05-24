@@ -109,6 +109,26 @@ class CharacterController < ApplicationController
     end
   end
 
+  def sendraven
+    if request.post?
+      @courier = Courier.new(sendcourier_params)
+      @courier.couriertype = 'Raven'
+      @courier.destination = 'Self'
+      @courier.recipient = 'Raven'
+      @courier.skillsused = 1
+      @courier.character_id = session[:character]
+      if @courier.save
+        CharacterMailer.with(courier: @courier).send_prayer.deliver_later
+      end
+      redirect_to character_courier_path
+    else
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
+
   def levelup
     @exptolevel = expToLevel(@character)
 

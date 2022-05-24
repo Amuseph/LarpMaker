@@ -1,0 +1,6 @@
+$('#sendCourierModalBody').html("<%= escape_javascript( render partial: 'modals/sendraven' ) %>")
+$('#sendCourierModalLabel').html("Send Raven")
+$('#sendCourierModal').modal({
+    backdrop: 'static',
+    keyboard: false,
+    show: true});
