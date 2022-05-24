@@ -162,7 +162,7 @@ module CharactersHelper
   end
 
   def ravens_available(character)
-    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Raven').sum(:skillsused) < 1)
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Raven').sum(:skillsused) < 1))
       return 1
     else
       return 0
