@@ -72,6 +72,7 @@ class EventController < ApplicationController
     @event = Event.find(params[:event_id])
     if request.post?
       @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
+      @eventattendance.mealplan = params[:mealplan][:mealchoice]
       if @eventattendance.save!
         add_event_exp(@event, @eventattendance)
         redirect_to player_events_path

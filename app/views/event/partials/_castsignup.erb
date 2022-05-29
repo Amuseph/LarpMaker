@@ -1,14 +1,18 @@
-<h3>Brew of the Month Club</h3>
-<p>
-  The brew of the month club is a great way to get free drinks in the tavern for the event. Buying this ticket allows you access to soda, coffee and powdered drink mixes.
-</p>
 <h3>Meal Plan</h3>
 
   <p>The meal includes breakfast on Saturday and Sunday along with dinner on Saturday evening.<br>
-  It also includes a ticket into the brew of the month club for free drinks game.
   <p class="small">
     Food at Myth may contain allergens such as celery, gluten, crustaceans, eggs, fish, lupin, milk, mollusks, mustard, nuts, peanuts, sesame seeds, soya, or sulfates. We will do our best to accommodate those with some allergic reactions to the ingredients mentioned above. Sometimes we can not make significant alterations to our meal plans. If your safety is at risk from eating any of these allergens, we recommend against getting the meal plan.
   </p>
 <p>
   <%= simple_format(@event.mealplandetails.html_safe)%>
 </p>
+
+<%= bootstrap_form_for :mealplan, url: event_castsignup_path do |f| %>
+  <%= f.check_box :acceptterms, required: true, label: ("I agree to the #{link_to 'Terms of Service', pages_termsofservice_path, target: '_blank'} and #{link_to 'waiver policy', pages_waiver_path, target: '_blank'}.").html_safe %>
+
+  <%= f.select :mealchoice, ['No Meal', 'Meat', 'Vegan'], required: true, label: 'Choose your meal plan' %>
+  <%= f.submit 'Sign Up To Cast', class: "btn btn-success" %>
+  <%= link_to 'Cancel', :back, class: "btn btn-danger" %>
+<% end %>
+<br>
