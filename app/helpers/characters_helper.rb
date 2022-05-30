@@ -55,14 +55,6 @@ module CharactersHelper
         availablegroups.push(professiongroup.name)
       end
     end
-
-    puts('taco')
-    puts('taco')
-    puts('taco')
-    puts(@freeprofessions)
-    puts('taco')
-    puts('taco')
-
     return availableprofessions, availablegroups
 
   end
