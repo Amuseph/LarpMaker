@@ -8,7 +8,7 @@ $('#professiongroup').change(function() {
   professionListUpdate()
 });
 
-$('#profForm').submit(function() {
+function confirm_submission() {
   if (freeprofession == 'true') {
     return;
   } else if ($('#characterprofession_profession_id :selected').text().startsWith('Novice')) {
@@ -18,8 +18,7 @@ $('#profForm').submit(function() {
   } else if ($('#characterprofession_profession_id :selected').text().startsWith('Master')) {
     return confirm('Are you sure? Doing so will cost 300 exp');
   }
-})
-
+}
 
 function professionListUpdate() {
   professiongroup = $('#professiongroup :selected').text();

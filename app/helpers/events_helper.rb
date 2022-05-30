@@ -140,7 +140,7 @@ module EventsHelper
 
   def get_meal_options(event, eventattendance)
     if eventattendance.registrationtype == 'Cast'
-      return [['Meat', 'Meat'], ['Vegan', 'Vegan']]
+      return [['No Meal', 'No Meal'], ['Meat', 'Meat'], ['Vegan', 'Vegan']]
     elsif eventattendance.mealplan.in?(['Meat', 'Vegan'])
       return [['Meat', 'Meat'], ['Vegan', 'Vegan']]
     elsif eventattendance.mealplan.in?([nil, ''])
@@ -153,7 +153,7 @@ module EventsHelper
   def get_mealplan_signup(event)
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
     @selected_meal = @eventattendance.mealplan
-    if @selected_meal.in?([nil, ''])
+    if @selected_meal.in?([nil, '', 'No Meal'])
       @selected_meal = 'None'
     end
     if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
@@ -214,7 +214,7 @@ module EventsHelper
     end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
       if @eventattendance.nil?
-        return  link_to 'Sign Up To Cast', event_castsignup_path, data: { confirm: 'Thank you for signing up to cast. Please confirm?'}, method: :post, :class => 'btn btn-success'        
+        return (render partial: 'event/partials/castsignup')
       else
         return ("<b>You are already registered to play as " + @eventattendance.registrationtype + '</b>').html_safe
       end
