@@ -25,7 +25,51 @@ module CharactersHelper
     end
   end
 
+  def professions_to_buy(character)
+    @freeprofessions = false
+    availableexp = current_user.explogs.where('acquiredate <= ? ', Time.now.in_time_zone('Eastern Time (US & Canada)').end_of_day).sum(:amount)
+
+    availableprofessions = []
+    availablegroups = []
+
+    Professiongroup.where('playeravailable = true').each do |professiongroup|
+      professionlist = []
+      professiongroup.professions.where('playeravailable = true').each do |profession|
+        @freeprofessions = true if character.professions.where("name like 'Novice%'").count < 2
+        next if @freeprofessions && !profession.name.start_with?('Novice')
+
+        if Professionrequirement.exists?(profession: profession.id)
+          canpurchase = true
+          Professionrequirement.where(profession: profession.id).each do |r|
+            canpurchase = false unless character.professions.exists?(id: r.requiredprofession_id)
+          end
+          next unless canpurchase
+        end
+        next if character.professions.where(name: profession.name).count >= 1
+        next if (availableexp < profession_exp_cost(profession)) && !@freeprofessions
+
+        professionlist.push([profession.name, profession.id])
+      end
+      unless professionlist.empty?
+        availableprofessions.push([professiongroup.name, professionlist])
+        availablegroups.push(professiongroup.name)
+      end
+    end
+
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    puts(@freeprofessions)
+    puts('taco')
+    puts('taco')
+
+    return availableprofessions, availablegroups
+
+  end
+
   def canBuyProfession(character)
+    availableprofessions, availablegroups = professions_to_buy(character)
+
     if !sheetsLocked
       last_played_event = last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
@@ -35,8 +79,9 @@ module CharactersHelper
       if character.characterprofessions.count < 2 && last_played_event < character.createdate
         # Buy 2 professions your first game
         true
-      elsif character.characterprofessions.where('acquiredate > ?',
-                                                 last_played_event).count < profsPerEvent(character)
+      elsif availableprofessions.empty?
+        return false
+      elsif character.characterprofessions.where('acquiredate > ?', last_played_event).count < profsPerEvent(character)
         true
       elsif !Setting.one_level_per_game && ((events_played * profsPerEvent(character)) + 2 > character.characterprofessions.count)
         true
@@ -239,5 +284,15 @@ module CharactersHelper
       memberlist.concat(member.get_name, '<br>')
     end
     return memberlist.html_safe
+  end
+
+  def profession_exp_cost(profession)
+    if profession.name.start_with?('Novice')
+      100
+    elsif profession.name.start_with?('Journeyman')
+      200
+    elsif profession.name.start_with?('Master')
+      300
+    end
   end
 end

@@ -238,13 +238,6 @@ class CharacterController < ApplicationController
     if request.post?
       @characterprofession = Characterprofession.new(addprof_params)
       @characterprofession.character_id = session[:character]
-      puts('taco')
-      puts('taco')
-      puts(last_played_event(@characterprofession.character))
-      puts(@characterprofession.character.createdate)
-      puts('taco')
-      puts('taco')
-      puts('taco')
       if @characterprofession.save!
         if (@character.characterprofessions.count > 2) || (last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
           @explog = Explog.new
@@ -259,36 +252,7 @@ class CharacterController < ApplicationController
         redirect_to character_index_path({ tab: 'professions' })
       end
     else
-      @characterprofession = Characterprofession.new
-      @freeprofessions = false
-      availableexp = current_user.explogs.where('acquiredate <= ? ', Time.now.in_time_zone('Eastern Time (US & Canada)').end_of_day).sum(:amount)
-
-      @availableprofessions = []
-      @availablegroups = []
-
-      Professiongroup.where('playeravailable = true').each do |professiongroup|
-        professionlist = []
-        professiongroup.professions.where('playeravailable = true').each do |profession|
-          @freeprofessions = true if @character.professions.where("name like 'Novice%'").count < 2
-          next if @freeprofessions && !profession.name.start_with?('Novice')
-
-          if Professionrequirement.exists?(profession: profession.id)
-            canpurchase = true
-            Professionrequirement.where(profession: profession.id).each do |r|
-              canpurchase = false unless @character.professions.exists?(id: r.requiredprofession_id)
-            end
-            next unless canpurchase
-          end
-          next if @character.professions.where(name: profession.name).count >= 1
-          next if (availableexp < profession_exp_cost(profession)) && !@freeprofessions
-
-          professionlist.push([profession.name, profession.id])
-        end
-        unless professionlist.empty?
-          @availableprofessions.push([professiongroup.name, professionlist])
-          @availablegroups.push(professiongroup.name)
-        end
-      end
+      @availableprofessions,  @availablegroups = professions_to_buy(@character)
       respond_to do |format|
         format.js
       end
@@ -432,13 +396,4 @@ class CharacterController < ApplicationController
     true
   end
 
-  def profession_exp_cost(profession)
-    if profession.name.start_with?('Novice')
-      100
-    elsif profession.name.start_with?('Journeyman')
-      200
-    elsif profession.name.start_with?('Master')
-      300
-    end
-  end
 end

@@ -4,6 +4,6 @@
     <%= f.select :profession_id, grouped_options_for_select(@availableprofessions), hide_label: true %>
     <p class = "small font-italic">Professions cost 100 exp for Novice, 200 for Journeyman and 300 for Master.</p>
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onclick="return confirm_submission()">Submit</button>
   <% end %>
 </div>
