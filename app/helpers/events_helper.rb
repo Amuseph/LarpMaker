@@ -25,6 +25,8 @@ module EventsHelper
 
     if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
       return
+    elsif !event.levelingevent
+      return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
       return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
     elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) #change this to 30 later
