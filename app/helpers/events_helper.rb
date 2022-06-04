@@ -25,6 +25,8 @@ module EventsHelper
 
     if event.startdate > Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
       return
+    elsif !event.levelingevent
+      return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
       return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
     elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) #change this to 30 later
@@ -285,7 +287,13 @@ module EventsHelper
     end
     @eventattendance.mealplan = mealplan
 
-    if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+    puts 'taco'
+    puts 'taco'
+    puts event.levelingevent
+    puts 'taco'
+    puts 'taco'
+
+    if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player') && (event.levelingevent)
       @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
     end
 

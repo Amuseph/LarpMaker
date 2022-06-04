@@ -53,7 +53,9 @@ class EventController < ApplicationController
   def playersignup
     @event = Event.find(params[:event_id])
     if user_signed_in?
-      if @event.mealplan
+      if (@event.mealplan && @event.mealplancost == 0)
+        @mealoptions = [['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
+      elsif @event.mealplan
         @mealoptions = [['None', 'None'], ['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
       else
         @mealoptions = [['None', 'None']]
