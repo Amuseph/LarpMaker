@@ -5,7 +5,7 @@ module Admin
       @eventattendance = Eventattendance.new(resource_params)
       @event = Event.find_by(id: @eventattendance.event_id)
 
-      if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+      if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player') && (@event.levelingevent)
         @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
       end
 

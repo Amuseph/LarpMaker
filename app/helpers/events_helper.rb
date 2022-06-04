@@ -285,7 +285,13 @@ module EventsHelper
     end
     @eventattendance.mealplan = mealplan
 
-    if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player')
+    puts 'taco'
+    puts 'taco'
+    puts event.levelingevent
+    puts 'taco'
+    puts 'taco'
+
+    if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player') && (event.levelingevent)
       @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
     end
 

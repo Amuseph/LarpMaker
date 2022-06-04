@@ -20,7 +20,13 @@
       <% eventattendance =  event.eventattendances.find_by(user_id: current_user) %>
         <tr class="table-light">
           <td>
-          <%= link_to event.name, event_path(event.id) %>
+          <%= 
+          if event.levelingevent then
+            link_to event.name, event_path(event.id) 
+          else
+            event.name
+          end
+            %>
           </td>
           <td><%= event.description %></td>
           
@@ -33,9 +39,9 @@
             if ( eventattendance.character && event.startdate < Time.now) then
               eventattendance.character.name
 
-            elsif (eventattendance.character && eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
+            elsif (eventattendance.character && (eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') && event.levelingevent) then
               link_to eventattendance.character.name, player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
-            elsif (eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') then
+            elsif ((eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') && event.levelingevent) then
               link_to 'Assign Character',player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
             end
       
