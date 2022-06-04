@@ -58,14 +58,16 @@ module EventsHelper
     first_event_of_season = Event.order(:startdate).find_by("season = ? and extract(year from startdate) = ?", event.season, year_of_season)
     days_till_first_lockout = (first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
 
-    @explog = Explog.new
-    @explog.user_id = eventattendance.user_id
-    @explog.name = 'Event'
-    @explog.acquiredate = event.startdate
-    @explog.description = "Exp for attending Event \"#{eventattendance.event.name}\" as a #{eventattendance.registrationtype}"
-    @explog.amount = event.eventexp
-    @explog.grantedby_id = current_user.id
-    @explog.save!
+    if event.eventexp > 0
+      @explog = Explog.new
+      @explog.user_id = eventattendance.user_id
+      @explog.name = 'Event'
+      @explog.acquiredate = event.startdate
+      @explog.description = "Exp for attending Event \"#{eventattendance.event.name}\" as a #{eventattendance.registrationtype}"
+      @explog.amount = event.eventexp
+      @explog.grantedby_id = current_user.id
+      @explog.save!
+    end
 
     if eventattendance.registrationtype == 'Player' and days_till_first_lockout > 0
       event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
@@ -286,12 +288,6 @@ module EventsHelper
       mealplan = nil 
     end
     @eventattendance.mealplan = mealplan
-
-    puts 'taco'
-    puts 'taco'
-    puts event.levelingevent
-    puts 'taco'
-    puts 'taco'
 
     if (@eventattendance.character_id.nil?) && (@eventattendance.user.characters.where(status: 'Active').count == 1) && (@eventattendance.registrationtype == 'Player') && (event.levelingevent)
       @eventattendance.character_id = @eventattendance.user.characters.find_by(status: 'Active').id
