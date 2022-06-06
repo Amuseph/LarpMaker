@@ -1,6 +1,7 @@
 
 module AdminHelper
   require 'active_record/errors'
+  include EventsHelper
 
   def process_banklog_upload(line, data)
     if data.length() != 3
@@ -29,13 +30,22 @@ module AdminHelper
     end
 
     begin
-      explog = Banklog.new
-      explog.character_id = data[0]
-      explog.name = data[1]
-      explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
-      explog.amount = data[2].strip
-      explog.grantedby_id = current_user.id
-      explog.save!
+      character = Eventattendance.joins(:event).where('user_id = ? and Registrationtype = ? and enddate < ? and levelingevent', user.id, 'Player', Date.today).order("enddate DESC").first.character
+      if character.nil? or character.blank?
+        return "Line #{line} this player does not have a character that attended a prior event: #{data}"
+      end
+    rescue
+      return "Line #{line} error in getting last played character: #{data}"
+    end
+
+    begin
+      banklog = Banklog.new
+      banklog.character_id = character.id
+      banklog.name = data[1]
+      banklog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      banklog.amount = data[2].strip
+      banklog.grantedby_id = current_user.id
+      banklog.save!
       return "Line #{line} upload successful"
     rescue
       return "Line #{line} error in Updating Bank Log: #{data}"

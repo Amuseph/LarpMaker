@@ -5,7 +5,7 @@
 
 <%= bootstrap_form_with(url: admin_bankloguploads_path, local: true) do |f| %>
 
-  <%= f.text_area :explogs, placeholder: '??PlayerID??|Name|Amount', label: 'Banklog Upload Submission' %>
+  <%= f.text_area :banklogs, placeholder: '??PlayerID??|Name|Amount', label: 'Banklog Upload Submission' %>
   <br>
   <button type="submit" class="btn btn-primary">Submit</button>
 <% end %>
