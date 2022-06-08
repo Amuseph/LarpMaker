@@ -61,13 +61,6 @@ class EventController < ApplicationController
         @mealoptions = [['None', 'None']]
       end
     end
-
-    if request.post?
-      @eventattendance = Eventattendance.create(event_id: @event.id, user_id: current_user.id, registrationtype: 'Cast')
-      if @eventattendance.save!
-        add_event_exp(@event, @eventattendance)
-      end
-    end
   end
 
   def castsignup

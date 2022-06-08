@@ -38,13 +38,11 @@
             <%= 
             if ( eventattendance.character && event.startdate < Time.now) then
               eventattendance.character.name
-
             elsif (eventattendance.character && (eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') && event.levelingevent) then
               link_to eventattendance.character.name, player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
             elsif ((eventattendance.event.startdate > Time.now and eventattendance.registrationtype == 'Player') && event.levelingevent) then
               link_to 'Assign Character',player_changeeventcharacter_path(:eventattendance_id => eventattendance.id), remote: true
             end
-      
             %></td>
           <td><%= get_feedback_link(eventattendance.event) %></td>
         </tr>
