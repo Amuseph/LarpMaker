@@ -30,7 +30,9 @@ Rails.application.routes.draw do
       resources :characters
       resources :backstories
       resources :explogs
+      resources :exploguploads
       resources :banklogs
+      resources :bankloguploads
       resources :events
       resources :guilds
       resources :houses
@@ -48,7 +50,7 @@ Rails.application.routes.draw do
       resources :skillrequirements
       resources :characterclassskillgroups, except: :index
       resources :characterprofessions
-      resources :characterskills#, except: :index
+      resources :characterskills
       resources :couriers
       resources :professions
       resources :professiongroups
