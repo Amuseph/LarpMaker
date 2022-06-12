@@ -11,7 +11,7 @@ module Admin
       i = 0
       upload.each_line do |line|
         i = i + 1
-        @result_messages.push(process_upload_exp(i, line.split('|')))
+        @result_messages.push(process_explog_upload(i, line.split('|')))
       end
       render 'index'
     end
