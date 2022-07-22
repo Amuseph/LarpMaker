@@ -6,14 +6,10 @@ class Event < ApplicationRecord
   has_many :characters, through: :eventattendances
   has_many :users, through: :characters
 
-  def self.available_cabins(event, registration)
+  def self.available_cabins(event)
     available_cabins = []
 
-    if registration.registrationtype = 'Player'
-      cabins = Cabin.where(playeravailable: true)
-    else
-      cabins = Cabin.where(castavailable: true)
-    end
+    cabins = Cabin.where(playeravailable: true)
     
     cabins.distinct.pluck(:location).each do |cabin_location|
       cabin_list = []

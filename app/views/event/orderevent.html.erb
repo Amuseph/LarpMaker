@@ -14,8 +14,9 @@
     
 </div>
 
-<b>Selected Mealplan: <%= @mealchoice %></b><br>
-<b>Cost: $<%= @eventprice.to_s %></b>
+<b>Selected Mealplan: </b><%= @mealchoice %><br>
+<b>Selected Cabin: </b><%= @cabin.name %><br>
+<b>Cost: </b>$<%= @eventprice.to_s %>
 
 <div id="paypal-button-container"></div>
 <script src="https://www.paypal.com/sdk/js?client-id=<%= escape_javascript ENV['PAYPAL_CLIENT_ID'] %>" ></script>
@@ -28,7 +29,7 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({meal_type: '<%= escape_javascript @mealchoice %>'})
+        body: JSON.stringify({meal_type: '<%= escape_javascript @mealchoice %>', cabin: '<%= escape_javascript @cabin.id %>'})
       });
       const responseData = await response.json();
       return responseData.token;
@@ -39,7 +40,7 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({order_id: data.orderID, meal_type: '<%= escape_javascript @mealchoice %>'})
+        body: JSON.stringify({order_id: data.orderID, meal_type: '<%= escape_javascript @mealchoice %>', cabin: '<%= escape_javascript @cabin.id %>'})
       });
       
       const responseData = await response.json();
