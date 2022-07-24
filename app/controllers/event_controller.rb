@@ -80,7 +80,8 @@ class EventController < ApplicationController
       redirect_to player_events_path
     end
     @event = Event.find(params[:event_id])
-    @mealchoice = params[:mealplan][:mealchoice]
+    @cabin = Cabin.find(params[:eventpurchase][:cabin])
+    @mealchoice = params[:eventpurchase][:mealchoice]
 
     @eventprice = get_event_price(@event)
 
@@ -190,7 +191,7 @@ class EventController < ApplicationController
       order.save!
       if response.result.status == 'COMPLETED'
 
-        add_user_to_event(current_user,@event, params[:meal_type])
+        add_user_to_event(current_user, @event, params[:meal_type], params[:cabin])
 
         return render :json => {:status => response.result.status}, :status => :ok
       end
@@ -292,7 +293,7 @@ class EventController < ApplicationController
       redirect_to event_path(params[:event_id])
     else
       @event = Event.find(params[:event_id])
-      @availablecabins = Event.available_cabins(@event, @myeventattendance)
+      @availablecabins = Event.available_cabins(@event)
       respond_to do |format|
         format.js
       end
