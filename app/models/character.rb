@@ -27,6 +27,7 @@ class Character < ApplicationRecord
   has_one_attached :photo
   validates :photo, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
 
+  default_scope { order(name: :asc) }
 
   def get_name
     if self.alias.present?

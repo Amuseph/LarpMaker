@@ -17,6 +17,8 @@ class User < ApplicationRecord
             inclusion: { in: %w[Cast Player Admin Banned],
                          message: '%{value} is not a valid Player Type' }
   
+  default_scope { order(firstname: :asc, lastname: :asc) }
+
   def set_noshow
     self.mealexempt = true
     save!
