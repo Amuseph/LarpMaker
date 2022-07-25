@@ -1,5 +1,6 @@
 {
   "name": "Larpmaker",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@popperjs/core": "^2.11.5",
