@@ -10,7 +10,7 @@
     "flatpickr": "^4.6.6",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
-    "select2": "^4.0.13",
+    "select2": "^4.1.0-rc.0",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.12"
   },

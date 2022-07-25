@@ -6,6 +6,8 @@ class Event < ApplicationRecord
   has_many :characters, through: :eventattendances
   has_many :users, through: :characters
 
+  default_scope { order(startdate: :desc) }
+
   def self.available_cabins(event)
     available_cabins = []
 
