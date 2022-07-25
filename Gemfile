@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 
 # Bootstrap makes things pretty
-gem 'momentjs-rails', '<= 2.29.1'
+gem 'momentjs-rails', '<= 2.29.1.1'
 gem 'bootstrap_form', '~> 4.0'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
