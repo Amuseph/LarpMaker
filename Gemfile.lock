@@ -335,6 +335,7 @@ DEPENDENCIES
   image_processing (~> 1.12)
   jbuilder (~> 2.7)
   mini_magick
+  momentjs-rails (<= 2.29.1.1)
   net-imap
   net-pop
   net-smtp
