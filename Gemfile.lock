@@ -98,6 +98,10 @@ GEM
     bindex (0.8.1)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
+    bootstrap (5.2.0)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.11.5, < 3)
+      sassc-rails (>= 2.0.0)
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
@@ -212,6 +216,7 @@ GEM
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    popper_js (2.11.5)
     public_suffix (4.0.6)
     puma (4.3.12)
       nio4r (~> 2.0)
@@ -326,6 +331,7 @@ DEPENDENCIES
   administrate
   aws-sdk-s3
   bootsnap (>= 1.4.2)
+  bootstrap (~> 5.2.0)
   bootstrap-sass
   bootstrap_form (~> 4.0)
   byebug
@@ -335,7 +341,6 @@ DEPENDENCIES
   image_processing (~> 1.12)
   jbuilder (~> 2.7)
   mini_magick
-  momentjs-rails (<= 2.29.1.1)
   net-imap
   net-pop
   net-smtp

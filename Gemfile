@@ -6,11 +6,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 
 # Bootstrap makes things pretty
+gem 'bootstrap', '~> 5.2.0'
 gem 'bootstrap_form', '~> 4.0'
 gem 'bootstrap-sass'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.2'
 gem 'sprockets-rails', require: 'sprockets/railtie'
-gem 'momentjs-rails', '<= 2.29.1.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 # Use postgres as the database for Active Record
@@ -45,22 +45,11 @@ gem 'MailchimpMarketing'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
-end
-
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-end
-
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
