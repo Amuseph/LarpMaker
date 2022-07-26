@@ -2,7 +2,7 @@
   <%= bootstrap_form_for :courier, url: character_sendoracle_path do |f| %>
     <%= f.select :skillsused, options_for_select(1..@oraclecount), {label: 'Oracles Used' } %>
     <%= f.text_area :message, :required => true, placeholder: 'Message', hide_label: true %>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     <button type="submit" class="btn btn-primary">Submit</button>
   <% end %>
 </div>
