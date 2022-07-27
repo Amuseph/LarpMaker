@@ -25,12 +25,11 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-link <%= checkActiveCampTab('link', 'general') %>" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'rules') %>" id="rules-tab" data-toggle="tab" href="#rules" role="tab" aria-controls="class" aria-selected="false">Camp Rules</a>
-
           <a class="nav-link <%= checkActiveCampTab('link', 'arrival') %>" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="class" aria-selected="false">Arrival At Myth</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'thingsyouneed') %>" id="thingsyouneed-tab" data-toggle="tab" href="#thingsyouneed" role="tab" aria-controls="class" aria-selected="false">Things You Need</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'sleepcabins') %>" id="sleepcabins-tab" data-toggle="tab" href="#sleepcabins" role="tab" aria-controls="class" aria-selected="false">Sleeping: Cabins</a>
-          <a class="nav-link <%= checkActiveCampTab('link', 'sleeptavern') %>" id="sleeptavern-tab" data-toggle="tab" href="#sleeptavern" role="tab" aria-controls="class" aria-selected="false">Sleeping: Tavern</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'tents') %>" id="tents-tab" data-toggle="tab" href="#tents" role="tab" aria-controls="class" aria-selected="false">Sleeping: Tents</a>
+          <a class="nav-link <%= checkActiveCampTab('link', 'sleeptavern') %>" id="sleeptavern-tab" data-toggle="tab" href="#sleeptavern" role="tab" aria-controls="class" aria-selected="false">Sleeping: Tavern</a>
         </div>
       </nav>
     </div>
@@ -53,11 +52,11 @@
         <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleepcabins') %>" id="sleepcabins" role="tabpanel" aria-labelledby="sleepcabins-tab">
           <%= render partial: 'pages/camptabs/sleepcabins' %>
         </div>
-        <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleeptavern') %>" id="sleeptavern" role="tabpanel" aria-labelledby="sleeptavern-tab">
-          <%= render partial: 'pages/camptabs/sleeptavern' %>
-        </div>
         <div class="tab-pane fade <%= checkActiveCampTab('content', 'tents') %>" id="tents" role="tabpanel" aria-labelledby="tents-tab">
           <%= render partial: 'pages/camptabs/tents' %>
+        </div>
+        <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleeptavern') %>" id="sleeptavern" role="tabpanel" aria-labelledby="sleeptavern-tab">
+          <%= render partial: 'pages/camptabs/sleeptavern' %>
         </div>
       </div>
     </div>
