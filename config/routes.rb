@@ -11,12 +11,14 @@ Rails.application.routes.draw do
     get :calendar
     get :mythology
     get :races
+    get :damarkeep
     get :laws
     get :townpositions
-    get :camp
     get :rulebook
     get :rulebookchangelog
+    get :camp
     get :events
+    get :communitylibrary
     get :community
     get :earnexp
     get :waiver

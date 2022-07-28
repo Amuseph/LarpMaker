@@ -284,6 +284,29 @@ body {
       color: #FF0000;
     }
   }
+  #librarylinks {
+    div {
+      text-align: center;
+    }
+    i {
+      font-size: 50px;
+    }
+    #link {
+      margin: auto;
+      padding: 5px;
+      border-radius: 25px;
+
+      a:link, a:visited, a:hover, a:active  { 
+        color: black;
+        text-decoration:none;
+        font-weight: bold;
+      }
+    }
+
+    #link:hover{
+      background: rgba(75, 75, 75, 0.25)
+    }
+  }
 }
 
 #worldsettings {

@@ -25,12 +25,11 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <a class="nav-link <%= checkActiveCampTab('link', 'general') %>" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'rules') %>" id="rules-tab" data-toggle="tab" href="#rules" role="tab" aria-controls="class" aria-selected="false">Camp Rules</a>
-
           <a class="nav-link <%= checkActiveCampTab('link', 'arrival') %>" id="arrival-tab" data-toggle="tab" href="#arrival" role="tab" aria-controls="class" aria-selected="false">Arrival At Myth</a>
           <a class="nav-link <%= checkActiveCampTab('link', 'thingsyouneed') %>" id="thingsyouneed-tab" data-toggle="tab" href="#thingsyouneed" role="tab" aria-controls="class" aria-selected="false">Things You Need</a>
-          <a class="nav-link <%= checkActiveCampTab('link', 'sleepcabins') %>" id="sleepcabins-tab" data-toggle="tab" href="#sleepcabins" role="tab" aria-controls="class" aria-selected="false">Sleeping in Cabins</a>
-          <a class="nav-link <%= checkActiveCampTab('link', 'sleeptavern') %>" id="sleeptavern-tab" data-toggle="tab" href="#sleeptavern" role="tab" aria-controls="class" aria-selected="false">Sleeping in Tavern</a>
-          <a class="nav-link <%= checkActiveCampTab('link', 'tents') %>" id="tents-tab" data-toggle="tab" href="#tents" role="tab" aria-controls="class" aria-selected="false">Tents</a>
+          <a class="nav-link <%= checkActiveCampTab('link', 'sleepcabins') %>" id="sleepcabins-tab" data-toggle="tab" href="#sleepcabins" role="tab" aria-controls="class" aria-selected="false">Sleeping: Cabins</a>
+          <a class="nav-link <%= checkActiveCampTab('link', 'tents') %>" id="tents-tab" data-toggle="tab" href="#tents" role="tab" aria-controls="class" aria-selected="false">Sleeping: Tents</a>
+          <a class="nav-link <%= checkActiveCampTab('link', 'sleeptavern') %>" id="sleeptavern-tab" data-toggle="tab" href="#sleeptavern" role="tab" aria-controls="class" aria-selected="false">Sleeping: Tavern</a>
         </div>
       </nav>
     </div>
@@ -53,11 +52,11 @@
         <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleepcabins') %>" id="sleepcabins" role="tabpanel" aria-labelledby="sleepcabins-tab">
           <%= render partial: 'pages/camptabs/sleepcabins' %>
         </div>
-        <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleeptavern') %>" id="sleeptavern" role="tabpanel" aria-labelledby="sleeptavern-tab">
-          <%= render partial: 'pages/camptabs/sleeptavern' %>
-        </div>
         <div class="tab-pane fade <%= checkActiveCampTab('content', 'tents') %>" id="tents" role="tabpanel" aria-labelledby="tents-tab">
           <%= render partial: 'pages/camptabs/tents' %>
+        </div>
+        <div class="tab-pane fade <%= checkActiveCampTab('content', 'sleeptavern') %>" id="sleeptavern" role="tabpanel" aria-labelledby="sleeptavern-tab">
+          <%= render partial: 'pages/camptabs/sleeptavern' %>
         </div>
       </div>
     </div>
@@ -65,28 +64,18 @@
 
   <div class="row mt-3">
     <div class="col-6">
-      <h3>The Crossing</h3>
-      <p>
-        This district in Damar Keep has a small crossing bridge with a well-traveled trail that leads to the city of Ivygate (or Windhold if you follow the split in the road). Residents of the village enjoy the gentle sound of the brook that flows into the pond known as the Cauldron.
-        While the town guard makes every effort, this side of town seems to be an active target for invaders and monsters. 
-        You have been warned, adventurer. Be sure you are always on your guard when staying in this part of Damar Keep.
-      </p>
+      <h3>The Glade</h3>
     </div>
     <div class="col-6">
-      <h3>The Glade</h3>
-      <p>
-        The bridge in the southern portion of the above Glade map leads to the town proper area with the Dancing Dragonfly. 
-        To the north, a precarious trail (yellow trail) leads through the woods. It is easy to get lost on the trail at night and there are many large stones and wetlands. Also in the Glade area is an amphitheater with benches and a podium. 
-        Residents closer to the bridge often enjoy the sound of the waterfall during times when the pond known as the Cauldron is full.
-      </p>
+      <h3>The Crossing</h3>
     </div>
   </div>
   <div class="row cabinmaps">
     <div class="col-6">
-      <%= image_tag("events/the_crossing.jpg") %>
+      <%= image_tag("events/the_glade.jpg") %>
     </div>
     <div class="col-6">
-      <%= image_tag("events/the_glade.jpg") %>
+      <%= image_tag("events/the_crossing.jpg") %>
     </div>
   </div>
 
