@@ -1,44 +1,62 @@
 <%= provide(:title, 'Explogs') %>
-<div class="container col-11">
-<div class="pagetitle">XP Log</div>
-<div class="pagesubtitle" >A Record of Experience Earned</div>
+<div class="container col-12">
+  <div class="pagetitle">XP Log</div>
+  <div class="pagesubtitle" >A Record of Experience Earned</div>
 
-<div class="container">
-  <div class="row bg-light">
-    <div class="col-sm">
-      Total Available XP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
-    </div>
-    <div class="col-sm">
-      Total Earned XP: <%= current_user.explogs.where('amount > 0').sum(:amount) %>
+  <div class='container col-10 text-right' id = 'transferxplink'>
+    <%= transfer_xp_link %>
+  </div>
+  <div class="container col-10">
+    <div class="row bg-light">
+      <div class="col-sm">
+        Total Available XP: <%= available_xp %>
+      </div>
+      <div class="col-sm">
+        Total Earned XP: <%= total_xp %>
+      </div>
     </div>
   </div>
+
+  <table class="table table-hover table-bordered table-sm">
+    <thead class = 'thead-dark'>
+      <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Acquire Date</th>
+          <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.explogs.each do |explog| %>
+        <% if (explog.acquiredate > Time.now) %>
+          <tr class = 'table-secondary'>
+        <% elsif (explog.amount < 0) %>
+          <tr class = 'table-danger'>
+        <% else %>
+          <tr class = 'table-success'>
+        <% end %>
+        
+          <td><%= explog.name %></td>
+          <td><%= explog.description %></td>
+          <td><%= explog.acquiredate.in_time_zone('Eastern Time (US & Canada)').strftime('%m/%d/%Y') %></td>
+          <td><%= explog.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 
-<table class="table table-hover table-bordered table-sm">
-  <thead class = 'thead-dark'>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Acquire Date</th>
-        <th scope="col">Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% current_user.explogs.each do |explog| %>
-      <% if (explog.acquiredate > Time.now) %>
-        <tr class = 'table-secondary'>
-      <% elsif (explog.amount < 0) %>
-        <tr class = 'table-danger'>
-      <% else %>
-        <tr class = 'table-success'>
-      <% end %>
-      
-        <td><%= explog.name %></td>
-        <td><%= explog.description %></td>
-        <td><%= explog.acquiredate.in_time_zone('Eastern Time (US & Canada)').strftime('%m/%d/%Y') %></td>
-        <td><%= explog.amount %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+<div class="modal fade" id="transferXPModal" tabindex="-1" role="dialog" aria-labelledby="transferXPModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transferXPModalLabel">Transfer XP</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> 
+      <div class="modal-body" id="transferXPBody"></div>
+    </div>
+  </div>
 </div>

@@ -119,6 +119,8 @@ Rails.application.routes.draw do
 
   namespace :player do
     get :explog
+    get :transferxp
+    post :transferxp
     get :events
     post :changecharacter
     get :changeeventcharacter

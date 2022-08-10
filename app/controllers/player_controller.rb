@@ -25,6 +25,19 @@ class PlayerController < ApplicationController
     end
   end
 
+  def transferxp
+    if request.post?
+      
+      redirect_to character_index_path({ tab: 'skills' })
+
+    else
+      respond_to do |format|
+        format.js
+      end
+    end
+
+  end
+
   private
 
   def changecharacter_params
