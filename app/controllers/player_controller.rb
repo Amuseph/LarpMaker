@@ -36,7 +36,8 @@ class PlayerController < ApplicationController
   end
 
   def validateemail
-    user = User.find_by(email: params[:email])
+    user = User.where('lower(email) = ?', params[:email].downcase).first 
+
     if user.nil?
       response = 'false'
     elsif user.email == current_user.email
