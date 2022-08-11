@@ -8,8 +8,8 @@ module PlayersHelper
   end
 
   def transfer_xp(receiver, amount)
-    reciever = User.find_by(email: receiver)
-
+    reciever = User.where('lower(email) = ?', receiver.downcase).first
+    
     @explog = Explog.new
     @explog.user_id = current_user.id
     @explog.name = 'XP Transfer'
