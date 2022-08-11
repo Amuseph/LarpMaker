@@ -125,6 +125,8 @@ Rails.application.routes.draw do
     post :changecharacter
     get :changeeventcharacter
     post :changeeventcharacter
+    get :validateemail
+    get :validatexpamount
   end
 
   resources :characterclass do

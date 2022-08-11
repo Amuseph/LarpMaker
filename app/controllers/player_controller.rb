@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PlayerController < ApplicationController
+  include PlayersHelper
   before_action :authenticate_user!
 
   def changecharacter
@@ -25,17 +26,31 @@ class PlayerController < ApplicationController
     end
   end
 
-  def transferxp
-    if request.post?
-      
-      redirect_to character_index_path({ tab: 'skills' })
-
+  def validateemail
+    user = User.find_by(email: params[:email])
+    if user.nil?
+      response = 'false'
     else
-      respond_to do |format|
-        format.js
-      end
+      response = 'true'
     end
+    respond_to do |format|
+      format.json { render json: { response: response } }
+    end
+  end
 
+  def validatexpamount
+    xpamount  = params[:xpamount].to_i
+
+    if xpamount <= 0
+      response = 'false'
+    elsif  available_xp > xpamount
+      response = 'true'
+    else
+      response = 'false'
+    end
+    respond_to do |format|
+      format.json { render json: { response: response } }
+    end
   end
 
   private

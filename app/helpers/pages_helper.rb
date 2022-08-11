@@ -90,7 +90,7 @@ module PagesHelper
 
   def transfer_xp_link
     if available_xp > 0
-      return link_to 'Transfer XP', player_transferxp_path, remote: true, class: 'text-right'
+      return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
     end
 
 
