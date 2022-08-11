@@ -13,9 +13,7 @@
       </div>
     </div>
   </div>
-
   <br>
-
   <%= bootstrap_form_for :xptransfer, url: player_transferxp_path, id: 'transferxpform' do |f| %>
     <%= f.text_field :emailaddress, :required => true, placeholder: 'Email Address', hide_label: true %>
     <p id ="emailvalidation"></p>
@@ -66,7 +64,6 @@
     })
     return returncode;
   }
-
   $('form').submit(function(e) {  
     if (validateEmail() == 'true') {
       if (validateAmount() == 'true') {
@@ -75,5 +72,4 @@
     }
     return false
   });
-
 </script>
