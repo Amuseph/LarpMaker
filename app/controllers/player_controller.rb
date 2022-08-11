@@ -26,9 +26,20 @@ class PlayerController < ApplicationController
     end
   end
 
+  def transferxp
+    if request.post?
+      @transferxp = Explog.create
+      transfer_xp(params[:xptransfer][:emailaddress], params[:xptransfer][:amount].to_i)
+      redirect_to player_explog_path()
+    end
+
+  end
+
   def validateemail
     user = User.find_by(email: params[:email])
     if user.nil?
+      response = 'false'
+    elsif user.email == current_user.email
       response = 'false'
     else
       response = 'true'
@@ -43,7 +54,7 @@ class PlayerController < ApplicationController
 
     if xpamount <= 0
       response = 'false'
-    elsif  available_xp > xpamount
+    elsif  available_xp >= xpamount
       response = 'true'
     else
       response = 'false'
