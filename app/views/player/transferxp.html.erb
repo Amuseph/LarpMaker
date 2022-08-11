@@ -16,67 +16,64 @@
 
   <br>
 
-  <%= bootstrap_form_for :xptransfer, url: player_transferxp_path do |f| %>
-    <div class="row">
-      <div class="container col-8">
-        <%= f.text_field :emailaddress, :required => true, placeholder: 'Email Address', hide_label: true %>
-      </div>
-      <div class="container col-4">
-        <button type="button" class="btn btn-secondary" id="validateemailbutton" onclick="validateEmail()">Validate Email</button>
-      </div>
-    </div>
+  <%= bootstrap_form_for :xptransfer, url: player_transferxp_path, id: 'transferxpform' do |f| %>
+    <%= f.text_field :emailaddress, :required => true, placeholder: 'Email Address', hide_label: true %>
     <p id ="emailvalidation"></p>
-    <div class="row">
-      <div class="container col-8">
-        <%= f.text_field :amount, :required => true, placeholder: 'XP Amount', hide_label: true %>
-      </div>
-      <div class="container col-4">
-      <button type="button" class="btn btn-secondary" id="validateamountbutton" onclick="validateAmount()" disabled>Validate Amount</button>
-      </div>
-    </div>
+    <%= f.text_field :amount, :required => true, placeholder: 'XP Amount', hide_label: true %>
     <p id ="amountvalidation"></p>
     <%= link_to '<button type="button" class="btn btn-secondary">Back</button>'.html_safe, player_explog_path %>
-    <button type="submit" class="btn btn-primary" id="submitbutton" disabled>Submit</button>
+    <button type="submit" class="btn btn-primary" id="submitbutton">Submit</button>
   <% end %>
 </div>
 
 <script>
   function validateEmail() {
+    returncode = 'false'
     $.ajax({
       url: '/player/validateemail',
       type: 'GET',
+      async: false,
       dataType: 'json',
       data: {email: document.getElementById('xptransfer_emailaddress').value},
       success: function(data){
         if (data.response == 'true') {
           document.getElementById("emailvalidation").innerHTML = 'Email Address Validated';
-          $('#validateamountbutton').removeAttr('disabled');
-          $('#xptransfer_emailaddress').prop('disabled', true);
-          $('#validateemailbutton').prop('disabled', true);
+          returncode = 'true';
         } else {
           document.getElementById("emailvalidation").innerHTML = 'Invalid Email Address';
         }
 
       }
     })
+    return returncode;
   }
   function validateAmount() {
+    returncode = 'false'
     $.ajax({
       url: '/player/validatexpamount',
       type: 'GET',
+      async: false,
       dataType: 'json',
       data: {xpamount: document.getElementById('xptransfer_amount').value},
       success: function(data){
         if (data.response == 'true') {
           document.getElementById("amountvalidation").innerHTML = 'XP Amount Validated';
-          $('#submitbutton').removeAttr('disabled');
-          $('#xptransfer_amount').prop('disabled', true);
-          $('#validateamountbutton').prop('disabled', true);
+          returncode = 'true';
         } else {
           document.getElementById("amountvalidation").innerHTML = 'Invalid XP Amount';
         }
-
       }
     })
+    return returncode;
   }
+
+  $('form').submit(function(e) {  
+    if (validateEmail() == 'true') {
+      if (validateAmount() == 'true') {
+        return true
+      }
+    }
+    return false
+  });
+
 </script>
