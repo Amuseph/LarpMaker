@@ -119,10 +119,14 @@ Rails.application.routes.draw do
 
   namespace :player do
     get :explog
+    get :transferxp
+    post :transferxp
     get :events
     post :changecharacter
     get :changeeventcharacter
     post :changeeventcharacter
+    get :validateemail
+    get :validatexpamount
   end
 
   resources :characterclass do

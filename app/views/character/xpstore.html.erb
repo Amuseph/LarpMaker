@@ -1,6 +1,6 @@
 <%= provide(:title, 'XP Store') %>
 <div class="container col-12 mt-4 mb-2" id="xpstore">
-Available XP: <%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>
+Available XP: <%= available_xp %>
   <div class="mb-2" id="xpstorecategory">
     Items for Arcanestå
   </div>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PlayerController < ApplicationController
+  include PlayersHelper
   before_action :authenticate_user!
 
   def changecharacter
@@ -22,6 +23,44 @@ class PlayerController < ApplicationController
       redirect_to player_events_path
     else
       @eventattendance = Eventattendance.find_by(id: params[:eventattendance_id])
+    end
+  end
+
+  def transferxp
+    if request.post?
+      @transferxp = Explog.create
+      transfer_xp(params[:xptransfer][:emailaddress], params[:xptransfer][:amount].to_i)
+      redirect_to player_explog_path()
+    end
+
+  end
+
+  def validateemail
+    user = User.find_by(email: params[:email])
+    if user.nil?
+      response = 'false'
+    elsif user.email == current_user.email
+      response = 'false'
+    else
+      response = 'true'
+    end
+    respond_to do |format|
+      format.json { render json: { response: response } }
+    end
+  end
+
+  def validatexpamount
+    xpamount  = params[:xpamount].to_i
+
+    if xpamount <= 0
+      response = 'false'
+    elsif  available_xp >= xpamount
+      response = 'true'
+    else
+      response = 'false'
+    end
+    respond_to do |format|
+      format.json { render json: { response: response } }
     end
   end
 

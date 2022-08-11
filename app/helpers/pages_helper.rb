@@ -70,21 +70,28 @@ module PagesHelper
   end
 
   def get_xpstore_link(item)
-    availablexp = current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount)
     case item
       when 'GoodFortune'
-        if (availablexp >= 250)
+        if (available_xp >= 250)
           return link_to 'Purchase for 250 XP', character_spendxp_path(item: 'GoodFortune'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
         else
           return "Not enough XP to purchase. Requires 250 XP."
         end
       when 'GravenMiracle'
         gravencost = gravencost()
-        if availablexp >= gravencost
+        if available_xp >= gravencost
           return link_to "Purchase for #{gravencost} XP", character_spendxp_path(item: 'GravenMiracle'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
         else
           return "Not enough XP to purchase. Requires #{gravencost} XP."
         end
     end
   end
+
+
+  def transfer_xp_link
+    if available_xp > 0
+      return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
+    end
+  end
+
 end
