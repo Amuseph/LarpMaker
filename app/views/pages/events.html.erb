@@ -15,7 +15,7 @@
     This season does not have any upcoming games. Please check back later!
   <% end %>
 
-  <% Event.all.where('season = ? and startdate > ?', 'Spring', DateTime.now).order('startdate asc').each do |event|  %>
+  <% Event.all.where('season = ? and startdate > ?', 'Spring', DateTime.now).reorder('startdate asc').each do |event|  %>
     <div class="row" id="eventspace">
       <div class="container col-12" id="eventname">
         <%= event.name %>
@@ -49,7 +49,7 @@
   <% if (Event.all.where('season = ? and startdate > ?', 'Fall', DateTime.now).count == 0)  %>
     This season does not have any upcoming games. Please check back later!
   <% end %>
-  <% Event.all.where('season = ? and startdate > ?', 'Fall', DateTime.now).order('startdate asc').each do |event|  %>
+  <% Event.all.where('season = ? and startdate > ?', 'Fall', DateTime.now).reorder('startdate asc').each do |event|  %>
     <div class="row" id="eventspace">
       <div class="container col-12" id="eventname">
         <%= event.name  %>
