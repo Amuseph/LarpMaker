@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get :events
     get :communitylibrary
     get :community
-    get :earnexp
+    get :earnxp
     get :waiver
     get :termsofservice
     get :faq
