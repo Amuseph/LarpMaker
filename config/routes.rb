@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     get :rulebookchangelog
     get :camp
     get :events
+    get :eventschedule
     get :communitylibrary
     get :community
     get :earnxp
