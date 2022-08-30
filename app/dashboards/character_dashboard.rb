@@ -42,6 +42,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     alias: Field::String,
+    rewrite: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -66,6 +67,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     name
     alias
     pronouns
+    rewrite
     level
     race
     characterclass
@@ -92,6 +94,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     name
     alias
     pronouns
+    rewrite
     level
     levelupdate
     race

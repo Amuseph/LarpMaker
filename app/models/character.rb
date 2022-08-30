@@ -65,5 +65,13 @@ class Character < ApplicationRecord
         charskill.destroy if charskill.skill.tier >= 4
       end
     end
+
+    if saved_change_to_rewrite?
+      if self.rewrite == true
+        characterskills.each do |charskill|
+          charskill.destroy
+        end
+      end
+    end
   end
 end

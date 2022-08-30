@@ -5,7 +5,21 @@ module CharactersHelper
     if !sheetsLocked 
       if Setting.allow_global_reroll
         true
-      elsif (@character.events.where('startdate <= ? AND eventtype = ? ', Time.now, 'Adventure Weekend').count) < 1
+      elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 1
+        true
+      end
+    end
+  end
+
+  def can_rewrite_character()
+    if !sheetsLocked 
+      if Setting.allow_global_reroll
+        false
+      elsif (@character.rewrite)
+        false
+      elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 1
+        false
+      elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 4
         true
       end
     end
