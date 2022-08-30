@@ -41,6 +41,10 @@ class CharacterController < ApplicationController
     @race = Race.all.where('playeravailable = true')
     @characterclass = Characterclass.all.where('playeravailable = true')
     @deity = Deity.all.where('playeravailable = true')
+
+    if !can_rewrite_character()
+      redirect_to root_path
+    end
   end
 
   def update
