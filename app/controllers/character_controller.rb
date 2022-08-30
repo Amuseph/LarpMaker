@@ -30,14 +30,21 @@ class CharacterController < ApplicationController
       redirect_to character_index_path
     end
   end
+
   def edit
     @race = Race.all.where('playeravailable = true')
     @characterclass = Characterclass.all.where('playeravailable = true')
     @deity = Deity.all.where('playeravailable = true')
   end
 
+  def rewrite
+    @race = Race.all.where('playeravailable = true')
+    @characterclass = Characterclass.all.where('playeravailable = true')
+    @deity = Deity.all.where('playeravailable = true')
+  end
+
   def update
-    @character = Character.find(params[:id])
+    @character = Character.find(session[:character])
     @oldname = @character.name
     @character.update(character_params)
 
@@ -45,6 +52,12 @@ class CharacterController < ApplicationController
       explog.description = explog.description.sub(@oldname, @character.name)
       explog.save!
     end
+
+    if params[:id] == 'rewrite'
+      @character.rewrite = true
+      @character.save!
+    end
+
     redirect_to root_path
   end
 

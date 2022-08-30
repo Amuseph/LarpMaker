@@ -23,27 +23,27 @@
     <div class="row characterCreateForm", id='classRow'>
       <div class="col-2 my-5 p-auto align-middle ">
         <%= f.collection_select :characterclass_id, @characterclass, :id, :name, {prompt: 'Class', hide_label: true }, required: true  %>
-      <div id='totemselect'>
-        <%= f.select :totem, ['Bear', 'Lizard', 'Rat', 'Raven', 'Snake', 'Spider', 'Wolf' ], {include_blank: 'Totem', prompt: 'Totem', hide_label: true } %>
-        <p class = "small font-italic">Totems can only be selected at character creation. Once selected, they cannot be changed.</p>
-      </div> 
+        <div id='totemselect'>
+          <%= f.select :totem, ['Bear', 'Lizard', 'Rat', 'Raven', 'Snake', 'Spider', 'Wolf' ], {include_blank: 'None' } %>
+          <p class = "small font-italic">Totems can only be selected at character creation. Once selected, they cannot be changed.</p>
+        </div>
+      </div>
+      <div class="col-10 align-self-center",  id='ClassDescDiv'>
+        <img class='pull-left' id= 'classtoken' height= '100' width= '100'/>
+        <span id='ClassDesc'></span>
+      </div>
     </div>
-    <div class="col-10 align-self-center",  id='ClassDescDiv'>
-      <img class='pull-left' id= 'classtoken' height= '100' width= '100'/>
-      <span id='ClassDesc'></span>
+    <div class="row characterCreateForm", id='deityRow'>
+      <div class="col-2 my-2 align-self-center ">
+        <%= f.collection_select :deity_id, @deity, :id, :name, {hide_label: true }  %>
+      </div>
+      <div class="col-10 align-self-center",  id='DeityDescDiv'>
+        <img class='pull-left' id= 'deitytoken' height= '100' width= '100'/>
+        <span id='DeityDesc'></span>
+      </div>
     </div>
   </div>
-  <div class="row characterCreateForm", id='deityRow'>
-    <div class="col-2 my-2 align-self-center ">
-      <%= f.collection_select :deity_id, @deity, :id, :name, {hide_label: true }  %>
-    </div>
-    <div class="col-10 align-self-center",  id='DeityDescDiv'>
-      <img class='pull-left' id= 'deitytoken' height= '100' width= '100'/>
-      <span id='DeityDesc'></span>
-    </div>
-  </div>
-
   <br><br>
-  <%= f.submit 'Save Character', class: "btn btn-success" %>
+  <%= f.submit 'Save Character', class: "btn btn-success", data: { confirm: 'Are you sure?' } %>
   <%= link_to 'Cancel', root_path, class: "btn btn-danger" %>
 <% end %>

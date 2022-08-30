@@ -94,7 +94,8 @@ Rails.application.routes.draw do
     post :learnprofession
     post :removeprofession
     get :printablesheet
-    get :comingsoon
+    get :rewrite
+    post :rewrite
   end
 
   resources :character
