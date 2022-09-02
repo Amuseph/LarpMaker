@@ -53,11 +53,28 @@ module EventsHelper
 
 
   def add_event_exp(event, eventattendance)
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    puts('taco')
     season_pass_exp = 100
     year_of_season = event.startdate.year
     first_event_of_season = Event.order(:startdate).find_by("season = ? and extract(year from startdate) = ?", event.season, year_of_season)
     days_till_first_lockout = (first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
 
+    puts('taco2')
+    puts('taco2')
+    puts('taco2')
+    puts(first_event_of_season.startdate)
+    puts(Time.now.in_time_zone('Eastern Time (US & Canada)').to_date)
+    puts((first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i)
+    puts(days_till_first_lockout)
+    puts('taco2')
+    puts('taco2')
+    puts('taco2')
+    puts('taco2')
+    puts('taco2')
     if event.eventexp > 0
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
@@ -69,7 +86,13 @@ module EventsHelper
       @explog.save!
     end
 
+    puts('taco3')
+    puts('taco3')
+    puts('taco3')
     if eventattendance.registrationtype == 'Player' && days_till_first_lockout > 0
+      puts('taco4')
+      puts('taco4')
+      puts('taco4')
       event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
       player_event_count_of_season = Event.joins(:eventattendances).where("user_id = ? and season = ? and registrationtype = ? and extract(year from startdate) = ?", current_user, @event.season, 'Player', year_of_season).count
       if event_count_of_season == player_event_count_of_season
