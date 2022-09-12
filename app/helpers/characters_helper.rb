@@ -12,6 +12,7 @@ module CharactersHelper
   end
 
   def can_rewrite_character()
+    return false
     if !sheetsLocked 
       if Setting.allow_global_reroll
         false
