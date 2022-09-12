@@ -127,7 +127,7 @@ module CharactersHelper
     elsif characterskill.skill.tier.zero?
       # Skill has been used and is tier 0
       return false
-    elsif @character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) > skill_refund_price(characterskill)
+    elsif @character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) >= skill_refund_price(characterskill)
       # Player can afford skill
       return true
     end
