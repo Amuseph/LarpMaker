@@ -58,8 +58,10 @@ class CharacterController < ApplicationController
     end
 
     if params[:id] == 'rewrite'
-      @character.rewrite = true
-      @character.save!
+      if can_rewrite_character()
+        @character.rewrite = true
+        @character.save!
+      end
     end
 
     redirect_to root_path
@@ -253,21 +255,24 @@ class CharacterController < ApplicationController
 
   def learnprofession
     if request.post?
-      @characterprofession = Characterprofession.new(addprof_params)
-      @characterprofession.character_id = session[:character]
-      if @characterprofession.save!
-        if (@character.characterprofessions.count > 2) || (last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
-          @explog = Explog.new
-          @explog.user_id = @character.user_id
-          @explog.name = 'Profession Purchase'
-          @explog.acquiredate = @characterprofession.acquiredate
-          @explog.description = "Purchased \"#{@characterprofession.profession.name}\" for \"#{@character.name}\""
-          @explog.amount = profession_exp_cost(@characterprofession.profession) * -1
-          @explog.grantedby_id = current_user.id
-          @explog.save!
+      if canBuyProfession(@character)
+        @characterprofession = Characterprofession.new(addprof_params)
+        @characterprofession.character_id = session[:character]
+        if @characterprofession.save!
+          if (@character.characterprofessions.count > 2) || (last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
+            @explog = Explog.new
+            @explog.user_id = @character.user_id
+            @explog.name = 'Profession Purchase'
+            @explog.acquiredate = @characterprofession.acquiredate
+            @explog.description = "Purchased \"#{@characterprofession.profession.name}\" for \"#{@character.name}\""
+            @explog.amount = profession_exp_cost(@characterprofession.profession) * -1
+            @explog.grantedby_id = current_user.id
+            @explog.save!
+          end
         end
-        redirect_to character_index_path({ tab: 'professions' })
       end
+      redirect_to character_index_path({ tab: 'professions' })
+
     else
       @availableprofessions,  @availablegroups = professions_to_buy(@character)
       respond_to do |format|

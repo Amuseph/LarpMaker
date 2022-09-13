@@ -44,7 +44,7 @@ module EventsHelper
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Feedback Letter'
       @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
-      @explog.description = "Exp for Feedback Letter"
+      @explog.description = "Exp for Feedback Letter - " + event.name
       @explog.amount = event.feedbackexp
       @explog.grantedby_id = current_user.id
       @explog.save!

@@ -38,15 +38,18 @@ class EventController < ApplicationController
     @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
     @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
     if request.post?
-      @eventfeedback = Eventfeedback.create(feedback_params)
-      @eventfeedback.user_id = current_user.id
-      @eventfeedback.event_id = params[:event_id]
-      @eventfeedback.character_id = @eventattendance.character_id
-      if @eventfeedback.save!
-        add_feedback_exp(@event, @eventattendance)
-        EventMailer.with(eventfeedback: @eventfeedback).send_event_feedback.deliver_later
-        redirect_to event_viewfeedback_path(params[:event_id])
+      if Eventfeedback.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
+        @eventfeedback = Eventfeedback.create(feedback_params)
+        @eventfeedback.user_id = current_user.id
+        @eventfeedback.event_id = params[:event_id]
+        @eventfeedback.character_id = @eventattendance.character_id
+        if @eventfeedback.save!
+          add_feedback_exp(@event, @eventattendance)
+          EventMailer.with(eventfeedback: @eventfeedback).send_event_feedback.deliver_later
+          
+        end
       end
+      redirect_to event_viewfeedback_path(params[:event_id])
     end
   end
 
