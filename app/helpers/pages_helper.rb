@@ -72,23 +72,132 @@ module PagesHelper
   end
 
   def get_xpstore_link(item)
+    
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Luck Token').count
     case item
+      when 'Tier1'
+        item_cost = 25
+      when 'Tier2'
+        item_cost = 35
+      when 'Tier3'
+        item_cost = 50
+      when 'BodyPanacea', 'SpiritPanacea', 'MindPanacea'
+        item_cost = 150
+      when 'Collecting', 'Refining', 'Crafting'
+        item_cost = 50
+      when 'SecondWind'
+        item_cost = 100
+      when 'LuckToken'
+        item_cost = 250
       when 'GoodFortune'
-        if (available_xp >= 250)
-          return link_to 'Purchase for 250 XP', character_spendxp_path(item: 'GoodFortune'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
-        else
-          return "Not enough XP to purchase. Requires 250 XP."
-        end
+        item_cost = 250
       when 'GravenMiracle'
-        gravencost = gravencost()
-        if available_xp >= gravencost
-          return link_to "Purchase for #{gravencost} XP", character_spendxp_path(item: 'GravenMiracle'), data: {confirm: 'Are you sure?'}, method: :post, :class => 'btn btn-success' 
-        else
-          return "Not enough XP to purchase. Requires #{gravencost} XP."
-        end
+        item_cost = gravencost()
+      else
+        item_cost = 999999
+    end
+
+    if item_cost > available_xp
+      return "<br>Not enough XP to purchase. Requires #{item_cost} XP.".html_safe
+    elsif spent_xpstore_xp + item_cost > 500 && item != 'GravenMiracle'
+      return "<br>Spending #{item_cost} would put you over the 500 XP Limit.".html_safe
+    elsif ['Collecting', 'Refining', 'Crafting'].include? item and profession_count >= 1
+      return '<br>You have already purchased a crafting profession'.html_safe
+    elsif secondwind_count >= 1 and item == 'SecondWind'
+      return '<br>You may only purchase one Second Wind per event'.html_safe
+    elsif lucktoken_count >= 1 and item == 'LuckToken'
+      return '<br>You may only purchase one Luck Token per event'.html_safe
+    else
+      return submit_tag  "Purchase for #{item_cost} XP", data: {confirm: 'Are you sure?'}, :class => 'btn btn-success' 
     end
   end
 
+  def xpstore_tier1_skills
+    skilllist = []
+
+    @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
+      skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and tier = 1', skillgroup.id)
+      skills.each do |skill|
+        if skill.resttype.name != 'Permanent'
+          skilllist.push([skill.name, skill.id]) if has_skill_prereq(@character, skill)
+        end
+      end
+    end
+    return skilllist
+  end
+
+  def xpstore_tier2_skills
+    skilllist = []
+
+    @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
+      skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and tier = 2', skillgroup.id)
+      skills.each do |skill|
+        if skill.resttype.name != 'Permanent'
+          skilllist.push([skill.name, skill.id]) if has_skill_prereq(@character, skill)
+        end
+      end
+    end
+    return skilllist
+  end
+
+  def xpstore_tier3_skills
+    skilllist = []
+
+    @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
+      skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and tier = 3', skillgroup.id)
+      skills.each do |skill|
+        if skill.resttype.name != 'Permanent'
+          skilllist.push([skill.name, skill.id]) if has_skill_prereq(@character, skill)
+        end
+      end
+    end
+    return skilllist
+  end
+
+  def xpstore_collecting
+    professionlist = []
+
+    Professiongroup.where('playeravailable = true and name = ?', 'Collector').each do |professiongroup|
+      professiongroup.professions.where('playeravailable = true and name like ?', 'Novice%').each do |profession|
+        next if @character.professions.where(name: profession.name).count >= 1
+        professionlist.push([profession.name, profession.id])
+      end
+    end
+    return professionlist
+  end
+
+  def xpstore_refining
+    professionlist = []
+
+    Professiongroup.where('playeravailable = true and name = ?', 'Refining').each do |professiongroup|
+      professiongroup.professions.where('playeravailable = true and name like ?', 'Novice%').each do |profession|
+        next if @character.professions.where(name: profession.name).count >= 1
+        professionlist.push([profession.name, profession.id])
+      end
+    end
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    puts(professionlist)
+    puts('taco')
+    puts('taco')
+    puts('taco')
+    return professionlist
+  end
+
+  def xpstore_crafting
+    professionlist = []
+
+    Professiongroup.where('playeravailable = true and name = ?', 'Crafting').each do |professiongroup|
+      professiongroup.professions.where('playeravailable = true and name like ?', 'Novice%').each do |profession|
+        next if @character.professions.where(name: profession.name).count >= 1
+        professionlist.push([profession.name, profession.id])
+      end
+    end
+    return professionlist
+  end
 
   def transfer_xp_link
     if available_xp > 0

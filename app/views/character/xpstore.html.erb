@@ -1,11 +1,154 @@
 <%= provide(:title, 'XP Store') %>
 <div class="container col-12 mt-4 mb-2" id="xpstore">
-Available XP: <%= available_xp %>
+  Available XP for XP Store: <%= available_xp %><br>
+  XP Spent Since Last Game (Excludes Graven): <%= spent_xpstore_xp %><br>
+  
+  <% 
+    tier1skills = xpstore_tier1_skills
+    tier2skills = xpstore_tier2_skills
+    tier3skills = xpstore_tier3_skills
+    collectorprofessions = xpstore_collecting
+    refiningprofessions = xpstore_refining
+    craftingprofessions = xpstore_crafting
+  %>
+
   <div class="mb-2" id="xpstorecategory">
-    Items for Arcanestå
+    Skills
+  </div>
+  <div class="row">
+    <div class="container col-4" id="itemcontainer">
+      <h3>Tier 1</h3>
+        A single use of a non-permanenet Tier 1 skill. This can exceed the 10 purchase maximum.<br>
+        Lasts until the end of the next event.
+      <br>
+
+      <%= bootstrap_form_for :skillpurchase, url: character_spendxp_path(item: 'Tier1') do |f| %>
+        <%= select_tag :skillpurchase, options_for_select(tier1skills) %><br>
+        <%= get_xpstore_link('Tier1') %>
+      <% end %>
+
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Tier 2</h3>
+        A single use of a non-permanenet Tier 2 skill. This can exceed the 10 purchase maximum.<br>
+        Lasts until the end of the next event.
+      <br>
+
+      <%= bootstrap_form_for :skillpurchase, url: character_spendxp_path(item: 'Tier2') do |f| %>
+        <%= select_tag :skillpurchase, options_for_select(tier2skills) %><br>
+        <%= get_xpstore_link('Tier2') %>
+      <% end %>
+
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Tier 3</h3>
+        A single use of a non-permanenet Tier 3 skill. This can exceed the 10 purchase maximum.<br>
+        Lasts until the end of the next event.
+      <br>
+
+      <%= bootstrap_form_for :skillpurchase, url: character_spendxp_path(item: 'Tier3') do |f| %>
+        <%= select_tag :skillpurchase, options_for_select(tier3skills) %><br>
+        <%= get_xpstore_link('Tier3') %>
+      <% end %>
+    </div>
   </div>
 
+  <div class="mb-2" id="xpstorecategory">
+    Items
+  </div>
+  <div class="row">
+    <div class="container col-4" id="itemcontainer">
+      <h3>Body Panacea</h3>
+        A single-use consumable that will remove Poison, Disease, Weakness, Waylay, and all Maimed limbs.<br>
+        Lasts until the end of the next event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'BodyPanacea') do |f| %>
+        <%= get_xpstore_link('BodyPanacea') %>
+      <% end %>
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Spirit Panacea</h3>
+        A single-use consumable that will remove Bind, Pin, Snare, Paralyze, Sleep, and Silence.<br>
+        Lasts until the end of the next event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'SpiritPanacea') do |f| %>
+        <%= get_xpstore_link('SpiritPanacea') %>
+      <% end %>
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Mind Panacea</h3>
+        A single-use consumable that will Dispel Fear, Taunt, Corrupt, Pacify, and Enslave.<br>
+        Lasts until the end of the next event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'MindPanacea') do |f| %>
+        <%= get_xpstore_link('MindPanacea') %>
+      <% end %>
+    </div>
+  </div>
 
+  <div class="mb-2" id="xpstorecategory">
+    Professions
+  </div>
+  <div class="row">
+    <div class="container col-4" id="itemcontainer">
+      <h3>Collecting</h3>
+        Allows access to a single Novice Collector Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
+        You may only purchase a single Profession this way per event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Collecting') do |f| %>
+        <%= select_tag :itempurchase, options_for_select(collectorprofessions) %><br>
+        <%= get_xpstore_link('Collecting') %>
+      <% end %>
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Refining</h3>
+        Allows access to a single Novice Refining Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
+        You may only purchase a single Profession this way per event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Refining') do |f| %>
+        <%= select_tag :itempurchase, options_for_select(refiningprofessions) %><br>
+        <%= get_xpstore_link('Refining') %>
+      <% end %>
+    </div>
+    <div class="container col-4" id="itemcontainer">
+      <h3>Crafting</h3>
+        Allows access to a single Novice Crafting Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
+        You may only purchase a single Profession this way per event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Crafting') do |f| %>
+        <%= select_tag :itempurchase, options_for_select(craftingprofessions) %><br>
+        <%= get_xpstore_link('Crafting') %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-2" id="xpstorecategory">
+    Heroic Actions
+  </div>
+  <div class="row">
+    <div class="container col-6" id="itemcontainer">
+      <h3>Second Wind</h3>
+        A single-use token that allows you to immediately gain the benfits of a Short Rest.<br>
+        May only purchase once per event.
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'SecondWind') do |f| %>
+        <%= get_xpstore_link('SecondWind') %>
+      <% end %>
+    </div>
+    <div class="container col-6" id="itemcontainer">
+      <h3>Luck Token</h3>
+        A single-use token that allows you to immediately gain the use of a single Long Rest ability.<br>
+        May only purchase once per event. 
+      <br>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'LuckToken') do |f| %>
+        <%= get_xpstore_link('LuckToken') %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="mb-2" id="xpstorecategory">
+    Dedrots Favors
+  </div>
   <div class="row">
     <div class="container col-6" id="itemcontainer">
       <%= image_tag("pages/xpstore/good_fortune.jpg", :class => "img-fluid") %><br>
@@ -18,7 +161,9 @@ Available XP: <%= available_xp %>
       <b>Card Availability:</b> You MUST have this card with you when you enter Arcanestå realm or it cannot be used.<br>
       <b>Sharing Cards:</b> You may share this card with someone else as long as they have not already become a spirit.<br>
       <br>
-      <%= get_xpstore_link('GoodFortune') %>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'GoodFortune') do |f| %>
+        <%= get_xpstore_link('GoodFortune') %>
+      <% end %>
     </div>
     <div class="container col-6" id="itemcontainer">
       <%= image_tag("pages/xpstore/graven_miracle.jpg", :class => "img-fluid") %><br>
@@ -31,6 +176,8 @@ Available XP: <%= available_xp %>
       <b>Card Availability:</b> You MUST have this card with you when you enter Arcanestå realm or it cannot be used.<br>
       <b>Sharing Cards:</b> You may NOT share this card with someone else.<br>
       <br>
-      <%= get_xpstore_link('GravenMiracle') %>
+      <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'GravenMiracle') do |f| %>
+        <%= get_xpstore_link('GravenMiracle') %>
+      <% end %>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 class CharacterController < ApplicationController
   include CharactersHelper
+  include PlayersHelper
   include PagesHelper
   before_action :authenticate_user!
   before_action :check_character_user
@@ -146,7 +147,6 @@ class CharacterController < ApplicationController
       end
     end
   end
-
 
   def levelup
     @exptolevel = expToLevel(@character)
@@ -324,30 +324,76 @@ class CharacterController < ApplicationController
   end
 
   def spendxp
-    item = params[:item]
+    item_sold = params[:item]
 
-    case item
-    when 'GoodFortune'
-      @explog = Explog.new
-      @explog.user_id = @character.user_id
-      @explog.name = 'XP Store'
-      @explog.acquiredate = Time.now
-      @explog.description = 'Good Fortune'
-      @explog.amount = -250
-      @explog.grantedby_id = current_user.id
-      @explog.save!
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Luck Token').count
+
+    case item_sold
+      when 'GoodFortune'
+        item_sold = 'Good Fortune'
+        item_cost = 250
+      when 'GravenMiracle'
+        item_sold = 'Graven Miracle'
+        item_cost = gravencost()
+      when 'BodyPanacea'
+        item_sold = 'Body Panacea'
+        item_cost = 150
+      when 'SpiritPanacea'
+        item_sold = 'Spirit Panacea'
+        item_cost = 150
+      when 'MindPanacea'
+        item_sold = 'Mind Panacea'
+        item_cost = 150
+      when 'Collecting', 'Refining', 'Crafting'
+        profession = Profession.find(params[:itempurchase])
+        item_sold = item_sold + ' - ' + profession.name
+        item_cost = 50
+      when 'SecondWind'
+        item_sold = 'Second Wind'
+        item_cost = 100
+      when 'LuckToken'
+        item_sold = 'Luck Token'
+        item_cost = 250
+      when 'Tier1'
+        item_cost = 25
+        skill = Skill.find(params[:skillpurchase])
+        item_sold = item_sold + ' - ' + skill.name
+      when 'Tier2'
+        item_cost = 35
+        skill = Skill.find(params[:skillpurchase])
+        item_sold = item_sold + ' - ' + skill.name
+      when 'Tier3'
+        item_cost = 50
+        skill = Skill.find(params[:skillpurchase])
+        item_sold = item_sold + ' - ' + skill.name
+    end
+
+    if item_cost > available_xp
       redirect_to player_explog_path
-    when 'GravenMiracle'
+    elsif spent_xpstore_xp + item_cost > 500 && params[:item] != 'GravenMiracle'
+      redirect_to player_explog_path
+    elsif ['Collecting', 'Refining', 'Crafting'].include? params[:item] and profession_count >= 1
+      redirect_to player_explog_path
+    elsif secondwind_count >= 1 and params[:item] == 'SecondWind' 
+      redirect_to player_explog_path
+    elsif lucktoken_count >= 1 and params[:item] == 'LuckToken' 
+      redirect_to player_explog_path
+    else
       @explog = Explog.new
       @explog.user_id = @character.user_id
       @explog.name = 'XP Store'
       @explog.acquiredate = Time.now
-      @explog.description = 'Graven Miracle'
-      @explog.amount = gravencost() * -1
+      @explog.description = item_sold
+      @explog.amount = item_cost * -1
       @explog.grantedby_id = current_user.id
       @explog.save!
       redirect_to player_explog_path
     end
+
+
+
   end
 
   private
@@ -399,23 +445,6 @@ class CharacterController < ApplicationController
     false
   end
 
-  def can_purchase_skill(_character, skill)
-    if Skillrequirement.exists?(skill: skill.id)
-      Skillrequirement.where(skill: skill.id).each do |r|
-        return false unless @character.skills.exists?(id: r.requiredskill_id)
-      end
-    end
-    if @character.skills.where(name: skill.name).count >= skill.maxpurchase
-      return false
-    elsif skill.tier > (((@character.level * 50) + 50) - (@character.skills.sum(:tier) * 10)) / 10
-      return false
-    elsif (skill.tier == 5) && (@character.skills.where('tier = 4').count < 2)
-      return false
-    elsif (skill.tier == 6) && ((@character.skills.where('tier = 4').count < 3) || (@character.skills.where('tier = 5').count < 2))
-      return false
-    end
-
-    true
-  end
+  
 
 end
