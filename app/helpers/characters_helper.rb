@@ -301,4 +301,31 @@ module CharactersHelper
       300
     end
   end
+
+  def has_skill_prereq(_character, skill)
+    if Skillrequirement.exists?(skill: skill.id)
+      Skillrequirement.where(skill: skill.id).each do |r|
+        if !@character.skills.exists?(id: r.requiredskill_id)
+          return false
+        end
+      end
+    end
+    return true
+  end
+  def can_purchase_skill(_character, skill)
+    if ! has_skill_prereq(@character, skill)
+      return false
+    end
+    if @character.skills.where(name: skill.name).count >= skill.maxpurchase
+      return false
+    elsif skill.tier > (((@character.level * 50) + 50) - (@character.skills.sum(:tier) * 10)) / 10
+      return false
+    elsif (skill.tier == 5) && (@character.skills.where('tier = 4').count < 2)
+      return false
+    elsif (skill.tier == 6) && ((@character.skills.where('tier = 4').count < 3) || (@character.skills.where('tier = 5').count < 2))
+      return false
+    end
+
+    true
+  end
 end
