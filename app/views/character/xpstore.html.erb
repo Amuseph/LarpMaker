@@ -1,7 +1,10 @@
 <%= provide(:title, 'XP Store') %>
 <div class="container col-12 mt-4 mb-2" id="xpstore">
-  Available XP for XP Store: <%= available_xp %><br>
-  XP Spent Since Last Game (Excludes Graven): <%= spent_xpstore_xp %><br>
+  <b>Available XP for XP Store:</b> <%= available_xp %><br>
+  <b>XP Spent Since Last Game (Excludes Graven):</b> <%= spent_xpstore_xp %><br>
+  <br>
+  <b>You will receive the item as an item card. Items cannot be used on others, are not lootable and not tradeable unless otherwise noted.<br>
+  All items cards must be returned at Check-Out. (Excludes Dedrots Favors)<br></b>
   
   <% 
     tier1skills = xpstore_tier1_skills
