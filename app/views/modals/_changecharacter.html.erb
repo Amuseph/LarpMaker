@@ -33,7 +33,7 @@
           </div>
   
           <div class="col-6">
-            <% if (current_user.charactercount > current_user.characters.count) %>
+            <% if (current_user.charactercount > current_user.characters.where("status = ?", 'Active').count)  %>
               <%= button_to "New Character", new_character_path, method: :get, class: "btn btn-secondary float-right" %>
             <% end %>
           </div>
