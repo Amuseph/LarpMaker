@@ -17,37 +17,10 @@
     EVENT INFO<br>
     For Event: <%= @feedback.event.startdate.strftime("%m/%d/%Y") %><br>
     --------------------<br>
-    
-    <p>How Satisfied Are You With Pre-Event Communication?</p>
-    <%= get_feedback_rank_string(@feedback.preeventcommunicationrating, 'Satisfaction') %>
-    
-    <p>How Satisfied Are You With The Event Overall?</p>
-    <%= get_feedback_rank_string(@feedback.eventrating, 'Satisfaction') %>
-    
-    <p>Are You Planning to Attend The Next Event?</p>
-    <%= get_feedback_rank_string(@feedback.attendnextevent, 'YesNo') %>    
-    
-    <p>How Satisfied Are You With Your Sleeping Arrangements?</p>
-    <%= get_feedback_rank_string(@feedback.sleepingrating, 'Satisfaction') %>
-    
-    <p>How Satisfied Are You With The Opening Meeting?</p>
-    <%= get_feedback_rank_string(@feedback.openingmeetingrating, 'Satisfaction') %>
-    
-    <p>How Satisfied Are You With The Plot For The Event?</p>
-    <%= get_feedback_rank_string(@feedback.plotrating, 'Satisfaction') %>
-    
-    <p>How Satisfied Are You With The Closing Meeting?</p>
-    <%= get_feedback_rank_string(@feedback.closingmeetingrating, 'Satisfaction') %>
-    
+        
     <p>Do you have any constructive feedback for Myth?</p>
     <%= simple_format(@feedback.feedback) %>
-    
-    <p>Anything else you would like to state or questions you might wish to address?</p>
-    <%= simple_format(@feedback.questions) %>
-    
-    <p>What Players Stand Out to You, if Any, And Why?</p>
-    <%= simple_format(@feedback.standoutplayers) %>
-
+      
     <p>What NPCs Stand Out to You, if Any, And Why?</p>
     <%= simple_format(@feedback.standoutnpc) %>
 
@@ -65,7 +38,6 @@
     
     <p>Are you doing anything with your profession?</p>
     <%= simple_format(@feedback.professions) %>
-
 
   </body>
 </html>
