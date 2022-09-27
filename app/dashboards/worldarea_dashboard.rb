@@ -11,7 +11,7 @@ class WorldareaDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     region: Field::Select.with_options(
-      collection: ['Catara', 'The Free Lands', 'The Pale Lands', 'Devaria', 'Faeden', 'The Savage Heights'],
+      collection: ['Cantara', 'The Free Lands', 'The Pale Lands', 'Devaria', 'Faeden', 'The Savage Heights'],
     ),
     description: Field::Text,
     created_at: Field::DateTime,
