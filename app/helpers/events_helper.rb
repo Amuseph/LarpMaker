@@ -230,7 +230,7 @@ module EventsHelper
     end
     if current_user.usertype == 'Banned'
       return 'An error has occured. Please reach out to support@mythlarp.com'
-    elsif current_user.usertype == 'Cast'
+    elsif current_user.usertype == 'Cast' and event.castcount != 0
       return 'Your account is currently set to cast only. Please reach out to support@mythlarp.com'
     end
     @eventattendance = Eventattendance.find_by(user_id: current_user, event_id: event.id)
