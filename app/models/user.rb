@@ -16,10 +16,5 @@ class User < ApplicationRecord
   validates :usertype,
             inclusion: { in: %w[Cast Player Admin Banned],
                          message: '%{value} is not a valid Player Type' }
-  
-  def set_noshow
-    self.mealexempt = true
-    save!
-  end
 
 end

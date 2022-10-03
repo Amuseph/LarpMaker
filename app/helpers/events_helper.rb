@@ -162,10 +162,8 @@ module EventsHelper
     end
     if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/purchasemealplan')
-    elsif (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Cast') && (!@eventattendance.user.mealexempt)
+    elsif (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Cast')
       return (render partial: 'event/partials/updatemealplan')
-    elsif (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Cast') && (@eventattendance.user.mealexempt)
-      return 'MEAL PLAN NOT AVAILABLE THIS EVENT'
     elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/updatemealplan')
     end

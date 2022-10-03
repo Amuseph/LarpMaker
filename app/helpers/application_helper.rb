@@ -43,12 +43,7 @@ module ApplicationHelper
 
   def update_mailchimp(user)
     begin
-      if user.aliaslastname.present?
-        lastname = user.aliaslastname
-      else
-        lastname = user.lastname
-      end
-
+      
       mailchimp = MailchimpMarketing::Client.new
       mailchimp.set_config({
         :api_key => ENV['MAILCHIMP_API'],
@@ -63,7 +58,7 @@ module ApplicationHelper
             'status_if_new': 'subscribed',
             'merge_fields': {
               FNAME: user.firstname,
-              LNAME: lastname
+              LNAME: user.lastname
             }
           }
         )
