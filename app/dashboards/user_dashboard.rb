@@ -42,7 +42,6 @@ class UserDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     last_character: Field::Number,
-    aliaslastname: Field::String,
     mealexempt: Field::Boolean
   }.freeze
 
@@ -66,7 +65,6 @@ class UserDashboard < Administrate::BaseDashboard
     id
     firstname
     lastname
-    aliaslastname
     email
     usertype
     address
@@ -98,7 +96,6 @@ class UserDashboard < Administrate::BaseDashboard
     zipcode
     phonenumber
     charactercount
-    aliaslastname
     mealexempt
   ].freeze
 
