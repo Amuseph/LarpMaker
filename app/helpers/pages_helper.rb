@@ -2,12 +2,21 @@
 
 module PagesHelper
   def sheetsLocked
-    next_event = Event.where('enddate > ? AND levelingevent', Time.now).minimum(:startdate)
+    next_event = get_next_event
+    puts('Taco2')
+    puts('Taco2')
+    puts('Taco2')
+    puts('Taco2')
+    puts(next_event)
+    puts(next_event.startdate)
+    puts('Taco2')
+    puts('Taco2')
+    puts('Taco2')
     if Setting.sheets_locked
       true
     elsif next_event.nil?
       false
-    elsif Setting.sheets_auto_lock && ((next_event - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
+    elsif Setting.sheets_auto_lock && ((next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= Setting.sheets_auto_lock_day)
       true
     end
   end
@@ -177,13 +186,6 @@ module PagesHelper
         professionlist.push([profession.name, profession.id])
       end
     end
-    puts('taco')
-    puts('taco')
-    puts('taco')
-    puts(professionlist)
-    puts('taco')
-    puts('taco')
-    puts('taco')
     return professionlist
   end
 
