@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
 module PagesHelper
+  def bgs_lock_time 
+    return 14
+  end
+
   def sheetsLocked
     next_event = get_next_event
-    puts('Taco2')
-    puts('Taco2')
-    puts('Taco2')
-    puts('Taco2')
-    puts(next_event)
-    puts(next_event.startdate)
-    puts('Taco2')
-    puts('Taco2')
-    puts('Taco2')
     if Setting.sheets_locked
       true
     elsif next_event.nil?
@@ -22,7 +17,6 @@ module PagesHelper
   end
 
   def betweenGameSkillsLocked
-    bgs_lock_time = 14
 
     last_event = Event.where('startdate < ? AND levelingevent', Time.now).maximum(:enddate)
     if Setting.sheets_locked
@@ -205,6 +199,21 @@ module PagesHelper
     if available_xp > 0
       return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
     end
+  end
+
+  def get_marquee_text
+    next_event = get_next_event
+    last_event = Event.where('startdate < ? AND levelingevent', Time.now).maximum(:enddate)
+    sheets_lock_in = Setting.sheets_auto_lock_day - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i
+
+    if sheetsLocked
+      return ("<p class=""h2"">Sheets have been locked while we prepare for game in %s days! </p>" % (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i).html_safe
+    elsif !betweenGameSkillsLocked
+      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_time - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i)).html_safe
+    elsif !sheetsLocked and sheets_lock_in <= 14
+      return ("<p class=""h2"">Early Bird Pricing ends and Character Sheets lock in %s days! </p>" % (sheets_lock_in)).html_safe
+    end
+    return 
   end
 
 end
