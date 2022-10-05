@@ -1,1 +1,37 @@
-Welcome to the website, Adventurer
+<%= provide(:title, 'Homepage') %>
+<div class="pagetitle">The Dancing Dragonfly of Damar Keep</div>
+The doors to the tavern creek open as you step in from the outdoors into the bustling interior. 
+There's the scent of ale in the air, mixed with the ever-present smell of blood and the loud voices making it clear that this is an adventurer's type of place. 
+A group speaks in hushed voices over coin and cheeses in one corner of the room, casting suspicious glances at a nearby group of armored warriors discussing their most recent kill. 
+At the bar, a man in a muffin cap is leaning to listen to the eager remarks of a pink-haired woman. 
+As you enter the room, the air fills with shouts of glee and anger from a group playing dice, one man grumbling as he passes his coins off and downs his drink in the same motion.
+<br>
+A paladin greets you with a hearty smile. "Welcome to the Dancing Dragonfly friend. Make yourself at home."
+<br>
+You make your way to the message board, eager to find glory and your story.
+<br>
+<br>
+<p class="h3">The Message Board</p>
+Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
+
+<div class="container col-12 mt-4" id="bulletinboard">
+  <div class="row mt-4">
+    <% counter = 0 %>
+    <% folder = get_next_event %>
+    <% Dir.glob("app/assets/images/bulletinboard/#{folder.name}/*").map do |path| %>
+    <% counter = counter + 1 %>
+      <div class="container col-3" id="link">
+      <% image = 0 %>
+      <%= link_to image_url("bulletinboard/#{folder.name}/#{File.basename(path)}"), target: ':_blank' do %>
+        <%= image_tag "bulletinboard/#{folder.name}/#{ File.basename(path) }", :class => "img-fluid mx-auto d-block" %>
+      <% end %>
+      </div>
+      <% if counter >= 4 %>
+    </div>
+    <div class="row mt-4">
+    <% counter = 0 %>
+    <% end %>
+      <% end %>
+  </div>
+</div>
+<br>

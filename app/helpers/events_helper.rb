@@ -297,4 +297,9 @@ module EventsHelper
       add_event_exp(event, @eventattendance)
     end
   end
+
+
+  def get_next_event
+    return Event.where('enddate > ? AND levelingevent', Time.now).reorder('startdate ASC').first
+  end
 end
