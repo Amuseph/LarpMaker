@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module PagesHelper
+include EventsHelper
   def bgs_lock_time 
     return 14
   end
