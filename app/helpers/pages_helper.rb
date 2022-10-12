@@ -209,10 +209,10 @@ include EventsHelper
 
     if (next_event.startdate..next_event.enddate).cover?(Time.now)
       return ("<p class=""h2"">We're busy in Hyraeth! See you soon! </p>").html_safe
-    elsif !betweenGameSkillsLocked
-      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_time - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i)).html_safe
     elsif !sheetsLocked and sheets_lock_in <= 14
       return ("<p class=""h2"">Early Bird Pricing ends and Character Sheets lock in %s days! </p>" % (sheets_lock_in)).html_safe
+    elsif !betweenGameSkillsLocked
+      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_time - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i)).html_safe
     elsif sheetsLocked
       return ("<p class=""h2"">Sheets have been locked while we prepare for game in %s days! </p>" % (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i).html_safe
     end
