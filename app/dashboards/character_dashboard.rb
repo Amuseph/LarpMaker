@@ -104,7 +104,6 @@ class CharacterDashboard < Administrate::BaseDashboard
     house
     guild
     status
-    skills
   ].freeze
 
   # COLLECTION_FILTERS
