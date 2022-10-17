@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 module EventsHelper
+
+  def early_bird_days
+    return 13
+  end
+
   def canUpdateCabin()
     if !sheetsLocked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Date.today
       true
@@ -56,7 +61,7 @@ module EventsHelper
     season_pass_exp = 100
     year_of_season = event.startdate.year
     first_event_of_season = Event.reorder('startdate ASC').find_by("season = ? and extract(year from startdate) = ?", event.season, year_of_season)
-    days_till_first_lockout = (first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+    days_till_first_lockout = (first_event_of_season.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - early_bird_days
 
     if event.eventexp > 0
       @explog = Explog.new
@@ -160,11 +165,11 @@ module EventsHelper
     if @selected_meal.in?([nil, '', 'No Meal'])
       @selected_meal = 'None'
     end
-    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
+    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/purchasemealplan')
-    elsif (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Cast')
+    elsif (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Cast')
       return (render partial: 'event/partials/updatemealplan')
-    elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - Setting.sheets_auto_lock_day > Date.today) && (@eventattendance.registrationtype == 'Player')
+    elsif @selected_meal.in?(['Meat', 'Vegan']) && (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/updatemealplan')
     end
   end
@@ -252,7 +257,7 @@ module EventsHelper
   end
 
   def get_event_price(event)
-    days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
+    days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - early_bird_days
     if user_signed_in?
       if (days_till_lockout <= 0)
         return event.atdoorcost
@@ -267,13 +272,14 @@ module EventsHelper
   end
 
   def get_event_price_details(event)
-    days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - Setting.sheets_auto_lock_day
-    early_bird_date = event.startdate - Setting.sheets_auto_lock_day
+    early_bird_date = event.startdate - 13
+    days_till_earlybird = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - early_bird_days
+    
     event_price_html = ''
-    if (days_till_lockout > 0)
+    if (days_till_earlybird > 0)
       event_price_html += '<b>New Player Early Bird Rate:</b> $' + event.newplayerprice.to_s + '<br>'
       event_price_html += '<b>Early Bird Pricing:</b> $'+ event.earlybirdcost.to_s + '<br>'
-      event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + days_till_lockout.to_s + ' days remain!)<br>'
+      event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + early_bird_days.to_s + ' days remain!)<br>'
     end
     event_price_html += '<b>Standard Pricing:</b> $' + event.atdoorcost.to_s + '<br>'
     return event_price_html.html_safe      
