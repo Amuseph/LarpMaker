@@ -214,7 +214,7 @@ include EventsHelper
     if (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
       return ("<p class=""h2"">We're busy in Hyraeth! See you soon! </p>").html_safe
     elsif !sheetsLocked and sheets_lock_in <= 14
-      hours_till_lock = (((next_event.startdate - sheets_auto_lock_days).to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+      hours_till_lock = (((next_event.startdate - sheets_auto_lock_days).to_time.in_time_zone('Eastern Time (US & Canada)') - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
       if sheets_lock_in > 1
         return ("<p class=""h2"">Character Sheets lock in %s days! </p>" % (sheets_lock_in)).html_safe
       else
