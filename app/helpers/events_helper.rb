@@ -2,7 +2,7 @@
 module EventsHelper
 
   def early_bird_days
-    return 13
+    13
   end
 
   def canUpdateCabin()
