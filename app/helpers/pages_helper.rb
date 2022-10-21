@@ -216,9 +216,9 @@ include EventsHelper
     elsif !sheetsLocked and sheets_lock_in <= 14
       hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
       if sheets_lock_in > 1
-        return ("<p class=""h2"">Character Sheets lock in %s days! </p>" % (sheets_lock_in)).html_safe
+        return ("<p class=""h2"">Character Sheets lock in %s day(s)! </p>" % (sheets_lock_in)).html_safe
       else
-        return ("<p class=""h2"">Character Sheets lock in less than %s hours! </p>" % (hours_till_lock)).html_safe
+        return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
       end
     elsif !betweenGameSkillsLocked
       return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i)).html_safe
