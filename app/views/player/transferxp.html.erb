@@ -52,13 +52,15 @@
       type: 'GET',
       async: false,
       dataType: 'json',
-      data: {xpamount: document.getElementById('xptransfer_amount').value},
+      data: {xpamount: document.getElementById('xptransfer_amount').value, email: document.getElementById('xptransfer_emailaddress').value},
       success: function(data){
         if (data.response == 'true') {
           document.getElementById("amountvalidation").innerHTML = 'XP Amount Validated';
           returncode = 'true';
-        } else {
+        } else if (data.response == 'false') {
           document.getElementById("amountvalidation").innerHTML = 'Invalid XP Amount';
+        } else {
+          document.getElementById("amountvalidation").innerHTML = data.response ;
         }
       }
     })
