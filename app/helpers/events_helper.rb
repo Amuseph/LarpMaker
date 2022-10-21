@@ -176,7 +176,7 @@ module EventsHelper
 
   def get_resident_players(event,area)
     cabinlist = +""
-    Cabin.all.where(location: area).where.not(name: ['Cast Cabin', 'Camping', 'Tavern']).each do |cabin|
+    Cabin.all.where(location: area).where.not(name: ['Cast Cabin']).each do |cabin|
       cabinlist.concat('<b>', cabin.name, '</b>')
       cabinlist.concat('<ul>')
         event.eventattendances.where(registrationtype: 'Player', cabin: Cabin.all.find_by(name: cabin.name)).joins(:character).merge(Character.order(name: :asc)).each do |cabinassignment|
