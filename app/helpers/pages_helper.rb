@@ -2,6 +2,7 @@
 
 module PagesHelper
 include EventsHelper
+include PlayersHelper
   def bgs_lock_days
     14
   end
@@ -22,11 +23,12 @@ include EventsHelper
   end
 
   def betweenGameSkillsLocked
-
-    last_event = get_last_event
+    last_event = last_played_event(@character)
     if Setting.sheets_locked
       true
     elsif sheetsLocked
+      true
+    elsif last_event.nil?
       true
     elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i > bgs_lock_days)
       true
@@ -201,7 +203,9 @@ include EventsHelper
   end
 
   def transfer_xp_link
-    if available_xp > 0
+    if get_last_event_attended.nil?
+      return
+    elsif available_xp > 0
       return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
     end
   end

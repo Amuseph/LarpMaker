@@ -19,19 +19,19 @@ module PlayersHelper
   end
 
   def transfer_xp(receiver, amount)
-    reciever = User.where('lower(email) = ?', receiver.downcase).first
+    receiver = User.where('lower(email) = ?', receiver.downcase).first
     
     @explog = Explog.new
     @explog.user_id = current_user.id
     @explog.name = 'XP Transfer'
     @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
-    @explog.description = "Transfer To " + reciever.firstname
+    @explog.description = "Transfer To " + receiver.firstname
     @explog.amount = amount * -1
     @explog.grantedby_id = current_user.id
     @explog.save!
 
     @explog = Explog.new
-    @explog.user_id = reciever.id
+    @explog.user_id = receiver.id
     @explog.name = 'XP Transfer'
     @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
     @explog.description = "Transfer From " + current_user.firstname
@@ -39,5 +39,9 @@ module PlayersHelper
     @explog.grantedby_id = current_user.id
     @explog.save!
 
+  end
+
+  def get_last_event_attended
+    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and user_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', current_user.id).reorder('enddate desc').first
   end
 end
