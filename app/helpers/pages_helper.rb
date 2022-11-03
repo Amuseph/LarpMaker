@@ -23,15 +23,18 @@ include PlayersHelper
   end
 
   def betweenGameSkillsLocked
+    if !session[:character]
+      return true
+    end
     last_event = last_played_event(@character)
     if Setting.sheets_locked
-      true
+      return true
     elsif sheetsLocked
-      true
+      return true
     elsif last_event.nil?
-      true
+      return true
     elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i > bgs_lock_days)
-      true
+      return true
     end
   end
 
