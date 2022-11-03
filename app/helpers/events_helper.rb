@@ -304,8 +304,11 @@ module EventsHelper
     end
   end
 
-
   def get_next_event
-    Event.where('enddate > ? AND levelingevent', Time.now).reorder('startdate ASC').first
+    Event.where('enddate > ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').reorder('startdate ASC').first
+  end
+
+  def get_last_event
+    Event.where('enddate < ? AND levelingevent and eventtype = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend').reorder('enddate desc').first
   end
 end

@@ -2,6 +2,7 @@
 
 module PagesHelper
 include EventsHelper
+include PlayersHelper
   def bgs_lock_days
     14
   end
@@ -22,13 +23,14 @@ include EventsHelper
   end
 
   def betweenGameSkillsLocked
-
-    last_event = Event.where('startdate < ? AND levelingevent', Time.now).maximum(:enddate)
+    last_event = last_played_event(@character)
     if Setting.sheets_locked
       true
     elsif sheetsLocked
       true
-    elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i > bgs_lock_days)
+    elsif last_event.nil?
+      true
+    elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i > bgs_lock_days)
       true
     end
   end
@@ -201,14 +203,16 @@ include EventsHelper
   end
 
   def transfer_xp_link
-    if available_xp > 0
+    if get_last_event_attended.nil?
+      return
+    elsif available_xp > 0
       return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
     end
   end
 
   def get_marquee_text
     next_event = get_next_event
-    last_event = Event.where('startdate < ? AND levelingevent', Time.now.in_time_zone('Eastern Time (US & Canada)')).maximum(:enddate)
+    last_event = get_last_event
     sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
 
     if (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
@@ -221,7 +225,7 @@ include EventsHelper
         return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
       end
     elsif !betweenGameSkillsLocked
-      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i)).html_safe
+      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
     elsif sheetsLocked
       return ("<p class=""h2"">Sheets have been locked while we prepare for game in %s days! </p>" % (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i).html_safe
     end
