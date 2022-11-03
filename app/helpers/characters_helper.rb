@@ -207,9 +207,15 @@ module CharactersHelper
   end
 
   def oracles_available()
-    purchasedOracles = @character.skills.where(name: 'Oracle').count 
-    usedOracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
-    return purchasedOracles - usedOracles
+    purchased_oracles = @character.skills.where(name: 'Oracle').count 
+    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
+    return purchased_oracles - used_oracles
+  end
+
+  def couriers_available()
+    available_couriers = 1
+    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Courier').count
+    return available_couriers - used_couriers
   end
 
   def ravens_available(character)

@@ -13,7 +13,9 @@ class EventDashboard < Administrate::BaseDashboard
     users: Field::HasMany,
     id: Field::Number,
     name: Field::String,
-    eventtype: Field::String,
+    eventtype: Field::Select.with_options(
+      collection: ['Adventure Weekend','Out of Game Party','Other'],
+    ),
     location: Field::String,
     startdate: Field::Date,
     enddate: Field::Date,

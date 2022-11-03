@@ -13,7 +13,7 @@ module PlayersHelper
   end
 
   def transfered_xp(player)
-    last_event = Event.where('enddate < ? AND levelingevent', Time.now).reorder('enddate desc').first
+    last_event = get_last_event
     first_event_of_season = Event.where('extract(year from startdate) = ? AND levelingevent and season = ?', last_event.startdate.year, last_event.season).reorder('startdate ASC').first
     player.explogs.where('name = ? and acquiredate >= ? and Amount > 0', 'XP Transfer', first_event_of_season.startdate).sum('amount')
   end

@@ -91,9 +91,11 @@
   </div>
 
   <% if !betweenGameSkillsLocked %>
-    <div class='sideSubLink'>
-      <%= link_to 'Send Courier', character_sendcourier_path, remote: true %>
-    </div>
+    <% if couriers_available() > 0 %>
+      <div class='sideSubLink'>
+        <%= link_to 'Send Courier', character_sendcourier_path, remote: true %>
+      </div>
+    <% end %>
     <% if oracles_available() > 0 %>
       <div class='sideSubLink'>
         <%= link_to 'Send Oracle', character_sendoracle_path, remote: true %>
