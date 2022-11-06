@@ -19,20 +19,22 @@ Here you can find posters hung up by the town for the next gather. Perhaps they 
   <div class="row mt-4">
     <% counter = 0 %>
     <% folder = get_next_event %>
-    <% Dir.glob("app/assets/images/bulletinboard/#{folder.name}/*").map do |path| %>
-    <% counter = counter + 1 %>
-      <div class="container col-3" id="link">
-      <% image = 0 %>
-      <%= link_to image_url("bulletinboard/#{folder.name}/#{File.basename(path)}"), target: ':_blank' do %>
-        <%= image_tag "bulletinboard/#{folder.name}/#{ File.basename(path) }", :class => "img-fluid mx-auto d-block" %>
-      <% end %>
+    <% if !get_next_event.nil? %>
+      <% Dir.glob("app/assets/images/bulletinboard/#{folder.name}/*").map do |path| %>
+      <% counter = counter + 1 %>
+        <div class="container col-3" id="link">
+        <% image = 0 %>
+        <%= link_to image_url("bulletinboard/#{folder.name}/#{File.basename(path)}"), target: ':_blank' do %>
+          <%= image_tag "bulletinboard/#{folder.name}/#{ File.basename(path) }", :class => "img-fluid mx-auto d-block" %>
+        <% end %>
+        </div>
+        <% if counter >= 4 %>
       </div>
-      <% if counter >= 4 %>
-    </div>
-    <div class="row mt-4">
-    <% counter = 0 %>
-    <% end %>
+      <div class="row mt-4">
+      <% counter = 0 %>
       <% end %>
+        <% end %>
+    <% end %>
   </div>
 </div>
 <br>
