@@ -200,18 +200,18 @@ module CharactersHelper
 
   def oracles_available()
     purchased_oracles = @character.skills.where(name: 'Oracle').count 
-    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Oracle').sum(:skillsused)
+    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Oracle').sum(:skillsused)
     return purchased_oracles - used_oracles
   end
 
   def couriers_available()
     available_couriers = 1
-    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Courier').count
+    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Courier').count
     return available_couriers - used_couriers
   end
 
   def ravens_available(character)
-    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Raven').sum(:skillsused) < 1))
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Raven').sum(:skillsused) < 1))
       return 1
     else
       return 0
@@ -335,7 +335,7 @@ module CharactersHelper
     character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
   end
 
-  def get_last_attended_event(character)
+  def get_last_played_adventure(character)
     if character.events.where('startdate < ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').maximum(:startdate).nil?
       return '1900-01-01'.to_date
     end
