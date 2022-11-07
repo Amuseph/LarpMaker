@@ -26,7 +26,7 @@ include PlayersHelper
     if !session[:character]
       return true
     end
-    last_event = get_last_played_event(@character)
+    last_event = get_last_played_adventure(@character)
     if Setting.sheets_locked
       return true
     elsif sheetsLocked
@@ -86,9 +86,9 @@ include PlayersHelper
 
   def get_xpstore_link(item)
     
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Luck Token').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_adventure(@character), 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Luck Token').count
     case item
       when 'Tier1'
         item_cost = 25
