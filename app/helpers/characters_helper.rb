@@ -27,7 +27,7 @@ module CharactersHelper
 
   def canLevel(character)
     unless sheetsLocked || character.level >= 20
-      last_played_event = last_played_event(character)
+      last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       if character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) >= expToLevel(character)
         if last_played_event > character.levelupdate
@@ -77,7 +77,7 @@ module CharactersHelper
     availableprofessions, availablegroups = professions_to_buy(character)
 
     if !sheetsLocked
-      last_played_event = last_played_event(character)
+      last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       max_profession_date = character.characterprofessions.maximum('acquiredate')
       max_profession_date = '1900-01-01'.to_date if max_profession_date.nil?
@@ -96,7 +96,7 @@ module CharactersHelper
   end
 
   def can_refund_skill(characterskill)
-    last_played_event = last_played_event(@character)
+    last_played_event = get_last_played_event(@character)
     events_played = @character.events.where('startdate < ?', Time.now).count
     if sheetsLocked
       return false
@@ -159,7 +159,7 @@ module CharactersHelper
   end
 
   def canRefundProfession(character, characterprofession)
-    last_played_event = last_played_event(character)
+    last_played_event = get_last_played_event(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
 
@@ -183,7 +183,7 @@ module CharactersHelper
   end
 
   def skill_refund_price(characterskill)
-    last_played_event = last_played_event(@character)
+    last_played_event = get_last_played_event(@character)
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       0
@@ -198,28 +198,20 @@ module CharactersHelper
     end
   end
 
-  def last_played_event(character)
-    if character.events.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate).nil?
-      return '1900-01-01'.to_date
-    end
-
-    character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
-  end
-
   def oracles_available()
     purchased_oracles = @character.skills.where(name: 'Oracle').count 
-    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Oracle').sum(:skillsused)
+    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Oracle').sum(:skillsused)
     return purchased_oracles - used_oracles
   end
 
   def couriers_available()
     available_couriers = 1
-    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Courier').count
+    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Courier').count
     return available_couriers - used_couriers
   end
 
   def ravens_available(character)
-    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', last_played_event(@character), 'Raven').sum(:skillsused) < 1))
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', get_last_played_event(@character), 'Raven').sum(:skillsused) < 1))
       return 1
     else
       return 0
@@ -334,4 +326,21 @@ module CharactersHelper
 
     true
   end
+
+  def get_last_played_event(character)
+    if character.events.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate).nil?
+      return '1900-01-01'.to_date
+    end
+
+    character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
+  end
+
+  def get_last_attended_event(character)
+    if character.events.where('startdate < ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').maximum(:startdate).nil?
+      return '1900-01-01'.to_date
+    end
+
+    character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
+  end
+
 end

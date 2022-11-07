@@ -26,7 +26,7 @@ include PlayersHelper
     if !session[:character]
       return true
     end
-    last_event = last_played_event(@character)
+    last_event = get_last_played_event(@character)
     if Setting.sheets_locked
       return true
     elsif sheetsLocked
@@ -86,9 +86,9 @@ include PlayersHelper
 
   def get_xpstore_link(item)
     
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Luck Token').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Luck Token').count
     case item
       when 'Tier1'
         item_cost = 25
@@ -216,25 +216,34 @@ include PlayersHelper
   def get_marquee_text
     next_event = get_next_event
     last_event = get_last_event
-    return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
+
+    if !betweenGameSkillsLocked
+      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
+    end
+
     if !next_event.nil?
       sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
-    end
-    if !betweenGameSkillsLocked
-      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
-    elsif (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
-      return ("<p class=""h2"">We're busy in Hyraeth! See you soon! </p>").html_safe
-    elsif !sheetsLocked and sheets_lock_in <= 14
-      hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
-      if sheets_lock_in > 1
-        return ("<p class=""h2"">Character Sheets lock in %s day(s)! </p>" % (sheets_lock_in)).html_safe
-      else
-        return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
+
+      if (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
+        return "<p class=""h2"">We're busy in Hyraeth! See you soon! </p>".html_safe
       end
-    elsif sheetsLocked
-      return ("<p class=""h2"">Sheets have been locked while we prepare for game in %s days! </p>" % (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i).html_safe
+
+      if !sheetsLocked and sheets_lock_in <= 14
+        hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+        if sheets_lock_in > 1
+          return ("<p class=""h2"">Character Sheets lock in %s day(s)! </p>" % (sheets_lock_in)).html_safe
+        else
+          return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
+        end
+      end
+
     end
-    return 
+
+    if sheetsLocked
+      return ("<p class=""h2"">Sheets have been locked while we prepare for game! </p>").html_safe
+    end
+    return
+
   end
 
 end

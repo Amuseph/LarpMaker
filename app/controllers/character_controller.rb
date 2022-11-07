@@ -259,7 +259,7 @@ class CharacterController < ApplicationController
         @characterprofession = Characterprofession.new(addprof_params)
         @characterprofession.character_id = session[:character]
         if @characterprofession.save!
-          if (@character.characterprofessions.count > 2) || (last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
+          if (@character.characterprofessions.count > 2) || (get_last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
             @explog = Explog.new
             @explog.user_id = @character.user_id
             @explog.name = 'Profession Purchase'
@@ -326,9 +326,9 @@ class CharacterController < ApplicationController
   def spendxp
     item_sold = params[:item]
 
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event(@character), 'Luck Token').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_event(@character), 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_event(@character), 'Luck Token').count
 
     case item_sold
       when 'GoodFortune'
