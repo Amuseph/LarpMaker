@@ -74,6 +74,7 @@ module CharactersHelper
   end
 
   def canBuyProfession(character)
+    return false
     availableprofessions, availablegroups = professions_to_buy(character)
 
     if !sheetsLocked
@@ -84,13 +85,13 @@ module CharactersHelper
 
       if character.characterprofessions.count < 2 && last_played_event < character.createdate
         # Buy 2 professions your first game
-        true
+        return true
       elsif availableprofessions.empty?
         return false
       elsif character.characterprofessions.where('acquiredate > ?', last_played_event).count < profsPerEvent(character)
-        true
+        return true
       elsif !Setting.one_level_per_game && ((events_played * profsPerEvent(character)) + 2 > character.characterprofessions.count)
-        true
+        return true
       end
     end
   end
