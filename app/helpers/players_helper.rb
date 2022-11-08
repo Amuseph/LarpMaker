@@ -42,6 +42,6 @@ module PlayersHelper
   end
 
   def get_last_event_attended
-    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and user_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', current_user.id).reorder('enddate desc').first
+    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and user_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), current_user.id).reorder('enddate desc').first
   end
 end
