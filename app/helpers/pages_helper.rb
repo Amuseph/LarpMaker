@@ -206,7 +206,9 @@ include PlayersHelper
   end
 
   def transfer_xp_link
-    if get_last_event_attended.nil?
+    if get_last_event_played.nil?
+      return
+    elsif current_user.usertype == 'Cast'
       return
     elsif available_xp > 0
       return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
