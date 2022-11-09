@@ -13,14 +13,13 @@ You make your way to the message board, eager to find glory and your story.
 <br>
 <br>
 
-
+<p class="h3">The Message Board</p>
+Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
 <div class="container col-12 mt-4" id="bulletinboard">
   <div class="row mt-4">
     <% counter = 0 %>
     <% folder = get_next_event %>
     <% if !get_next_event.nil? %>
-      <p class="h3">The Message Board</p>
-      Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
       <% Dir.glob("app/assets/images/bulletinboard/#{folder.name}/*").map do |path| %>
       <% counter = counter + 1 %>
         <div class="container col-3" id="link">
