@@ -368,6 +368,12 @@ class CharacterController < ApplicationController
         item_cost = 50
         skill = Skill.find(params[:skillpurchase])
         item_sold = item_sold + ' - ' + skill.name
+      when 'Juniper'
+        item_cost = 50
+        item_sold = 'Juniper'
+      when 'WeepingWillow'
+        item_cost = 100
+        item_sold = 'Weeping Willow - Left'
     end
 
     if item_cost > available_xp
@@ -389,6 +395,11 @@ class CharacterController < ApplicationController
       @explog.amount = item_cost * -1
       @explog.grantedby_id = current_user.id
       @explog.save!
+      if (item_sold == 'Juniper' or item_sold == 'Weeping Willow - Left')
+        eventattendance = Eventattendance.find_by(id: params[:cabinpurchase])
+        eventattendance.cabin = Cabin.find_by(name: item_sold)
+        eventattendance.save!
+      end
       redirect_to player_explog_path
     end
 

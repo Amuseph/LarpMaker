@@ -59,7 +59,7 @@ class PlayerController < ApplicationController
       transfer_type = 'Cast'
     elsif @character.nil?
       transfer_type = 'Cast'
-    elsif @character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count <= 0
+    elsif @character.events.where('startdate < ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').count <= 0
       transfer_type = 'Cast'
     end
 

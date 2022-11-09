@@ -295,7 +295,7 @@ class EventController < ApplicationController
       redirect_to event_path(params[:event_id])
     else
       @event = Event.find(params[:event_id])
-      @availablecabins = Event.available_cabins(@event)
+      @availablecabins = Event.available_player_cabins(@event)
       respond_to do |format|
         format.js
       end
