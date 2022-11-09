@@ -154,18 +154,35 @@
   </div>
   <div class="row">
     <div class="container col-4" id="itemcontainer">
-
-    </div>
-    <div class="container col-4" id="itemcontainer">
-    <%= image_tag("pages/xpstore/juniper.png", :class => "img-fluid  mx-auto d-block") %><br>
+      <%= image_tag("pages/xpstore/juniper.png", :class => "img-fluid  mx-auto d-block") %><br>
       <h3>Juniper Cabin</h3>
-        Located next to the Dancing Dragonfly, this cabin sleeps 10 and has lights and a bathroom. Purchasing this will update your attendence to that event to Juniper. Should you have multiple parties interested, they must all purchase this.<br>
+        Located next to the Dancing Dragonfly, this cabin sleeps 12 and has lights and a bathroom. Purchasing this will update your attendence to that event to Juniper. Should you have multiple parties interested, they must all purchase this.<br>
         This is non-refundable should you change your mind and wish to select a different cabin.
       <br>
-        Coming in the 2023 Season for 25 XP
+      <%= bootstrap_form_for :cabinpurchase, url: character_spendxp_path(item: 'Juniper') do |f| %>
+        <% if !xpstore_cabinlist_juniper.empty? %>
+          <%= select_tag :cabinpurchase, options_for_select(xpstore_cabinlist_juniper) %><br>
+        <% end %>
+        <%= get_xpstore_link('Juniper') %>
+      <% end %>
     </div>
+
     <div class="container col-4" id="itemcontainer">
 
+    </div>
+
+    <div class="container col-4" id="itemcontainer">
+      
+      <h3>Weeping Willow - Left Cabin</h3>
+        Located next to the bridge to The Glade, this cabin sleeps 4 and has lights and a bathroom with a shower. Purchasing this will update your attendence to that event to Weeping Willow - Left. Should you have multiple parties interested, they must all purchase this.<br>
+        This is non-refundable should you change your mind and wish to select a different cabin.
+      <br>
+      <%= bootstrap_form_for :cabinpurchase, url: character_spendxp_path(item: 'WeepingWillow') do |f| %>
+        <% if !xpstore_cabinlist_weepingwillow.empty? %>
+          <%= select_tag :cabinpurchase, options_for_select(xpstore_cabinlist_weepingwillow) %><br>
+        <% end %>
+        <%= get_xpstore_link('WeepingWillow') %>
+      <% end %>
     </div>
   </div>
   

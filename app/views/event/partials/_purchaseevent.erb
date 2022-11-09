@@ -4,7 +4,7 @@
 <%= bootstrap_form_for :eventpurchase, url: event_orderevent_path do |f| %>
   <%= f.check_box :acceptterms, required: true, label: ("I agree to the #{link_to 'Terms of Service', pages_termsofservice_path, target: '_blank'} and #{link_to 'waiver policy', pages_waiver_path, target: '_blank'}.").html_safe %>
   <%= f.select :mealchoice, @mealoptions, required: true, label: 'Choose your meal plan' %>
-  <%= f.select :cabin, grouped_options_for_select(Event.available_cabins(@event)), required: true, label: ("Choose your sleeping arrangements - #{link_to "View Cabins Here", pages_camp_path, target: '_blank'}").html_safe %>
+  <%= f.select :cabin, grouped_options_for_select(Event.available_player_cabins(@event)), required: true, label: ("Choose your sleeping arrangements - #{link_to "View Cabins Here", pages_camp_path, target: '_blank'}").html_safe %>
 
 
 

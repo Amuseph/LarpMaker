@@ -108,6 +108,10 @@ include PlayersHelper
         item_cost = 250
       when 'GravenMiracle'
         item_cost = gravencost()
+      when 'Juniper'
+        item_cost = 50
+      when 'WeepingWillow'
+        item_cost = 100
       else
         item_cost = 999999
     end
@@ -122,9 +126,41 @@ include PlayersHelper
       return '<br>You may only purchase one Second Wind per event'.html_safe
     elsif lucktoken_count >= 1 and item == 'LuckToken'
       return '<br>You may only purchase one Luck Token per event'.html_safe
+    elsif item == 'Juniper' and xpstore_cabinlist_juniper.empty?
+      return '<br>This cabin is full or you are already registered for all events you are registered'.html_safe
+    elsif item == 'WeepingWillow' and xpstore_cabinlist_weepingwillow.empty?
+      return '<br>This cabin is full or you are already registered for all events you are registered'.html_safe
     else
       return submit_tag  "Purchase for #{item_cost} XP", data: {confirm: 'Are you sure?'}, :class => 'btn btn-success' 
     end
+  end
+
+  def xpstore_cabinlist_juniper
+    eventlist = []
+    cabin = Cabin.find_by(name: 'Juniper')
+    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').each do | eventattendance |
+      if eventattendance.cabin.nil? or eventattendance.cabin.name != 'Juniper'
+        event = Event.find(eventattendance.event.id)
+        if (event.eventattendances.where(cabin_id: cabin.id).count < cabin.maxplayers) || cabin.maxplayers == -1
+          eventlist.push([eventattendance.event.name, eventattendance.id])
+        end
+      end
+    end
+    return eventlist
+  end
+
+  def xpstore_cabinlist_weepingwillow
+    eventlist = []
+    cabin = Cabin.find_by(name: 'Weeping Willow - Left')
+    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').each do | eventattendance |
+      if eventattendance.cabin.nil? or eventattendance.cabin.name != 'Weeping Willow - Left'
+        event = Event.find(eventattendance.event.id)
+        if (event.eventattendances.where(cabin_id: cabin.id).count < cabin.maxplayers) || cabin.maxplayers == -1
+          eventlist.push([eventattendance.event.name, eventattendance.id])
+        end
+      end
+    end
+    return eventlist
   end
 
   def xpstore_tier1_skills
