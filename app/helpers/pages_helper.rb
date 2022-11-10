@@ -127,9 +127,9 @@ include PlayersHelper
     elsif lucktoken_count >= 1 and item == 'LuckToken'
       return '<br>You may only purchase one Luck Token per event'.html_safe
     elsif item == 'Juniper' and xpstore_cabinlist_juniper.empty?
-      return '<br>This cabin is full or you are already registered for all events you are registered'.html_safe
+      return '<br>This cabin is full or you are already in it for all events you are registered for.'.html_safe
     elsif item == 'WeepingWillow' and xpstore_cabinlist_weepingwillow.empty?
-      return '<br>This cabin is full or you are already registered for all events you are registered'.html_safe
+      return '<br>This cabin is full or you are already in it for all events you are registered for.'.html_safe
     else
       return submit_tag  "Purchase for #{item_cost} XP", data: {confirm: 'Are you sure?'}, :class => 'btn btn-success' 
     end
