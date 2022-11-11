@@ -284,7 +284,7 @@ class Skill < ApplicationRecord
           go directly to Dedrot’s realm at the start of the next
           game day.'
         when 'Ororo'
-          return 'Benefactors may state “Resist” to missile weapons.'
+          return 'Benefactors may state “Resist” to missile weapons and thrown weapons.'
         when 'Ryknos'
           return 'Benefactors may state, “I Heal myself 1 Hit Point” when they successfully
           render an enemy unconscious through a weapon strike.'
