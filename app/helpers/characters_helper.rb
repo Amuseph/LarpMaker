@@ -40,18 +40,23 @@ module CharactersHelper
   end
 
   def professions_to_buy(character)
-    @freeprofessions = false
     availableexp = current_user.explogs.where('acquiredate <= ? ', Time.now.in_time_zone('Eastern Time (US & Canada)').end_of_day).sum(:amount)
 
     availableprofessions = []
     availablegroups = []
+    playernoviceprofs = []
+
+    if (character.professions.where('name like ?', 'Novice%').count >= 2)
+      maxprofessions = true
+      character.professions.where('name like ?', 'Novice%').each do |profession|
+        playernoviceprofs.push(profession.name.sub('Novice ', ''))
+      end
+    end
 
     Professiongroup.where('playeravailable = true').each do |professiongroup|
       professionlist = []
       professiongroup.professions.where('playeravailable = true').each do |profession|
-        @freeprofessions = true if character.professions.where("name like 'Novice%'").count < 2
-        next if @freeprofessions && !profession.name.start_with?('Novice')
-
+        
         if Professionrequirement.exists?(profession: profession.id)
           canpurchase = true
           Professionrequirement.where(profession: profession.id).each do |r|
@@ -59,8 +64,9 @@ module CharactersHelper
           end
           next unless canpurchase
         end
+        next if (availableexp < profession_exp_cost(profession))
         next if character.professions.where(name: profession.name).count >= 1
-        next if (availableexp < profession_exp_cost(profession)) && !@freeprofessions
+        next if maxprofessions and !(playernoviceprofs.include? profession.name.sub('Novice ', '').sub('Journeyman ', '').sub('Master ', ''))
 
         professionlist.push([profession.name, profession.id])
       end
@@ -69,31 +75,32 @@ module CharactersHelper
         availablegroups.push(professiongroup.name)
       end
     end
+
     return availableprofessions, availablegroups
 
   end
 
   def canBuyProfession(character)
-    return false
+    
     availableprofessions, availablegroups = professions_to_buy(character)
-
     if !sheetsLocked
       last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       max_profession_date = character.characterprofessions.maximum('acquiredate')
       max_profession_date = '1900-01-01'.to_date if max_profession_date.nil?
 
-      if character.characterprofessions.count < 2 && last_played_event < character.createdate
-        # Buy 2 professions your first game
-        return true
-      elsif availableprofessions.empty?
+      if availableprofessions.empty?
         return false
-      elsif character.characterprofessions.where('acquiredate > ?', last_played_event).count < profsPerEvent(character)
+      elsif character.characterprofessions.where('acquiredate > ?', last_played_event).count < 1
         return true
-      elsif !Setting.one_level_per_game && ((events_played * profsPerEvent(character)) + 2 > character.characterprofessions.count)
+      elsif !Setting.one_level_per_game && (events_played > character.characterprofessions.count)
         return true
+      elsif events_played > character.characterprofessions.count
+        return true
+        # TEMP FIX TO LET PEOPLE REBUY PROFESSIONS
       end
     end
+    return false
   end
 
   def can_refund_skill(characterskill)
@@ -237,16 +244,6 @@ module CharactersHelper
     end
   end
 
-  def profsPerEvent(character)
-    if character.skills.exists?(name: "Artisan's Devotion")
-      2
-    elsif character.skills.exists?(name: 'Channel Divinity') && (character.deity.name == 'Ixbus')
-      2
-    else
-      1
-    end
-  end
-
   def percentToLevel(character)
     totalXP = character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount).to_f.to_f
     totalXP / expToLevel(character).to_f * 100.0
@@ -293,11 +290,11 @@ module CharactersHelper
 
   def profession_exp_cost(profession)
     if profession.name.start_with?('Novice')
-      100
-    elsif profession.name.start_with?('Journeyman')
-      200
-    elsif profession.name.start_with?('Master')
       300
+    elsif profession.name.start_with?('Journeyman')
+      400
+    elsif profession.name.start_with?('Master')
+      500
     end
   end
 

@@ -63,8 +63,8 @@
         <% if (@character.characterskills.where(skill: Skill.where(name: 'Favored Foe'))).count > 0  %>
           <b>Favored Foe:</b> <%= @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details').join(',') %> <br>
         <% end %>
-        <% if (@character.characterskills.where(skill: Skill.find_by(name: 'Alignment Focus'))).count > 0  %> 
-          <b>Alignment Focus:</b> <%= @character.characterskills.where(skill: Skill.find_by(name: 'Alignment Focus')).pluck('details').join(',') %> <br>
+        <% if (@character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus']))).count > 0  %> 
+          <b>Chosen Element:</b> <%= @character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus'])).pluck('details').join(',') %> <br>
         <% end %>
       </div>
     </div>
