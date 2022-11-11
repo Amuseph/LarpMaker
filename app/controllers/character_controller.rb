@@ -402,9 +402,6 @@ class CharacterController < ApplicationController
       end
       redirect_to player_explog_path
     end
-
-
-
   end
 
   private
@@ -414,7 +411,7 @@ class CharacterController < ApplicationController
   end
 
   def addskill_params
-    params.require(:characterskill).permit(:skill_id, :favoredfoe, :alignmentfocus, :acquiredate)
+    params.require(:characterskill).permit(:skill_id, :favoredfoe, :chosenelement, :acquiredate)
   end
 
   def addprof_params

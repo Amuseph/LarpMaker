@@ -31,13 +31,13 @@ function skillListValidation() {
     document.getElementById("characterskill_favoredfoe").required = false;
     $('#favoredfoe').hide()
   }
-  if (characterskill == 'Alignment Focus') {
-    $('#alignmentfocus').show()
-    document.getElementById("characterskill_alignmentfocus").required = true;
+  if (((characterskill == 'Alignment Focus') || (characterskill == 'Alchemist’s Orb') || (characterskill == 'Runic Redirection'))) {
+    $('#chosenelement').show()
+    document.getElementById("characterskill_chosenelement").required = true;
   }  else {
-    document.getElementById('characterskill_alignmentfocus').selectedIndex = -1
-    document.getElementById("characterskill_alignmentfocus").required = false;
-    $('#alignmentfocus').hide()
+    document.getElementById('characterskill_chosenelement').selectedIndex = -1
+    document.getElementById("characterskill_chosenelement").required = false;
+    $('#chosenelement').hide()
   }
 
   $.ajax({
