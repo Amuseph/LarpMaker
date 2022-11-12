@@ -1,6 +1,5 @@
 $('#professionModalBody').html("<%= escape_javascript( render partial: 'modals/addprofession' ) %>")
 
-var freeprofession = "<%= @freeprofessions %>"
 $('#characterProfessionModal').modal('show');
 professions = $('#characterprofession_profession_id').html();
 professionListUpdate()
@@ -9,14 +8,12 @@ $('#professiongroup').change(function() {
 });
 
 function confirm_submission() {
-  if (freeprofession == 'true') {
-    return;
-  } else if ($('#characterprofession_profession_id :selected').text().startsWith('Novice')) {
-    return confirm('Are you sure? Doing so will cost 100 exp');
-  } else if ($('#characterprofession_profession_id :selected').text().startsWith('Journeyman')) {
-    return confirm('Are you sure? Doing so will cost 200 exp');
-  } else if ($('#characterprofession_profession_id :selected').text().startsWith('Master')) {
+  if ($('#characterprofession_profession_id :selected').text().startsWith('Novice')) {
     return confirm('Are you sure? Doing so will cost 300 exp');
+  } else if ($('#characterprofession_profession_id :selected').text().startsWith('Journeyman')) {
+    return confirm('Are you sure? Doing so will cost 400 exp');
+  } else if ($('#characterprofession_profession_id :selected').text().startsWith('Master')) {
+    return confirm('Are you sure? Doing so will cost 500 exp');
   }
 }
 
