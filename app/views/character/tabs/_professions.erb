@@ -15,7 +15,7 @@
         <td><%= characterprofession.profession.description %></td>
         <td>
           <%=
-            if(canRefundProfession(@character, characterprofession))
+            if(can_refund_profession(@character, characterprofession))
                 link_to character_removeprofession_path(profession_id: characterprofession.profession_id), method: :post, data: { confirm: 'Are you sure?' } do 
                   fa_icon "trash" 
               end
