@@ -51,7 +51,7 @@
     </div>
   <% end %>
 
-  <% if canBuyProfession(@character) %>
+  <% if can_buy_profession(@character) %>
     <div class='sideSubLink'>
       <%= link_to 'Learn Profession', character_learnprofession_path, remote: true %>
     </div>

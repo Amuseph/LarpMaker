@@ -255,7 +255,7 @@ class CharacterController < ApplicationController
 
   def learnprofession
     if request.post?
-      if canBuyProfession(@character)
+      if can_buy_profession(@character)
         @characterprofession = Characterprofession.new(addprof_params)
         @characterprofession.character_id = session[:character]
         if @characterprofession.save!

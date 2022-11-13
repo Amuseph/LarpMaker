@@ -80,7 +80,7 @@ module CharactersHelper
 
   end
 
-  def canBuyProfession(character)
+  def can_buy_profession(character)
     
     availableprofessions, availablegroups = professions_to_buy(character)
     if !sheetsLocked
@@ -93,9 +93,9 @@ module CharactersHelper
         return false
       elsif character.characterprofessions.where('acquiredate > ?', last_played_event).count < 1
         return true
-      elsif !Setting.one_level_per_game && (events_played > character.characterprofessions.count)
+      elsif !Setting.one_level_per_game && ((events_played + 1) > character.characterprofessions.count)
         return true
-      elsif events_played > character.characterprofessions.count
+      elsif (events_played + 1) > character.characterprofessions.count
         return true
         # TEMP FIX TO LET PEOPLE REBUY PROFESSIONS
       end
@@ -166,7 +166,7 @@ module CharactersHelper
     end
   end
 
-  def canRefundProfession(character, characterprofession)
+  def can_refund_profession(character, characterprofession)
     last_played_event = get_last_played_event(character)
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
