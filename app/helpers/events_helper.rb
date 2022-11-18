@@ -6,7 +6,7 @@ module EventsHelper
   end
 
   def canUpdateCabin()
-    if !sheetsLocked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Date.today
+    if !get_sheets_locked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Date.today
       true
     else
       false

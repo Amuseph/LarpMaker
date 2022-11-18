@@ -446,7 +446,7 @@ class CharacterController < ApplicationController
   end
 
   def check_sheets_locked
-    if sheetsLocked
+    if get_sheets_locked
       redirect_to player_characters_path
       return true
     end
