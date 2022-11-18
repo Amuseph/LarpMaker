@@ -92,11 +92,17 @@
   <div class="mb-2" id="xpstorecategory">
     Professions
   </div>
+  <div class="row pl-10">
+    <div class="container col-12" id="itemcontainer">
+      <p>Profession purchases will not increase your labor pool. <br>
+      Actions using this still costs the appropriate labor. <br>
+      You may only purchase a single Profession this way per event.</p>
+    </div>
+  </div>
   <div class="row">
     <div class="container col-4" id="itemcontainer">
       <h3>Collecting</h3>
-        Allows access to a single Novice Collector Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
-        You may only purchase a single Profession this way per event.
+        Allows access to a single Novice Collector Profession until the end of the next event.
       <br>
       <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Collecting') do |f| %>
         <%= select_tag :itempurchase, options_for_select(collectorprofessions) %><br>
@@ -105,8 +111,7 @@
     </div>
     <div class="container col-4" id="itemcontainer">
       <h3>Refining</h3>
-        Allows access to a single Novice Refining Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
-        You may only purchase a single Profession this way per event.
+        Allows access to a single Novice Refining Profession until the end of the next event.
       <br>
       <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Refining') do |f| %>
         <%= select_tag :itempurchase, options_for_select(refiningprofessions) %><br>
@@ -115,8 +120,7 @@
     </div>
     <div class="container col-4" id="itemcontainer">
       <h3>Crafting</h3>
-        Allows access to a single Novice Crafting Profession until the end of the next event. You must specify the Profession upon purchase. Actions using this still costs the appropriate labor.<br>
-        You may only purchase a single Profession this way per event.
+        Allows access to a single Novice Crafting Profession until the end of the next event.
       <br>
       <%= bootstrap_form_for :itempurchase, url: character_spendxp_path(item: 'Crafting') do |f| %>
         <%= select_tag :itempurchase, options_for_select(craftingprofessions) %><br>

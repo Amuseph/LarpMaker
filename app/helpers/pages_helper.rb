@@ -11,14 +11,16 @@ include PlayersHelper
     14
   end
 
-  def sheetsLocked
+  def get_sheets_locked
     next_event = get_next_event
     if Setting.sheets_locked
-      true
+      return true
     elsif next_event.nil?
-      false
+      return false
     elsif Setting.sheets_auto_lock && ((next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= sheets_auto_lock_days)
-      true
+      return true
+    elsif (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
+      return true
     end
   end
 
@@ -29,7 +31,7 @@ include PlayersHelper
     last_event = get_last_played_adventure(@character)
     if Setting.sheets_locked
       return true
-    elsif sheetsLocked
+    elsif get_sheets_locked
       return true
     elsif last_event.nil?
       return true
@@ -244,6 +246,8 @@ include PlayersHelper
   def transfer_xp_link
     if get_last_event_played.nil?
       return
+    elsif !get_last_event_played.enddate.prev_month(6).past?
+      return
     elsif current_user.usertype == 'Cast'
       return
     elsif available_xp > 0
@@ -254,19 +258,14 @@ include PlayersHelper
   def get_marquee_text
     next_event = get_next_event
     last_event = get_last_event
-
-    if !betweenGameSkillsLocked
-      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
+    if get_sheets_locked
+      return ("<p class=""h2"">Sheets have been locked while we prepare for game! </p>").html_safe
     end
 
     if !next_event.nil?
       sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
-
-      if (next_event.startdate..next_event.enddate).cover?(Time.now.in_time_zone('Eastern Time (US & Canada)'))
-        return "<p class=""h2"">We're busy in Hyraeth! See you soon! </p>".html_safe
-      end
-
-      if !sheetsLocked and sheets_lock_in <= 14
+  
+      if sheets_lock_in <= 14
         hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
         if sheets_lock_in > 1
           return ("<p class=""h2"">Character Sheets lock in %s day(s)! </p>" % (sheets_lock_in)).html_safe
@@ -274,14 +273,13 @@ include PlayersHelper
           return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
         end
       end
-
+    end
+    
+    if !betweenGameSkillsLocked
+      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
     end
 
-    if sheetsLocked
-      return ("<p class=""h2"">Sheets have been locked while we prepare for game! </p>").html_safe
-    end
     return
-
   end
 
 end

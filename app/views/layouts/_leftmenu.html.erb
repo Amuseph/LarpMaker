@@ -45,7 +45,7 @@
     </div>
   <% end %>
 
-  <% if !sheetsLocked %>
+  <% if !get_sheets_locked %>
     <div class='sideSubLink'>
       <%= link_to 'Train Skill', character_trainskill_path, remote: true %>
     </div>
@@ -66,7 +66,7 @@
     <% end %>
   </div>
 
-  <% if !sheetsLocked %>
+  <% if !get_sheets_locked %>
     <div class='sideSubLink'>
       <%= link_to 'XP Store', character_xpstore_path %>
     </div>

@@ -2,7 +2,7 @@
 
 module CharactersHelper
   def can_edit_character()
-    if !sheetsLocked 
+    if !get_sheets_locked 
       if Setting.allow_global_reroll
         true
       elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 1
@@ -12,7 +12,7 @@ module CharactersHelper
   end
 
   def can_rewrite_character()
-    if !sheetsLocked 
+    if !get_sheets_locked 
       if Setting.allow_global_reroll
         false
       elsif (@character.rewrite)
@@ -26,7 +26,7 @@ module CharactersHelper
   end
 
   def canLevel(character)
-    unless sheetsLocked || character.level >= 20
+    unless get_sheets_locked || character.level >= 20
       last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       if character.user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) >= expToLevel(character)
@@ -83,7 +83,7 @@ module CharactersHelper
   def can_buy_profession(character)
     
     availableprofessions, availablegroups = professions_to_buy(character)
-    if !sheetsLocked
+    if !get_sheets_locked
       last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
       max_profession_date = character.characterprofessions.maximum('acquiredate')
@@ -106,7 +106,7 @@ module CharactersHelper
   def can_refund_skill(characterskill)
     last_played_event = get_last_played_event(@character)
     events_played = @character.events.where('startdate < ?', Time.now).count
-    if sheetsLocked
+    if get_sheets_locked
       return false
     end
     characterskill.skill.skillrequirements.each do |skillreq|
@@ -171,7 +171,7 @@ module CharactersHelper
     events_played = character.events.where('startdate < ?', Time.now).count
     starter_professions = character.characterprofessions.order('characterprofessions.acquiredate asc').first(2)
 
-    if sheetsLocked
+    if get_sheets_locked
       return false
     end
     characterprofession.profession.professionrequirements.each do |profreq|
