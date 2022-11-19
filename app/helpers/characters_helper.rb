@@ -208,18 +208,21 @@ module CharactersHelper
 
   def oracles_available()
     purchased_oracles = @character.skills.where(name: 'Oracle').count 
-    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Oracle').sum(:skillsused)
+    last_played_event = get_last_played_adventure(@character)
+    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Oracle').sum(:skillsused)
     return purchased_oracles - used_oracles
   end
 
   def couriers_available()
     available_couriers = 1
-    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Courier').count
+    last_played_event = get_last_played_adventure(@character)
+    used_couriers = @character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Courier').count
     return available_couriers - used_couriers
   end
 
   def ravens_available(character)
-    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', get_last_played_adventure(@character), 'Raven').sum(:skillsused) < 1))
+    last_played_event = get_last_played_adventure(@character)
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Raven').sum(:skillsused) < 1))
       return 1
     else
       return 0
@@ -334,11 +337,7 @@ module CharactersHelper
   end
 
   def get_last_played_adventure(character)
-    if character.events.where('startdate < ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').maximum(:startdate).nil?
-      return '1900-01-01'.to_date
-    end
-
-    character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
+    Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and character_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', character.id).reorder('enddate desc').first
   end
 
 end

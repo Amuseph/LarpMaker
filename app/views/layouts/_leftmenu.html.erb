@@ -90,7 +90,7 @@
     <% end %>
   </div>
 
-  <% if !betweenGameSkillsLocked %>
+  <% if !get_between_game_skills_locked %>
     <% if couriers_available() > 0 %>
       <div class='sideSubLink'>
         <%= link_to 'Send Courier', character_sendcourier_path, remote: true %>
