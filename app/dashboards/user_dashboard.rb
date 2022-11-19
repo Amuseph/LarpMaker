@@ -42,7 +42,6 @@ class UserDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     last_character: Field::Number,
-    vaccine: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -66,7 +65,6 @@ class UserDashboard < Administrate::BaseDashboard
     firstname
     lastname
     email
-    vaccine
     usertype
     address
     address2
@@ -88,7 +86,6 @@ class UserDashboard < Administrate::BaseDashboard
     email
     firstname
     lastname
-    vaccine
     usertype
     address
     address2

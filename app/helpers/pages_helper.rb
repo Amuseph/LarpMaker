@@ -266,10 +266,10 @@ include PlayersHelper
       sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
   
       if sheets_lock_in <= 14
-        hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
         if sheets_lock_in > 1
           return ("<p class=""h2"">Character Sheets lock in %s day(s)! </p>" % (sheets_lock_in)).html_safe
         else
+          hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
           return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
         end
       end

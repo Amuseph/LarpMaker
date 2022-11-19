@@ -279,7 +279,12 @@ module EventsHelper
     if (days_till_earlybird > 0)
       event_price_html += '<b>New Player Early Bird Rate:</b> $' + event.newplayerprice.to_s + '<br>'
       event_price_html += '<b>Early Bird Pricing:</b> $'+ event.earlybirdcost.to_s + '<br>'
-      event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (' + early_bird_days.to_s + ' days remain!)<br>'
+      if days_till_earlybird >= 1
+        event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (Less Than ' + days_till_earlybird.to_s + ' days remain!)<br>'
+      else
+        hours_till_earlybird = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+        event_price_html +=  'Early Bird pricing goes till ' + early_bird_date.strftime("%m/%d/%Y") + ' - (Less Than ' + hours_till_earlybird.to_s + ' hours remain!)<br>'
+      end
     end
     event_price_html += '<b>Standard Pricing:</b> $' + event.atdoorcost.to_s + '<br>'
     return event_price_html.html_safe      
