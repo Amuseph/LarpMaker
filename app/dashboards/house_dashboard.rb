@@ -12,8 +12,6 @@ class HouseDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     thane: Field::BelongsTo,
-    fledglingplot: Field::String,
-    establishedplot: Field::String,
     createdate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -34,8 +32,6 @@ class HouseDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     name
     thane
-    fledglingplot
-    establishedplot
     characters
     createdate
     created_at
@@ -48,8 +44,6 @@ class HouseDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     thane
-    fledglingplot
-    establishedplot
     characters
     createdate
   ].freeze
