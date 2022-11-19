@@ -4,7 +4,7 @@ module PagesHelper
 include EventsHelper
 include PlayersHelper
   def bgs_lock_days
-    14
+    15
   end
 
   def sheets_auto_lock_days 
@@ -24,18 +24,18 @@ include PlayersHelper
     end
   end
 
-  def betweenGameSkillsLocked
+  def get_between_game_skills_locked
     if !session[:character]
       return true
     end
-    last_event = get_last_played_adventure(@character)
+    last_played_event = get_last_played_adventure(@character)
     if Setting.sheets_locked
       return true
     elsif get_sheets_locked
       return true
-    elsif last_event.nil?
+    elsif last_played_event.nil?
       return true
-    elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event).to_i > bgs_lock_days)
+    elsif ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_played_event.enddate).to_i >= bgs_lock_days)
       return true
     end
   end
@@ -87,10 +87,11 @@ include PlayersHelper
   end
 
   def get_xpstore_link(item)
+    last_played_event = get_last_played_adventure(@character)
     
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_adventure(@character), 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Luck Token').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event.enddate, 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Luck Token').count
     case item
       when 'Tier1'
         item_cost = 25
@@ -275,8 +276,14 @@ include PlayersHelper
       end
     end
     
-    if !betweenGameSkillsLocked
-      return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i)).html_safe
+    if !get_between_game_skills_locked
+      bgs_lock_in = bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i
+      if bgs_lock_in > 1
+        return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_in)).html_safe
+      else
+        hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+        return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_lock)).html_safe
+      end
     end
 
     return

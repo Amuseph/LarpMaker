@@ -325,10 +325,10 @@ class CharacterController < ApplicationController
 
   def spendxp
     item_sold = params[:item]
-
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', get_last_played_adventure(@character), 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', get_last_played_adventure(@character), 'Luck Token').count
+    last_played_event = get_last_played_adventure(@character)
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event.enddate, 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Luck Token').count
 
     case item_sold
       when 'GoodFortune'
