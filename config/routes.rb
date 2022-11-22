@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       resources :houses
       resources :eventattendances
       resources :eventfeedbacks, only: [:index, :show, :destroy]
+      resources :incidents
       resources :cabins
       resources :rulebookchanges
       resources :races

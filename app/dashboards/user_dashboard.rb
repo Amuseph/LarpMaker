@@ -10,6 +10,7 @@ class UserDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     explogs: Field::HasMany,
     characters: Field::HasMany,
+    incidents: Field::HasMany,
     eventattendances: Field::HasMany,
     events: Field::HasMany,
     explog: Field::HasOne,
@@ -77,6 +78,7 @@ class UserDashboard < Administrate::BaseDashboard
     explogs
     characters
     eventattendances
+    incidents
   ].freeze
 
   # FORM_ATTRIBUTES
