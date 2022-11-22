@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_18_185748) do
+ActiveRecord::Schema.define(version: 2022_11_22_204212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,17 @@ ActiveRecord::Schema.define(version: 2022_11_18_185748) do
     t.integer "thane_id"
   end
 
+  create_table "incidents", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "reportedby_id", null: false
+    t.date "incidentdate", default: -> { "CURRENT_TIMESTAMP" }
+    t.string "details", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reportedby_id"], name: "index_incidents_on_reportedby_id"
+    t.index ["user_id"], name: "index_incidents_on_user_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "description"
@@ -433,6 +444,8 @@ ActiveRecord::Schema.define(version: 2022_11_18_185748) do
   add_foreign_key "explogs", "users", column: "grantedby_id"
   add_foreign_key "guilds", "characters", column: "guildmaster_id"
   add_foreign_key "houses", "characters", column: "thane_id"
+  add_foreign_key "incidents", "users"
+  add_foreign_key "incidents", "users", column: "reportedby_id"
   add_foreign_key "orders", "users"
   add_foreign_key "professionrequirements", "professions"
   add_foreign_key "professionrequirements", "professions", column: "requiredprofession_id"
