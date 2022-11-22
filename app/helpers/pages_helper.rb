@@ -245,22 +245,20 @@ include PlayersHelper
   end
 
   def transfer_xp_link
-    puts('Taco')
-    if get_last_event_played.nil?
-      puts('Taco1')
-      return
-    elsif !get_last_event_played.enddate.prev_month(6).past?
-      puts('Taco2')
-      return
-    elsif (current_user.usertype == 'Cast') or (current_user.usertype == 'Banned')
-      puts('Taco3')
+    xp_transferred = transfer_exp_sent(current_user)
 
-      return
+    if !get_last_event_played.enddate.prev_month(6).past?
+      return 'Unable to Transfer - No events in the last 6 months'.html_safe
+    elsif current_user.usertype == 'Cast'
+      return 'Unable to Transfer - Marked as permanent cast'.html_safe
+    elsif current_user.usertype == 'Banned'
+      return 'Unable to Transfer'.html_safe
+    elsif xp_transferred >= 300
+      return 'Unable to Transfer - 300 XP transferred this year'.html_safe
     elsif available_xp > 0
       return link_to 'Transfer XP', player_transferxp_path, class: 'text-right'
     end
     
-    puts('Taco4')
   end
 
   def get_marquee_text
