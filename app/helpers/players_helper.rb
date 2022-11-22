@@ -13,10 +13,12 @@ module PlayersHelper
     current_user.explogs.where('name = ? and acquiredate >= ? and Description != ?', 'XP Store', last_played_event.enddate, 'Graven Miracle').sum('amount') * -1
   end
 
-  def transfered_xp(player)
-    last_event = get_last_event
-    first_event_of_season = Event.where('extract(year from startdate) = ? AND levelingevent and season = ?', last_event.startdate.year, last_event.season).reorder('startdate ASC').first
-    player.explogs.where('name = ? and acquiredate >= ? and Amount > 0', 'XP Transfer', first_event_of_season.startdate).sum('amount')
+  def transfer_exp_received(player)
+    return player.explogs.where('name = ? and acquiredate >= ? and Amount > 0', 'XP Transfer', Date.today.beginning_of_year).sum('amount')
+  end
+
+  def transfer_exp_sent(player)
+    return (player.explogs.where('name = ? and acquiredate >= ? and Amount < 0', 'XP Transfer', Date.today.beginning_of_year).sum('amount')) * -1
   end
 
   def transfer_xp(receiver, amount)

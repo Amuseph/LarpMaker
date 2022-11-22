@@ -53,18 +53,7 @@ class PlayerController < ApplicationController
   def validatexpamount
     xpamount  = params[:xpamount].to_i
     target_user = User.where('lower(email) = ?', params[:email].downcase).first
-    max_transfer = 300 - transfered_xp(target_user)
-
-    if (current_user.usertype == 'Cast')
-      transfer_type = 'Cast'
-    elsif @character.nil?
-      transfer_type = 'Cast'
-    elsif @character.events.where('startdate < ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').count <= 0
-      transfer_type = 'Cast'
-    end
-
-
-
+    max_transfer = 300 - transfer_exp_received(target_user)
 
     if max_transfer < 0
       max_transfer = 0
@@ -72,8 +61,8 @@ class PlayerController < ApplicationController
 
     if xpamount <= 0
       response = 'false'
-    elsif  (max_transfer < xpamount) and (transfer_type == 'Cast' )
-      response = 'User may only have %s more XP transferred for this season' % max_transfer
+    elsif  (max_transfer < xpamount)
+      response = 'User may only have %s more XP transferred for this year' % max_transfer
     elsif  available_xp >= xpamount
       response = 'true'
     else
