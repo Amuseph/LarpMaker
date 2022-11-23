@@ -15,7 +15,7 @@ class IncidentDashboard < Administrate::BaseDashboard
     ),
     reportedby: Field::BelongsTo,
     details: Field::Text,
-    incidentdate: Field::DateTime,
+    incidentdate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
