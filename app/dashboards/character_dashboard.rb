@@ -9,7 +9,6 @@ class CharacterDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     characterskills: Field::HasMany,
-    skills: Field::HasMany,
     characterprofessions: Field::HasMany,
     professions: Field::HasMany,
     professiongroups: Field::HasMany,
@@ -80,7 +79,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     createdate
     created_at
     updated_at
-    skills
+    characterskills
     characterprofessions
     eventattendances
     courier

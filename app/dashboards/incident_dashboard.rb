@@ -14,8 +14,8 @@ class IncidentDashboard < Administrate::BaseDashboard
       searchable_fields: ['firstname', 'lastname', 'email'],
     ),
     reportedby: Field::BelongsTo,
-    details: Field::String,
-    incidentdate: Field::DateTime,
+    details: Field::Text,
+    incidentdate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze

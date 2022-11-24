@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_22_204212) do
+ActiveRecord::Schema.define(version: 2022_11_23_025230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -254,7 +254,7 @@ ActiveRecord::Schema.define(version: 2022_11_22_204212) do
     t.bigint "user_id", null: false
     t.bigint "reportedby_id", null: false
     t.date "incidentdate", default: -> { "CURRENT_TIMESTAMP" }
-    t.string "details", null: false
+    t.text "details", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reportedby_id"], name: "index_incidents_on_reportedby_id"
