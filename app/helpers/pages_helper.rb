@@ -246,12 +246,15 @@ include PlayersHelper
 
   def transfer_xp_link
     xp_transferred = transfer_exp_sent(current_user)
+    last_event_played = get_last_event_played
 
     if current_user.usertype == 'Cast'
       return 'Unable to Transfer - Marked as permanent cast'.html_safe
     elsif current_user.usertype == 'Banned'
       return 'Unable to Transfer'.html_safe
-    elsif !get_last_event_played.enddate.prev_month(6).past?
+    elsif get_last_event_played.nil?
+      return 'Unable to Transfer - No events in the last 6 months'.html_safe
+    elsif !last_event_played.enddate.prev_month(6).past?
       return 'Unable to Transfer - No events in the last 6 months'.html_safe
     elsif xp_transferred >= 300
       return 'Unable to Transfer - 300 XP transferred this year'.html_safe
