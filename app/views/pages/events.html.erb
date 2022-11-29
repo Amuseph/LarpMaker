@@ -9,20 +9,14 @@
   For any questions, please reach out to support@mythlarp.com</b></p>
   
 
-  <% Event.all.where('startdate > ?', DateTime.now).reorder('eventyear asc').select('distinct(extract(year from startdate)) AS eventyear').each do |eventyear|  %>
-    <div id="yearheader">
-      <%= eventyear.eventyear.to_i  %>
-    </div>
-    <br>
-    
     <div id="seasonheader">
       Spring Season
     </div>
-    <% if (Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Spring', DateTime.now, eventyear.eventyear).count == 0)  %>
+    <% if (Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Spring', DateTime.now, Date.today.year).count == 0)  %>
       This season does not have any upcoming games. Please check back later!
     <% end %>
 
-    <% Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Spring', DateTime.now, eventyear.eventyear).reorder('startdate asc').each do |event|  %>
+    <% Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Spring', DateTime.now, Date.today.year).reorder('startdate asc').each do |event|  %>
       <div class="row" id="eventspace">
         <div class="container col-12" id="eventname">
           <%= event.name %>
@@ -53,10 +47,10 @@
     <div id="seasonheader">
       Fall Season
     </div>
-    <% if (Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Fall', DateTime.now, eventyear.eventyear).count == 0)  %>
+    <% if (Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Fall', DateTime.now, Date.today.year).count == 0)  %>
       This season does not have any upcoming games. Please check back later!
     <% end %>
-    <% Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Fall', DateTime.now, eventyear.eventyear).reorder('startdate asc').each do |event|  %>
+    <% Event.all.where('season = ? and startdate > ? and extract(year from startdate) = ?', 'Fall', DateTime.now, Date.today.year).reorder('startdate asc').each do |event|  %>
       <div class="row" id="eventspace">
         <div class="container col-12" id="eventname">
           <%= event.name  %>
@@ -83,7 +77,6 @@
         </div>
       </div>
     <% end %>
-  <% end %>
 
 
 
