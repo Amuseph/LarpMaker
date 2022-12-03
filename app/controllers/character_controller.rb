@@ -259,7 +259,6 @@ class CharacterController < ApplicationController
         @characterprofession = Characterprofession.new(addprof_params)
         @characterprofession.character_id = session[:character]
         if @characterprofession.save!
-          if (@character.characterprofessions.count > 2) || (get_last_played_event(@characterprofession.character) > @characterprofession.character.createdate)
             @explog = Explog.new
             @explog.user_id = @character.user_id
             @explog.name = 'Profession Purchase'
@@ -268,7 +267,6 @@ class CharacterController < ApplicationController
             @explog.amount = profession_exp_cost(@characterprofession.profession) * -1
             @explog.grantedby_id = current_user.id
             @explog.save!
-          end
         end
       end
       redirect_to character_index_path({ tab: 'professions' })
