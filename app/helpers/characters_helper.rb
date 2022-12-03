@@ -177,11 +177,12 @@ module CharactersHelper
 
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
-      true
+      return true
     elsif last_played_event < characterprofession.acquiredate.in_time_zone('Eastern Time (US & Canada)')
       # Profession has never been used
       return true
     end
+    return false
   end
 
   def skill_refund_price(characterskill)
