@@ -25,7 +25,7 @@ module CharactersHelper
     end
   end
 
-  def canLevel(character)
+  def can_level(character)
     unless get_sheets_locked || character.level >= 20
       last_played_event = get_last_played_event(character)
       events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
@@ -323,11 +323,11 @@ module CharactersHelper
   end
 
   def get_last_played_event(character)
-    if character.events.where('startdate < ? AND levelingevent', Time.now).maximum(:startdate).nil?
+    if character.events.where('startdate <= ? AND levelingevent', Time.now).maximum(:startdate).nil?
       return '1900-01-01'.to_date
     end
 
-    character.events.where('startdate < ?', Time.now).maximum(:startdate).to_date
+    return character.events.where('startdate <= ?', Time.now).maximum(:startdate).to_date
   end
 
   def get_last_played_adventure(character)

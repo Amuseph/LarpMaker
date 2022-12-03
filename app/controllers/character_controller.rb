@@ -151,7 +151,7 @@ class CharacterController < ApplicationController
   def levelup
     @exptolevel = expToLevel(@character)
 
-    if canLevel(@character)
+    if can_level(@character)
       @character.level = @character.level + 1
       @character.levelupdate = Time.now
 
