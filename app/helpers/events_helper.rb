@@ -48,7 +48,7 @@ module EventsHelper
       @explog = Explog.new
       @explog.user_id = eventattendance.user_id
       @explog.name = 'Feedback Letter'
-      @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+      @explog.acquiredate = Time.now.to_date
       @explog.description = "Exp for Feedback Letter - " + event.name
       @explog.amount = event.feedbackexp
       @explog.grantedby_id = current_user.id
@@ -81,7 +81,7 @@ module EventsHelper
         @explog = Explog.new
         @explog.user_id = eventattendance.user_id
         @explog.name = 'Season Pass'
-        @explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)').to_date
+        @explog.acquiredate = Time.now.to_date
         @explog.description = "Season Pass Bonus #{@event.season} - #{year_of_season}"
         @explog.amount = season_pass_exp * player_event_count_of_season
         @explog.grantedby_id = current_user.id

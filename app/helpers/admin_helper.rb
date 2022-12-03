@@ -42,7 +42,7 @@ module AdminHelper
       banklog = Banklog.new
       banklog.character_id = character.id
       banklog.name = data[1]
-      banklog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)')
+      banklog.acquiredate = Time.now
       banklog.amount = data[2].strip
       banklog.grantedby_id = current_user.id
       banklog.save!
@@ -85,7 +85,7 @@ module AdminHelper
       explog = Explog.new
       explog.user_id = data[0]
       explog.name = data[1]
-      explog.acquiredate = Time.now.in_time_zone('Eastern Time (US & Canada)')
+      explog.acquiredate = Time.now
       explog.description = data[2].strip
       explog.amount = data[3].strip
       explog.grantedby_id = current_user.id
