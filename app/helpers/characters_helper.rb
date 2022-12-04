@@ -99,7 +99,7 @@ module CharactersHelper
   end
 
   def can_refund_skill(characterskill)
-    last_played_event = get_last_played_event(@character)
+    last_played_event = get_last_played_adventure(@character)
     events_played = @character.events.where('startdate < ?', Time.now).count
     if get_sheets_locked
       return false
@@ -186,7 +186,7 @@ module CharactersHelper
   end
 
   def skill_refund_price(characterskill)
-    last_played_event = get_last_played_event(@character)
+    last_played_event = get_last_played_adventure(@character)
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       return 0
