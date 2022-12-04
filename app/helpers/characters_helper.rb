@@ -123,7 +123,7 @@ module CharactersHelper
     elsif (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       return true
-    elsif last_played_event < characterskill.acquiredate
+    elsif last_played_event.startdate < characterskill.acquiredate
       # Skill has never been used
       return true
     elsif characterskill.skill.tier.zero?
@@ -190,7 +190,7 @@ module CharactersHelper
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       return 0
-    elsif last_played_event < characterskill.acquiredate
+    elsif last_played_event.startdate < characterskill.acquiredate
       # Skill has never been used
       return 0
     elsif Setting.allow_global_reroll
