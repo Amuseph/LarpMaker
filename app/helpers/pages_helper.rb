@@ -268,8 +268,6 @@ include PlayersHelper
     next_event = get_next_event
     last_event = get_last_event
 
-    return ("<p class=""h2"">Sheets have been locked for Mythmas! We hope to see you there!</p>").html_safe
-
     if get_sheets_locked
       return ("<p class=""h2"">Sheets have been locked while we prepare for game! </p>").html_safe
     end
