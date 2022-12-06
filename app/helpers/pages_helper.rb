@@ -88,10 +88,15 @@ include PlayersHelper
 
   def get_xpstore_link(item)
     last_played_event = get_last_played_adventure(@character)
+    if last_played_event.nil?
+      event_end_date = @character.created_at
+    else
+      event_end_date = last_played_event.enddate
+    end
     
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', last_played_event.enddate, 'Collecting%', 'Refining%', 'Crafting%').count
-    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Second Wind').count
-    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', last_played_event.enddate, 'Luck Token').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', event_end_date, 'Collecting%', 'Refining%', 'Crafting%').count
+    secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', event_end_date, 'Second Wind').count
+    lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', event_end_date, 'Luck Token').count
     case item
       when 'Tier1'
         item_cost = 25
