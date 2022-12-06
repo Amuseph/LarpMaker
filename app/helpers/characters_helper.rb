@@ -123,6 +123,9 @@ module CharactersHelper
     elsif (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       return true
+    elsif last_played_event.nil?
+      # Never attended an event
+      return true
     elsif last_played_event.startdate < characterskill.acquiredate
       # Skill has never been used
       return true
@@ -190,6 +193,9 @@ module CharactersHelper
     if (Setting.allow_global_reroll)
       # Allowing everyone to reroll
       return 0
+    elsif last_played_event.nil?
+      # Never attended an event
+      return true
     elsif last_played_event.startdate < characterskill.acquiredate
       # Skill has never been used
       return 0
