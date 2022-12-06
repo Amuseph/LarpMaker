@@ -10,11 +10,7 @@ module PlayersHelper
 
   def spent_xpstore_xp
     last_played_event = get_last_played_adventure(@character)
-    if last_played_event.nil?
-      event_end_date = @character.created_at
-    else
-      event_end_date = last_played_event.enddate
-    current_user.explogs.where('name = ? and acquiredate >= ? and Description != ?', 'XP Store', event_end_date, 'Graven Miracle').sum('amount') * -1
+    current_user.explogs.where('name = ? and acquiredate >= ? and Description != ?', 'XP Store', last_played_event.enddate, 'Graven Miracle').sum('amount') * -1
   end
 
   def transfer_exp_received(player)
