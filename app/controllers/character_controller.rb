@@ -330,7 +330,7 @@ class CharacterController < ApplicationController
       event_end_date = last_played_event.enddate
     end
 
-    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', event_end_date 'Collecting%', 'Refining%', 'Crafting%').count
+    profession_count = current_user.explogs.where('name = ? and acquiredate >= ? and (description LIKE ? OR description LIKE ? OR description LIKE ?)', 'XP Store', event_end_date, 'Collecting%', 'Refining%', 'Crafting%').count
     secondwind_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', event_end_date, 'Second Wind').count
     lucktoken_count = current_user.explogs.where('name = ? and acquiredate >= ? and description = ?', 'XP Store', event_end_date, 'Luck Token').count
 
