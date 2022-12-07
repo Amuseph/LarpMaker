@@ -1,13 +1,12 @@
 <%= bootstrap_form_with(model: @character, url: yield(:url), local: true) do |f| %>
   <div>
     <div class="row characterCreateForm">
-      <div class="col-12 my-2">
+      <div class="col-6 mt-2">
         <%= f.text_field :name, :required => true, placeholder: 'Character Name', maxlength: 40, hide_label: true %>
       </div>
-      <div class="col-6 my-2">
-        <%= f.text_field :alias, placeholder: 'Character Alias', maxlength: 40, hide_label: true %>
+      <div class="col-12">
+      <p class = "small font-italic">The site will display your the first word you enter here so be mindful if you name yourself something like "The Great Slayer"</p>
       </div>
-      <p class = "small font-italic">Alias is displayed in place of your character name on the site. Please use this in instances where you want your real name hidden</p>
       <div class="col-6 my-2 p-auto">
         <%= f.select :pronouns, [ 'He/Him', 'She/Her','They/Them' ], {prompt: 'Pronouns', hide_label: true }, required: true %>
       </div>
