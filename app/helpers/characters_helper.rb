@@ -17,9 +17,9 @@ module CharactersHelper
         false
       elsif (@character.rewrite)
         false
-      elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 1
+      elsif (@character.events.where('startdate <= ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').count) < 1
         false
-      elsif (@character.events.where('startdate <= ? AND levelingevent = ? ', Time.now, true).count) < 4
+      elsif (@character.events.where('startdate <= ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').count) < 4
         true
       end
     end
@@ -83,7 +83,7 @@ module CharactersHelper
     availableprofessions, availablegroups = professions_to_buy(character)
     if !get_sheets_locked
       last_played_event = get_last_played_event(character)
-      events_played = character.events.where('startdate < ? and levelingevent = ?', Time.now, true).count
+      events_played = character.events.where('startdate < ? and levelingevent', Time.now).count
       max_profession_date = character.characterprofessions.maximum('acquiredate')
       max_profession_date = '1900-01-01'.to_date if max_profession_date.nil?
 
@@ -139,15 +139,19 @@ module CharactersHelper
   end
 
   def edit_backstory_link
-    if @character.backstory.nil?
-      link_to 'Add A Backstory - ', character_editbackstory_path
+    if get_last_played_adventure(@character).nil?
+      return 'You must play a game before submitting a backstory. Please check back after attending an event!'
+    elsif @character.backstory.nil?
+      return link_to 'Add A Backstory - ', character_editbackstory_path
     elsif !@character.backstory.locked
-      link_to 'Edit Your Backstory - ', character_editbackstory_path
+      return link_to 'Edit Your Backstory - ', character_editbackstory_path
     end
   end
 
   def backstory_status
-    if @character.backstory.nil?
+    if get_last_played_adventure(@character).nil?
+      return ''
+    elsif @character.backstory.nil?
       return 'Backstory Pending Submission <br>'.html_safe
     else
       if !@character.backstory.locked?
@@ -347,7 +351,7 @@ module CharactersHelper
   end
 
   def get_last_played_adventure(character)
-    Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and character_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', character.id).reorder('enddate desc').first
+    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and character_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', character.id).reorder('enddate desc').first
   end
 
 end
