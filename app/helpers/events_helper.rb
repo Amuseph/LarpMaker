@@ -254,10 +254,14 @@ module EventsHelper
 
   def get_event_price(event)
     days_till_lockout = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - early_bird_days
+
+    
+
+
     if user_signed_in?
       if (days_till_lockout <= 0)
         return event.atdoorcost
-      elsif (get_last_event_played.nil?)
+      elsif (Eventattendance.joins(:event).where('user_id = ? and Registrationtype = ? and levelingevent and EventType = ?', current_user.id, 'Player', 'Adventure Weekend').count == 0)
         return event.newplayerprice
       else
         return event.earlybirdcost
