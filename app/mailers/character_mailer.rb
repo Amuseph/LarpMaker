@@ -6,9 +6,9 @@ class CharacterMailer < ApplicationMailer
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
   end
 
-  def send_prayer
+  def send_raven
     @courier = params[:courier]
-    @subject = 'Prayer From ' + @courier.character.name + ' to ' + @courier.recipient
+    @subject = 'Raven From ' + @courier.character.name
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
   end
 

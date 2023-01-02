@@ -92,24 +92,6 @@ class CharacterController < ApplicationController
     end
   end
 
-  def sendprayer
-    if request.post?
-      @courier = Courier.new(sendcourier_params)
-      @courier.couriertype = 'Prayer'
-      @courier.destination = 'Self'
-      @courier.skillsused = 0
-      @courier.character_id = session[:character]
-      if @courier.save
-        CharacterMailer.with(courier: @courier).send_prayer.deliver_later
-      end
-      redirect_to character_courier_path
-    else
-      respond_to do |format|
-        format.js
-      end
-    end
-  end
-
   def sendoracle
     @oraclecount =  oracles_available()
     if request.post?
@@ -138,7 +120,7 @@ class CharacterController < ApplicationController
       @courier.skillsused = 1
       @courier.character_id = session[:character]
       if @courier.save
-        CharacterMailer.with(courier: @courier).send_prayer.deliver_later
+        CharacterMailer.with(courier: @courier).send_raven.deliver_later
       end
       redirect_to character_courier_path
     else
