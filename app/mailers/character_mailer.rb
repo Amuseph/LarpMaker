@@ -21,23 +21,12 @@ class CharacterMailer < ApplicationMailer
         subject = 'Between Game Skill From ' + @courier.character.name
     end
 
-    puts('Taco')
-    puts('Taco')
-    puts(@courier)
-    puts('Taco')
-    puts('Taco')
-
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: subject)
-    puts('Taco')
-    puts('Taco')
-    puts('Taco')
-    puts('Taco')
-    puts('Taco')
   end
 
   def send_backstory
     @backstory = params[:backstory]
     @subject = @backstory.character.name
-    mail(from: 'history@mythlarp.com', to: 'history@mythlarp.com', subject: @subject)
+    mail(from: 'andrewwarzocha+s11ygfpv6ae3jxics64v@boards.trello.com', to: 'andrewwarzocha+s11ygfpv6ae3jxics64v@boards.trello.com', subject: @subject)
   end
 end
