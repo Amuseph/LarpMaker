@@ -20,7 +20,7 @@ class CharacterMailer < ApplicationMailer
 
   def send_backstory
     @backstory = params[:backstory]
-    @subject = 'Backstory From ' + @backstory.character.name
+    @subject = @backstory.character.name
     mail(from: 'history@mythlarp.com', to: 'history@mythlarp.com', subject: @subject)
   end
 end
