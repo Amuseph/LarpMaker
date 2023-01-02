@@ -40,7 +40,6 @@ class CharacterDashboard < Administrate::BaseDashboard
     createdate: Field::Date,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    alias: Field::String,
     rewrite: Field::Boolean,
   }.freeze
 
@@ -51,7 +50,6 @@ class CharacterDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     name
-    alias
     user
     characterclass
     race
@@ -64,7 +62,6 @@ class CharacterDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     user
     name
-    alias
     pronouns
     rewrite
     level
@@ -91,7 +88,6 @@ class CharacterDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     user
     name
-    alias
     pronouns
     rewrite
     level

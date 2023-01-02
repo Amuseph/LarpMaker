@@ -10,7 +10,7 @@ class BanklogDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     character: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_fields: ['name', 'alias'],
+      searchable_fields: ['name'],
     ),
     grantedby: Field::BelongsTo,
     id: Field::Number,

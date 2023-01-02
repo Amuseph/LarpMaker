@@ -11,7 +11,7 @@ class BackstoryDashboard < Administrate::BaseDashboard
     id: Field::Number,
     character: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_fields: ['name', 'alias'],
+      searchable_fields: ['name'],
     ),
     backstory: Field::Text,
     locked: Field::Boolean,

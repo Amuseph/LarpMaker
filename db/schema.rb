@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_23_025230) do
+ActiveRecord::Schema.define(version: 2023_01_02_003056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,6 @@ ActiveRecord::Schema.define(version: 2022_11_23_025230) do
     t.bigint "guild_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "alias"
     t.boolean "rewrite", default: false
     t.index ["characterclass_id"], name: "index_characters_on_characterclass_id"
     t.index ["deity_id"], name: "index_characters_on_deity_id"
@@ -212,11 +211,11 @@ ActiveRecord::Schema.define(version: 2022_11_23_025230) do
     t.boolean "levelingevent", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "playercount", null: false
-    t.integer "castcount", null: false
     t.boolean "mealplan", null: false
     t.integer "mealplancost"
     t.text "mealplandetails"
+    t.integer "playercount", null: false
+    t.integer "castcount", null: false
     t.integer "newplayerprice", null: false
     t.string "season", null: false
   end

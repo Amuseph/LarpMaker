@@ -19,7 +19,7 @@ class EventfeedbackDashboard < Administrate::BaseDashboard
     ),
     character: Field::BelongsTo.with_options(
       searchable: true,
-      searchable_fields: ['name, alias'],
+      searchable_fields: ['name'],
     ),
     created_at: Field::DateTime,
     preeventcommunicationrating: Field::Number,
