@@ -393,7 +393,7 @@ class CharacterController < ApplicationController
   private
 
   def character_params
-    params.require(:character).permit(:name, :pronouns, :deity_id, :race_id, :characterclass_id, :totem, :alias, :characterphoto)
+    params.require(:character).permit(:name, :pronouns, :deity_id, :race_id, :characterclass_id, :totem, :characterphoto)
   end
 
   def addskill_params

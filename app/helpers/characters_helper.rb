@@ -279,7 +279,7 @@ module CharactersHelper
   def get_house_members(house)
     memberlist = +""
     house.characters.each do |member|
-      memberlist.concat(member.get_name, '<br>')
+      memberlist.concat(member.get_first_name, '<br>')
     end
     return memberlist.html_safe
   end
@@ -287,7 +287,7 @@ module CharactersHelper
   def get_guild_members(guild)
     memberlist = +""
     guild.characters.each do |member|
-      memberlist.concat(member.get_name, '<br>')
+      memberlist.concat(member.get_first_name, '<br>')
     end
     return memberlist.html_safe
   end

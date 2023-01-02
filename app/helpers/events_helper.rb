@@ -15,11 +15,7 @@ module EventsHelper
 
   def cabin_resident(cabinassignment)
     if (cabinassignment.character) then 
-      if cabinassignment.character.alias.present?
-        return cabinassignment.character.alias
-      else
-        return cabinassignment.character.name.partition(" ").first 
-      end
+      return cabinassignment.character.get_first_name
     else
       return 'Player: ' + cabinassignment.user.firstname
     end
