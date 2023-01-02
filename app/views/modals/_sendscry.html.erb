@@ -1,0 +1,11 @@
+<div class="modal-body" id="sendCourierModalBody">
+  <%= bootstrap_form_for :courier, url: character_sendscry_path do |f| %>
+    <%= f.text_field :destination, :required => true, placeholder: 'Item', hide_label: true %>
+    <%= f.text_area :message, :required => true, placeholder: 'Message', hide_label: true %>
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <% end %>
+  
+</div>
+ 

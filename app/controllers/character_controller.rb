@@ -130,6 +130,24 @@ class CharacterController < ApplicationController
     end
   end
 
+  def sendscry
+    if request.post?
+      @courier = Courier.new(sendcourier_params)
+      @courier.couriertype = 'Scry'
+      @courier.recipient = 'Self'
+      @courier.skillsused = 1
+      @courier.character_id = session[:character]
+      if @courier.save
+        CharacterMailer.with(courier: @courier).send_scry.deliver_later
+      end
+      redirect_to character_courier_path
+    else
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
   def levelup
     @exptolevel = expToLevel(@character)
 

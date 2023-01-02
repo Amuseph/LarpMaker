@@ -12,6 +12,12 @@ class CharacterMailer < ApplicationMailer
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
   end
 
+  def send_scry
+    @courier = params[:courier]
+    @subject = 'Scry From ' + @courier.character.name
+    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
+  end
+
   def send_oracle
     @courier = params[:courier]
     @subject = 'Oracle From ' + @courier.character.name + ' to ' + @courier.recipient

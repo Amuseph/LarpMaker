@@ -82,6 +82,8 @@ Rails.application.routes.draw do
     post :sendoracle
     get :sendraven
     post :sendraven
+    get :sendscry
+    post :sendscry
     post :levelup
     get :availableskills
     get :trainskill

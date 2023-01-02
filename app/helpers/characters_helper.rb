@@ -230,6 +230,15 @@ module CharactersHelper
     end
   end
 
+  def scrys_available(character)
+    purchased_scrys = @character.skills.where(name: 'Scrying').count 
+    last_played_event = get_last_played_adventure(@character)
+    used_scrys = @character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Scry').sum(:skillsused)
+
+    return purchased_scrys - used_scrys
+
+  end
+
   def expToLevel(character)
     if character.level.between?(0, 1)
       400
