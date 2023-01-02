@@ -257,7 +257,7 @@ module EventsHelper
     if user_signed_in?
       if (days_till_lockout <= 0)
         return event.atdoorcost
-      elsif (current_user.eventattendances.where(registrationtype: 'Player').count == 0)
+      elsif (get_last_event_played.nil?)
         return event.newplayerprice
       else
         return event.earlybirdcost
