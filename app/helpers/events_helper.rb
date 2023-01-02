@@ -15,11 +15,7 @@ module EventsHelper
 
   def cabin_resident(cabinassignment)
     if (cabinassignment.character) then 
-      if cabinassignment.character.alias.present?
-        return cabinassignment.character.alias
-      else
-        return cabinassignment.character.name.partition(" ").first 
-      end
+      return cabinassignment.character.get_first_name
     else
       return 'Player: ' + cabinassignment.user.firstname
     end
@@ -261,7 +257,7 @@ module EventsHelper
     if user_signed_in?
       if (days_till_lockout <= 0)
         return event.atdoorcost
-      elsif (current_user.eventattendances.where(registrationtype: 'Player').count == 0)
+      elsif (get_last_event_played.nil?)
         return event.newplayerprice
       else
         return event.earlybirdcost

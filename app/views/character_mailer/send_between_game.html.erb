@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <b>To:</b> <%= @courier.recipient %><br>
+    <b>Skill:</b><%= @courier.couriertype %><br>
+    <b>Skill Count:</b><%= @courier.skillsused %><br>
+    <b>From:</b> <%= @courier.character.name %><br>
+    <b>Email:</b> <%= @courier.character.user.email %><br>
+    <p>
+      <%= simple_format(@courier.message) %>
+    </p>
+  </body>
+</html>

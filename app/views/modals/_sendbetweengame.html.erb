@@ -1,0 +1,15 @@
+<div class="modal-body" id="sendCourierModalBody">
+  <%= bootstrap_form_for :courier, url: character_sendbetweengame_path do |f| %>
+    
+    <%= f.select :skillname, options_for_select(@skilllist), label: 'Skill', required: true  %>
+    <div id='skillcount'>
+      <%= f.select :skillcount, options_for_select(1..@skillcount), label: 'Skills Count', required: true  %>
+    </div>
+    
+    <%= f.text_area :message, :required => true, placeholder: 'Message', hide_label: true %>
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <% end %>
+  
+</div>

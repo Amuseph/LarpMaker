@@ -207,10 +207,10 @@ module CharactersHelper
     end
   end
 
-  def oracles_available()
-    purchased_oracles = @character.skills.where(name: 'Oracle').count 
-    last_played_event = get_last_played_adventure(@character)
-    used_oracles = @character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Oracle').sum(:skillsused)
+  def oracles_available(character)
+    purchased_oracles = character.skills.where(name: 'Oracle').count 
+    last_played_event = get_last_played_adventure(character)
+    used_oracles = character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Oracle').sum(:skillsused)
     return purchased_oracles - used_oracles
   end
 
@@ -223,11 +223,20 @@ module CharactersHelper
 
   def ravens_available(character)
     last_played_event = get_last_played_adventure(@character)
-    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (@character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Raven').sum(:skillsused) < 1))
+    if ((character.characterclass.name == 'Druid') && (character.totem == 'Raven') && (character.skills.where(name: 'Totemic Blessing').count >= 1) && (character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Raven').sum(:skillsused) < 1))
       return 1
     else
       return 0
     end
+  end
+
+  def scrys_available(character)
+    purchased_scrys = character.skills.where(name: 'Scrying').count 
+    last_played_event = get_last_played_adventure(character)
+    used_scrys = character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Scry').sum(:skillsused)
+
+    return purchased_scrys - used_scrys
+
   end
 
   def expToLevel(character)
@@ -279,7 +288,7 @@ module CharactersHelper
   def get_house_members(house)
     memberlist = +""
     house.characters.each do |member|
-      memberlist.concat(member.get_name, '<br>')
+      memberlist.concat(member.get_first_name, '<br>')
     end
     return memberlist.html_safe
   end
@@ -287,7 +296,7 @@ module CharactersHelper
   def get_guild_members(guild)
     memberlist = +""
     guild.characters.each do |member|
-      memberlist.concat(member.get_name, '<br>')
+      memberlist.concat(member.get_first_name, '<br>')
     end
     return memberlist.html_safe
   end

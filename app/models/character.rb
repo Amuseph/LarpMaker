@@ -28,12 +28,8 @@ class Character < ApplicationRecord
   validates :photo, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
 
 
-  def get_name
-    if self.alias.present?
-      return self.alias
-    else
-      return self.name.partition(" ").first 
-    end
+  def get_first_name
+    return self.name.partition(" ").first 
   end
 
 
