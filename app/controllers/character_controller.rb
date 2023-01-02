@@ -92,53 +92,44 @@ class CharacterController < ApplicationController
     end
   end
 
-  def sendoracle
-    @oraclecount =  oracles_available()
-    if request.post?
-      @courier = Courier.new(sendcourier_params)
-      @courier.couriertype = 'Oracle'
-      @courier.recipient = @character.deity.name
-      @courier.destination = 'Self'
-      @courier.character_id = session[:character]
-      if @courier.save
-        CharacterMailer.with(courier: @courier).send_oracle.deliver_later
-      end
-      redirect_to character_courier_path
-    else
-      respond_to do |format|
-        format.js
-      end
-    end
-  end
 
-  def sendraven
-    if request.post?
-      @courier = Courier.new(sendcourier_params)
-      @courier.couriertype = 'Raven'
-      @courier.destination = 'Self'
-      @courier.recipient = 'Raven'
-      @courier.skillsused = 1
-      @courier.character_id = session[:character]
-      if @courier.save
-        CharacterMailer.with(courier: @courier).send_raven.deliver_later
-      end
-      redirect_to character_courier_path
+  def sendbetweengame
+    
+    if oracles_available(@character) > 0
+      @skillcount = oracles_available(@character)
+      @skilllist = ['Oracle', 'Other']
+    elsif
+      scrys_available(@character) > 0
+      @skillcount = 1
+      @skilllist = ['Scry', 'Other']
+    elsif
+      ravens_available(@character) > 0
+      @skillcount = 1
+      @skilllist = ['Raven', 'Other']
     else
-      respond_to do |format|
-        format.js
-      end
+      @skillcount = 1
+      @skilllist = ['Other']
     end
-  end
 
-  def sendscry
     if request.post?
       @courier = Courier.new(sendcourier_params)
-      @courier.couriertype = 'Scry'
-      @courier.recipient = 'Self'
-      @courier.skillsused = 1
+      @courier.couriertype = params[:courier][:skillname]
+      if params[:courier][:skillname] == 'Other'
+        @courier.skillsused = 0
+      elsif params[:courier][:skillname] == 'Oracle'
+        @courier.skillsused = params[:courier][:skillcount]
+      else
+        @courier.skillsused = 1
+      end
+      if params[:courier][:skillname] == 'Oracle'
+        @courier.recipient = @character.deity.name
+      else
+        @courier.recipient = 'None'
+      end
+      @courier.destination = 'None'
       @courier.character_id = session[:character]
       if @courier.save
-        CharacterMailer.with(courier: @courier).send_scry.deliver_later
+        CharacterMailer.with(courier: @courier).send_between_game.deliver_later
       end
       redirect_to character_courier_path
     else

@@ -6,22 +6,33 @@ class CharacterMailer < ApplicationMailer
     mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
   end
 
-  def send_raven
+  def send_between_game
     @courier = params[:courier]
-    @subject = 'Raven From ' + @courier.character.name
-    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
-  end
 
-  def send_scry
-    @courier = params[:courier]
-    @subject = 'Scry From ' + @courier.character.name
-    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
-  end
+    case @courier.couriertype
+      when 'Oracle'
+        subject = 'Oracle From ' + @courier.character.name + ' to ' + @courier.recipient
+      when 'Scry'
+        subject = 'Scry From ' + @courier.character.name
 
-  def send_oracle
-    @courier = params[:courier]
-    @subject = 'Oracle From ' + @courier.character.name + ' to ' + @courier.recipient
-    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
+      when 'Raven'
+        subject = 'Raven From ' + @courier.character.name
+      when 'Other'
+        subject = 'Between Game Skill From ' + @courier.character.name
+    end
+
+    puts('Taco')
+    puts('Taco')
+    puts(@courier)
+    puts('Taco')
+    puts('Taco')
+
+    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: subject)
+    puts('Taco')
+    puts('Taco')
+    puts('Taco')
+    puts('Taco')
+    puts('Taco')
   end
 
   def send_backstory

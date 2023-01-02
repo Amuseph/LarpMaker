@@ -96,21 +96,10 @@
         <%= link_to 'Send Courier', character_sendcourier_path, remote: true %>
       </div>
     <% end %>
-    <% if oracles_available() > 0 %>
+
       <div class='sideSubLink'>
-        <%= link_to 'Send Oracle', character_sendoracle_path, remote: true %>
+        <%= link_to 'Send Between Game', character_sendbetweengame_path, remote: true %>
       </div>
-    <% end %>
-    <% if ravens_available(@character) > 0 %>
-      <div class='sideSubLink'>
-        <%= link_to 'Send Raven', character_sendraven_path, remote: true %>
-      </div>
-    <% end %>
-    <% if scrys_available(@character) > 0 %>
-      <div class='sideSubLink'>
-        <%= link_to 'Send Scry', character_sendscry_path, remote: true %>
-      </div>
-    <% end %>
   <% end %>
 
   <div class='sideLink'>

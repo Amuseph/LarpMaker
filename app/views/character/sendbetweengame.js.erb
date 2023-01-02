@@ -1,0 +1,27 @@
+$('#sendCourierModalBody').html("<%= escape_javascript( render partial: 'modals/sendbetweengame' ) %>")
+$('#sendCourierModalLabel').html("Send Between Game Action")
+$('#sendCourierModal').modal({
+  backdrop: 'static',
+  keyboard: false,
+  show: true});
+
+$('#courier_skillname').change(function() {
+  skillCountValidation()
+});
+
+skillCountValidation()
+
+
+function skillCountValidation() {
+  var skill = $('#courier_skillname option:selected').text()
+
+  if (skill == 'Oracle') {
+    $('#skillcount').show()
+    document.getElementById("courier_skillcount").required = true;
+  }  else {
+    document.getElementById('courier_skillcount').selectedIndex = -1
+    document.getElementById("courier_skillcount").required = false;
+    $('#skillcount').hide()
+  }
+  
+}

@@ -78,12 +78,8 @@ Rails.application.routes.draw do
     post :sendcourier
     get :house
     get :guild
-    get :sendoracle
-    post :sendoracle
-    get :sendraven
-    post :sendraven
-    get :sendscry
-    post :sendscry
+    get :sendbetweengame
+    post :sendbetweengame
     post :levelup
     get :availableskills
     get :trainskill
