@@ -146,7 +146,7 @@ include PlayersHelper
   def xpstore_cabinlist_juniper
     eventlist = []
     cabin = Cabin.find_by(name: 'Juniper')
-    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').each do | eventattendance |
+    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').reorder('startdate asc').each do | eventattendance |
       if eventattendance.cabin.nil? or eventattendance.cabin.name != 'Juniper'
         event = Event.find(eventattendance.event.id)
         if (event.eventattendances.where(cabin_id: cabin.id).count < cabin.maxplayers) || cabin.maxplayers == -1
@@ -160,7 +160,7 @@ include PlayersHelper
   def xpstore_cabinlist_weepingwillow
     eventlist = []
     cabin = Cabin.find_by(name: 'Weeping Willow - Left')
-    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').each do | eventattendance |
+    @character.eventattendances.joins(:event).where('startdate > ? and levelingevent = ? and eventtype = ?', Time.now, true, 'Adventure Weekend').reorder('startdate asc').each do | eventattendance |
       if eventattendance.cabin.nil? or eventattendance.cabin.name != 'Weeping Willow - Left'
         event = Event.find(eventattendance.event.id)
         if (event.eventattendances.where(cabin_id: cabin.id).count < cabin.maxplayers) || cabin.maxplayers == -1
