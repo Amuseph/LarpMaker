@@ -17,7 +17,10 @@ class ExplogDashboard < Administrate::BaseDashboard
     acquiredate: Field::DateTime,
     name: Field::String,
     name: Field::Select.with_options(
-      collection: ['Adjustment', 'Donation' ,'Event' ,'Feedback Letter' , 'Level Up' ,'Profession Purchase' ,'Referral Bonus' ,'Season Pass' ,'Skill Refund' ,'Volunteer' ,'Volunteer - Break down' ,'Volunteer - Myth Booth' ,'Volunteer - Set up' ,'XP Store' ,'XP Transfer'],
+      collection: ['Adjustment', 'Donation', 'Event', 'Feedback Letter', 'Level Up',
+        'Profession Purchase', 'Referral Bonus', 'Ritual', 'Season Pass', 'Skill Refund',
+        'Volunteer', 'Volunteer - Break down', 'Volunteer - Myth Booth', 'Volunteer - Set up', 
+        'XP Store', 'XP Transfer'],
     ),
     description: Field::String,
     amount: Field::Number,
