@@ -1,36 +1,42 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark p-0 shadow">
+  <div class="container-fluid">
+    <%= link_to image_tag("logo_small.png", id: "navbar-logo", :size => '40x40'), root_path, :class => "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<div class="container-fluid">
-<%= link_to image_tag("logo_small.png", id: "navbar-logo", :size => '40x40'), root_path, :class => "navbar-brand" %>
-  <div class="navbar-collapse">
-    <div class="navbar-nav">
-      <div class='nav-item dropdown'>
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuWorld">The World</a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuWorld">
-          <li><%= link_to 'World Setting', pages_setting_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Calendar', pages_calendar_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Mythology', pages_mythology_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Our Town', pages_damarkeep_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'The Laws', pages_laws_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Town Positions', pages_townpositions_path, class: 'dropdown-item' %></li>
-        </ul>
-      </div>
-      <div class='nav-item dropdown'>
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuGame">The Game</a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuGame">
-          <li><%= link_to 'Rulebook', pages_rulebook_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Camp', pages_camp_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Event Schedule', pages_eventschedule_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Register For Events', pages_events_path, class: 'dropdown-item' %></li>
-        </ul>
-      </div>
-      <div class='nav-item dropdown'>
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuResources">Resources</a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuResources">
-          <li><%= link_to 'Community Library', pages_communitylibrary_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Join The Community', pages_community_path, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Help Myth - Earn XP', pages_earnxp_path, class: 'dropdown-item' %></li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuWorld">The World</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuWorld">
+            <li><%= link_to 'World Setting', pages_setting_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Calendar', pages_calendar_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Mythology', pages_mythology_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Our Town', pages_damarkeep_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'The Laws', pages_laws_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Town Positions', pages_townpositions_path, class: 'dropdown-item' %></li>
+          </ul>
+        </li>
+        <li class='nav-item dropdown'>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuGame">The Game</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuGame">
+            <li><%= link_to 'Rulebook', pages_rulebook_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Camp', pages_camp_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Event Schedule', pages_eventschedule_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Register For Events', pages_events_path, class: 'dropdown-item' %></li>
+          </ul>
+        </li>
+        <li class='nav-item dropdown'>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuResources">Resources</a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuResources">
+            <li><%= link_to 'Community Library', pages_communitylibrary_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Join The Community', pages_community_path, class: 'dropdown-item' %></li>
+            <li><%= link_to 'Help Myth - Earn XP', pages_earnxp_path, class: 'dropdown-item' %></li>
+          </ul>
+        </li>
+      </ul>
     </div>
 
     <div class="navbar-nav ml-auto align-items-end">
@@ -63,4 +69,4 @@
       <% end %>
     </div>
   </div>
-</div>
+</nav>

@@ -4,6 +4,7 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
@@ -25,51 +26,35 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
-<%= favicon_link_tag asset_path('favicon.png') %>
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <%= favicon_link_tag asset_path('favicon.png') %>
 
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark p-0 shadow">
-      <%= render 'layouts/topmenu' %>
-    </nav>
-    <div class="container-fluid", id='pageContent'>
+    <div class="container-fluid">
       <div class="row">
-        <% if session[:character] %>
-          <nav class="col-2", id='sidebarMenu'>
-
-            
-            <%= render 'layouts/leftmenu' %>
-          </nav>
-          <main class="col-10", id='mainContent'>
-            <%= yield %>
-          </main>
-        <% else %>
-        
-        <main class="col-12", id='mainContent'>
+        <%= render 'layouts/topmenu' %>
+        <div class="col-1 bg-primary"></div>
+        <div class="col-10", id='mainContent'>
           <%= yield %>
-        </main>
-        <% end %>
+        </div>
+        <div class="col-1 bg-danger"></div>
+      </div>
+      <div class="row">
+        <div class="col-1 bg-danger"></div>
+        <div class="col-10">
+          <%= render 'layouts/bottommenu' %>
+          
+        </div>
+
+
+
+        <div class="col-1 bg-primary"></div>
       </div>
     </div>
-
- 
-    <% if session[:character] %>
-      <%= render 'layouts/pagemodals' %>
-    <% end %>
-
-    <% if user_signed_in? && (current_user.characters.count > 0) %>
-      <%= render partial: '/modals/changecharacter' %>
-    <% end %>
-
   </body>
 </html>

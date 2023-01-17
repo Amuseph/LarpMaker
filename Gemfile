@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.1'
+ruby "3.2.0"
 
 # Bootstrap makes things pretty
 gem 'bootstrap', '~> 5.2.0'

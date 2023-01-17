@@ -20,11 +20,6 @@
 @import 'font-awesome';
 @import 'select2/dist/css/select2';
 
-body { 
-  background-image: url(woodbackground.jpg);
-  min-height: 100vh;
-}
-
 #gamedate {
   color: black;
   font-family: 'Copperplate Gothic Light';
@@ -42,11 +37,6 @@ body {
   padding-bottom: 3%;
 }
 
-#mainContent {
-  background-image: url(parchmentbackground.jpg);
-  min-height: 85vh;
-}
-
 #transferxplink {
   a:link, a:visited, a:hover, a:active  { 
     color: black;
@@ -61,7 +51,6 @@ body {
 }
 
 #sidebarMenu {
-  background-image: url(parchmentbackground.jpg);
   border-top-left-radius: 30px;
   width: 100px;
   min-height: 85vh;
