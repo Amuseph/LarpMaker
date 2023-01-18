@@ -20,10 +20,10 @@
       <div class="row justify-content-md-center">
         <div class="col-md-auto" id='profilephoto'>
           <%= link_to character_changephoto_path, remote: true do %>        
-            <% if @character.photo.attached? %>
+            <% if !@character.photo.attached? %>
               <%= image_tag @character.photo, id: 'characterphoto', size: '350x350' %>
             <% else %>
-              <%= image_tag 'pages/camp/camp-header.jpg', id: 'characterphoto', size: '350x350', class: 'center-block' %>
+              <%= image_tag 'charactersheet/defaultprofile.png', id: 'characterphoto', size: '350x350', class: 'center-block' %>
             <% end %>
           <% end %>
         </div>
@@ -80,13 +80,15 @@
               </div>
             <% end %>
           </div>
-          <div class="profilelinks">
-            <%= link_to character_xpstore_path do %>
-              <div>
-                <%= image_tag 'charactersheet/chest.png', size: '25x25', class: 'center-block' %> -  XP Store
-              </div>
-            <% end %>
-          </div>
+          <% if !get_sheets_locked %>
+            <div class="profilelinks">
+              <%= link_to character_xpstore_path do %>
+                <div>
+                  <%= image_tag 'charactersheet/chest.png', size: '25x25', class: 'center-block' %> -  XP Store
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
