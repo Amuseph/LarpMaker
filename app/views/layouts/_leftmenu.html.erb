@@ -7,16 +7,7 @@
     @character = Character.find_by(id: session[:character]) 
   %>
 
-  <div class='sideLink'>
-    <%= link_to character_index_path do %>
-      <div>
-        <%= image_tag("leftmenu/profile.png") %>
-        <span id='name'>
-          <%= @character.get_first_name %>
-        </span>
-      </div>
-    <% end %>
-  </div>
+
 
   
   <div class='sideSubLink'>
@@ -27,68 +18,9 @@
     <%= link_to 'Update Photo', character_changephoto_path, remote: true 
     %>
   </div>
-  <% if can_edit_character() %>
-    <div class='sideSubLink'>
-      <%= link_to 'Edit Character', edit_character_path(session[:character]) %>
-    </div>
-  <% end %>
 
-  <% if can_rewrite_character() %>
-    <div class='sideSubLink'>
-      <%= link_to 'Rewrite Character', character_rewrite_path %>
-    </div>
-  <% end %>
 
-  <% if can_level(@character) %>
-    <div class='sideSubLink'>
-      <%= link_to 'Level Up', character_levelup_path, data: { confirm: 'Leveling up will cost ' + expToLevel(@character).to_s + ' exp. This is irreversible. Are you sure?'}, method: :post%>
-    </div>
-  <% end %>
 
-  <% if !get_sheets_locked %>
-    <div class='sideSubLink'>
-      <%= link_to 'Train Skill', character_trainskill_path, remote: true %>
-    </div>
-  <% end %>
-
-  <% if can_buy_profession(@character) %>
-    <div class='sideSubLink'>
-      <%= link_to 'Learn Profession', character_learnprofession_path, remote: true %>
-    </div>
-  <% end %>
-  
-  <div class='sideLink'>
-    <%= link_to character_banklog_path do %>
-      <div>
-        <%= image_tag("leftmenu/bank.png") %>
-        Bank
-      </div>
-    <% end %>
-  </div>
-
-  <% if !get_sheets_locked %>
-    <div class='sideSubLink'>
-      <%= link_to 'XP Store', character_xpstore_path %>
-    </div>
-  <% end %>
-
-  <div class='sideLink'>
-    <%= link_to event_index_path do %>
-      <div>
-        <%= image_tag("leftmenu/events.png") %>
-        Events
-      </div>
-    <% end %>
-  </div>
-
-  <div class='sideLink'>
-    <%= link_to character_courier_path do %>
-      <div>
-        <%= image_tag("leftmenu/courier.png") %>
-        Courier
-      </div>
-    <% end %>
-  </div>
 
   <% if !get_between_game_skills_locked %>
     <% if couriers_available() > 0 %>

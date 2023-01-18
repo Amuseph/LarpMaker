@@ -98,75 +98,116 @@
 }
 
 #characterprofile {
-  #profilecard {
-    img {
-      display: block;
-      width:100%;
-    }
-    #profilecardimage {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-
-      #profilecardtop {
-        position: relative;
-        z-index: 1;
-      }
-
-      #characterphoto {
-        z-index: 0;
-        position: absolute;
-
-      }
-    }
-    
-    #profilecardmiddle {
-      position: relative;
-    }
-    #profilecardname {
-      position: absolute;
-      top: 50%;
-      transform: translate(0, -50%);
-      width: 100%;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-    }
-
-    #profilecardbottom {
-      position: relative;
-    }
-    #profilecarddetails {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 0);
-      top: 0px;
-      width: 80%;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-    }
-  padding: 0px;
-  }
-  #profiledata {
-    color: black;
-    font-family: 'Copperplate Gothic Light';
-    #name {
-      display: inline-block;
-      font-weight: bold;
-    }
-    #pronouns {
-      margin-left: 10px;
-    }
-  }
-}
-
-#characterbackstory {
-  a:link, a:visited, a:hover, a:active  { 
-    color: black;
+  color: black;
+  font-family: 'Copperplate Gothic Light';
+  #charactername {
+    display: inline-block;
     font-weight: bold;
-    font-family: 'Copperplate Gothic Light';
-    font-size: 16px;
-    padding: auto;
+  }
+  #pronouns {
+    margin-left: 10px;
+  }
+
+  #characterphoto {
+    max-width:100%;
+    border-radius: 50%;
+  }
+
+  .profilelinks {
+    padding: 0px;
+    margin-top: 10px;
+    border-radius: 25px;
+    text-align: left;
+    width: 100%;
+    
+    img {
+      height: 25px;
+      width: 25px;
+    }
+  }
+
+    a:link, a:visited, a:hover, a:active  { 
+      color: black;
+      text-decoration:none;
+      font-weight: bold;
+      font-family: 'Copperplate Gothic Light';
+      font-size: 16px;
+      padding: auto;
+    }
+
+    .profilelinks:hover {
+      background: rgba(75, 75, 75, 0.25)
+    }
+
+
+  #classtoken {
+    max-width:100%;
+  }
+
+
+  #bgheader {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #backgroundpreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #backgrounddetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #skillheader {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #skillpreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #skilldetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  
+  #professionheader {
+    display:flex;
+    align-items:center;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    color: blue;
+    font-weight: bold;
+  }
+
+  #professiondetails {
+    border-style: none solid solid solid; 
+    border-width: 1px;
   }
 }
 

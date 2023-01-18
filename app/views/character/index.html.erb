@@ -1,93 +1,320 @@
 <%= provide(:title, 'My Character') %>
 <div class="container col-12" id="characterprofile">
-  <div class="row">
-    <div class="col-2" id='profilecard'>
-      <div id ='profilecardimage'>
-        <%= image_tag "profile/profileCardTop.png", id: 'profilecardtop' %>
-        <% if @character.photo.attached? %>
-          <%= image_tag @character.photo, id: 'characterphoto' %>
-          <% end %>
-      </div>
-      <div id = 'profilecardmiddle'>
-        <%= image_tag "profile/profileCardMiddle.png" %>
-        <div id = 'profilecardname'>
-          <svg viewBox="0 0 140 20">
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">
-              <%= @character.get_first_name %>
-            </text>
-          </svg>
-        </div>
-      </div>
-      <div id = 'profilecardmiddle'>
-        <%= image_tag "profile/profileCardBottom.png" %>
-        <div id = 'profilecarddetails'>
-          <svg viewBox="0 0 180 20">
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">
-              <%= @character.race.name %> <%= @character.characterclass.name %>
-            </text>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="col-10">
+  <div>
     <% if(@character.level < 20) %>
       <div class="progress position-relative" id="levelbar" style="height: 25px;">
         <div class="progress-bar bg-info" role="progressbar" style="width: <%= percentToLevel(@character) %>%" aria-valuenow="<%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %>" aria-valuemin="0" aria-valuemax="<%= expToLevel(@character) %>">
-          <span class="justify-content-center d-flex position-absolute w-100 text-dark font-weight-bold"><%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %> of <%= expToLevel(@character) %> EXP to Level <%= @character.level + 1%> </span>
+          <span class="justify-content-center d-flex position-absolute w-100 text-dark font-weight-bold"><%= current_user.explogs.where('acquiredate <= ? ', Time.now).sum(:amount) %> of <%= expToLevel(@character) %> XP to Level <%= @character.level + 1 %> </span>
         </div>
       </div>
     <% end %>
+    
+  </div>
+  <div class="row" id='profiletitle'>
+    <center>
+      <h2 id='charactername'><%= @character.name %></h2>
+    </center>
+  </div>
+  <div class="row">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto" id='profilephoto'>
+          <%= link_to character_changephoto_path, remote: true do %>        
+            <% if @character.photo.attached? %>
+              <%= image_tag 'pages/camp/camp-header.jpg', id: 'characterphoto', size: '350x350' %>
+            <% else %>
+              <%= image_tag 'pages/camp/camp-header.jpg', id: 'characterphoto', size: '350x350', class: 'center-block' %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="col-md-2">
+          <% if can_edit_character() %>
+            <div class="profilelinks">
+              <%= link_to edit_character_path(session[:character]) do %>
+                <div>
+                  <%= image_tag 'charactersheet/edit.png', size: '25x25', class: 'center-block' %> - Edit
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <% if can_rewrite_character() %>
+            <div class="profilelinks">
+              <%= link_to character_rewrite_path do %>
+                <div>
+                  <%= image_tag 'charactersheet/edit.png', size: '25x25', class: 'center-block' %> - Rewrite
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <% if can_level(@character) %>
+            <div class="profilelinks">
+              <%= link_to character_courier_path do %>
+                <div>
+                  <%= image_tag 'charactersheet/levelup.png', size: '25x25', class: 'center-block' %> - Level Up
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <% if !get_sheets_locked %>
+            <div class="profilelinks">
+              <%= link_to character_courier_path do %>
+                <div>
+                  <%= image_tag 'charactersheet/trainskill.png', size: '25x25', class: 'center-block' %> - Train Skill
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <% if can_buy_profession(@character) %>
+            <div class="profilelinks">
+              <%= link_to character_courier_path do %>
+                <div>
+                  <%= image_tag 'charactersheet/trainprofession.png', size: '25x25', class: 'center-block' %> - Train Profession
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="profilelinks">
+            <%= link_to character_courier_path do %>
+              <div>
+                <%= image_tag 'charactersheet/courier.png', size: '25x25', class: 'center-block' %> -  Courier
+              </div>
+            <% end %>
+          </div>
+          <div class="profilelinks">
+            <%= link_to character_courier_path do %>
+              <div>
+                <%= image_tag 'charactersheet/xpstore.png', size: '25x25', class: 'center-block' %> -  XP Store
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="container col-12 mt-2" id="bgheader">
+      <a id="backgroundlink" href="./character">
+        <div>
+          <i class="fas fa-plus"></i>&nbsp; Level <%= @character.level %> <%= @character.race.name %> <%= @character.characterclass.name %>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row" id="backgroundpreview">
+    <div class="container col-3">
+      <%= image_tag get_character_token(@character), id: 'classtoken' %>
+    </div>
+    <div class="container col-9">
+      <% if (!@character.totem.nil? and !@character.totem.empty?) %>
+        <b>Totem:</b> <%= @character.totem  %><br>
+      <% end %>
+
+      <% if(@character.deity_id) %>
+        <b>Deity:</b> <%= if(@character.deity) then @character.deity.name end %><br>
+      <% end %>
+      <b>House:</b>
+      <% if(@character.house_id) %>
+        <%= @character.house.name %>
+      <% end %>
+      <br>
+      <b>Guild:</b> 
+      <% if(@character.guild_id) %>
+        <%= @character.guild.name  %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container col-12" id="backgrounddetails">
+      <%= edit_backstory_link %> <%= backstory_status %>
+      <%= display_backstory %>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+    <div class="container col-12 mt-2" id="skillheader">
+      <a id="skilllink" href="./character">
+        <div>
+          <i class="fas fa-plus"></i>&nbsp; Skills
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="row" id="skillpreview">
+    <br>
+    <div class="container col-12">
       <div class="progress position-relative" id="cpbar" style="height: 25px;">
         <div class="progress-bar bg-success" role="progressbar" style="width: <%= percentOfCP(@character) %>%" aria-valuenow="<%= ((@character.level * 50) + 50) - (@character.skills.sum(:tier) * 10) %>" aria-valuemin="0" aria-valuemax="<%= (@character.level * 50) + 50 %>">
           <span class="justify-content-center d-flex position-absolute w-100 text-dark font-weight-bold"><%= (@character.skills.sum(:tier) * 10) %> of <%= (@character.level * 50) + 50 %> CP spent</span>
         </div>
       </div>
-      <div id='profiledata'>
-        <center><h2 id='name'><%= @character.name %></h2><span id='pronouns' class="small text-muted">(<%= @character.pronouns %>)</span><br></center>
-        <h4> <%= @character.race.name %> <%= @character.characterclass.name %></h4>
-        <b>Level:</b> <%= @character.level %><br>
-        <% if (!@character.totem.nil? and !@character.totem.empty?) %>
-          <b>Totem:</b> <%= @character.totem  %><br>
-        <% end %>
+      <% if (@character.characterskills.where(skill: Skill.where(name: 'Favored Foe'))).count > 0  %>
+        <b>Favored Foe:</b> <%= @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details').join(',') %> <br>
+      <% end %>
+      <% if (@character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus']))).count > 0  %> 
+        <b>Chosen Element:</b> <%= @character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus'])).pluck('details').join(',') %> <br>
+      <% end %>
+    </div>
+    <br>
+  </div>
+  <div class="row">
+    <div class="container col-12" id="skilldetails">
 
-        <% if(@character.deity_id) %>
-          <b>Deity:</b> <%= if(@character.deity) then @character.deity.name end %><br>
-        <% end %>
-        <% if(@character.house_id) %>
-          <b>House:</b> <%= @character.house.name %> <br>
-        <% end %>
-        <% if(@character.guild_id) %>
-          <b>Guild:</b> <%= @character.guild.name  %><br>
-        <% end %>
-        <br>
-        <% if (@character.characterskills.where(skill: Skill.where(name: 'Favored Foe'))).count > 0  %>
-          <b>Favored Foe:</b> <%= @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details').join(',') %> <br>
-        <% end %>
-        <% if (@character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus']))).count > 0  %> 
-          <b>Chosen Element:</b> <%= @character.characterskills.where(skill: Skill.find_by(name: ['Alchemist’s Orb', 'Runic Redirection', 'Alignment Focus'])).pluck('details').join(',') %> <br>
-        <% end %>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-sm">
+        <thead class = 'thead-dark'>
+        <tr>
+            <th>Name</th>
+            <th>#</th>
+            <th>Tier</th>
+            <th>Group</th>
+            <th>Rest Type</th>
+            <th>Incant</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+          <% @character.characterskills.select("skill_id, skills.tier, skills.name, max(acquiredate) as acquiredate").joins('INNER JOIN skills ON skills.id = characterskills.skill_id').group("skill_id, skills.tier, skills.name").order('tier, name asc').each do |characterskill| %>
+            <tr class="table-light">
+              <td><%= characterskill.skill.name %></td>
+              <td><%= @character.characterskills.select("skill_id").group("skill_id").count[characterskill.skill_id] %></td>
+              <td><%= characterskill.skill.tier %></td>
+              <td><%= characterskill.skill.skillgroup.name %></td>
+              <td><%= characterskill.skill.resttype.name %></td>
+              <td><%= characterskill.skill.incant %></td>
+              <td><%= characterskill.skill.description %> </td>
+              <td>
+                <%=
+                  if(can_refund_skill(characterskill))
+                    refundprice = skill_refund_price(characterskill)
+                    if (refundprice == 0)
+                      link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post do 
+                        fa_icon "trash" 
+                      end
+                    else
+                      link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post, data: { confirm: 'Doing this will cost you ' + refundprice.to_s + ' exp. This is irreversible.' } do 
+                        fa_icon "trash" 
+                      end
+                    end
+                  end
+                %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="container col-12 mt-2" id="professionheader">
+        <div>
+          Professions
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container col-12" id="professiondetails">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-sm">
+          <thead class = 'thead-dark'>
+            <tr>
+                <th>Name</th>
+                <th>Rank</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @character.characterprofessions.each do |characterprofession| %>
+              <tr class="table-light">
+                <td ><%= characterprofession.profession.name %></td>
+                <td><%= characterprofession.profession.rank %></td>
+                <td><%= characterprofession.profession.description %></td>
+                <td>
+                  <%=
+                    if(can_refund_profession(@character, characterprofession))
+                        link_to character_removeprofession_path(profession_id: characterprofession.profession_id), method: :post, data: { confirm: 'Are you sure?' } do 
+                          fa_icon "trash" 
+                      end
+                    end
+                  %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  <br>
-</div>
 
-<nav class="navbar py-0 px-0" id='profiletabbar'>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-link <%= checkActiveCharacterTab('link', 'backstory') %>" id="backstory-tab" data-toggle="tab" href="#backstory" role="tab" aria-controls="class" aria-selected="false">Backstory</a>
-    <a class="nav-link <%= checkActiveCharacterTab('link', 'skills') %>" id="skills-tab" data-toggle="tab" href="#skills" role="tab" aria-controls="skills" aria-selected="true">Skills</a>
-    <a class="nav-link <%= checkActiveCharacterTab('link', 'professions') %>" id="professions-tab" data-toggle="tab" href="#professions" role="tab" aria-controls="class" aria-selected="false">Professions</a>
-  </div>
-</nav>
 
-<div class="tab-content" id="charTabContent">
-  <div class="tab-pane fade <%= checkActiveCharacterTab('content', 'backstory') %>" id="backstory" role="tabpanel" aria-labelledby="backstory-tab">
-    <%= render partial: 'character/tabs/backstory' %>
-  </div>
-  <div class="tab-pane fade <%= checkActiveCharacterTab('content', 'skills') %>" id="skills" role="tabpanel" aria-labelledby="skills-tab">
-    <%= render partial: 'character/tabs/skills' %>
-  </div>
-  <div class="tab-pane fade <%= checkActiveCharacterTab('content', 'professions') %>" id="professions" role="tabpanel" aria-labelledby="professions-tab">
-    <%= render partial: 'character/tabs/professions' %>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
+<br>
+
+<script type="text/javascript">
+  window.onload = function() {
+    document.getElementById("backgrounddetails").style.display = "none";
+    document.getElementById("skilldetails").style.display = "none";
+
+    document.getElementById("backgroundlink").onclick = function() {
+      areadiv = document.getElementById("backgrounddetails");
+      if (areadiv.style.display === "none") {
+        areadiv.style.display = "block";
+        $(this).find($(".fas")).removeClass('fas fa-plus').addClass('fas fa-minus');
+      } else {
+        areadiv.style.display = "none";
+        $(this).find($(".fas")).removeClass('fas fa-minus').addClass('fas fa-plus');
+      }
+      return false;
+    }
+
+    document.getElementById("skilllink").onclick = function() {
+      areadiv = document.getElementById("skilldetails");
+      if (areadiv.style.display === "none") {
+        areadiv.style.display = "block";
+        $(this).find($(".fas")).removeClass('fas fa-plus').addClass('fas fa-minus');
+      } else {
+        areadiv.style.display = "none";
+        $(this).find($(".fas")).removeClass('fas fa-minus').addClass('fas fa-plus');
+      }
+      return false;
+    }
+
+  }
+</script>

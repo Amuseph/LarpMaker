@@ -266,11 +266,15 @@ module CharactersHelper
     totalXP / expToLevel(character).to_f * 100.0
   end
 
-  def percentOfCP(_character)
-    totalCP = ((@character.level * 50) + 50).to_f
-    currentCP = ((@character.skills.sum(:tier) * 10)).to_f
+  def percentOfCP(character)
+    totalCP = ((character.level * 50) + 50).to_f
+    currentCP = ((character.skills.sum(:tier) * 10)).to_f
 
     currentCP / totalCP * 100.0
+  end
+
+  def get_character_token(character)
+    return '/images/classtoken/' + character.characterclass.name.downcase + '.png'
   end
 
   def get_house_details()
