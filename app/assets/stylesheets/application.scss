@@ -50,62 +50,13 @@
 
 }
 
-#sidebarMenu {
-  border-top-left-radius: 30px;
-  width: 100px;
-  min-height: 85vh;
-
-  .sideLink {
-    padding: 0px;
-    margin-top: 10px;
-    border-radius: 25px;
-    text-align: left;
-    width: 100%;
-    
-    img {
-      height: 25px;
-      width: 25px;
-    }
-
-    a:link, a:visited, a:hover, a:active  { 
-      color: black;
-      text-decoration:none;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-      font-size: 16px;
-      padding: auto;
-    }
-  }
-
-  .sideSubLink {
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 25px;
-    text-align: left;
-
-    a:link, a:visited, a:hover, a:active  { 
-      color: black;
-      text-decoration:none;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-      font-size: 10px;
-    }
-  }
-
-  .sideLink:hover, .sideSubLink:hover {
-    background: rgba(75, 75, 75, 0.25)
-  }
-}
-
 #characterprofile {
   color: black;
   font-family: 'Copperplate Gothic Light';
+
   #charactername {
     display: inline-block;
     font-weight: bold;
-  }
-  #pronouns {
-    margin-left: 10px;
   }
 
   #characterphoto {
@@ -126,24 +77,20 @@
     }
   }
 
-    a:link, a:visited, a:hover, a:active  { 
-      color: black;
-      text-decoration:none;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-      font-size: 16px;
-      padding: auto;
-    }
+  a:link, a:visited, a:hover, a:active  { 
+    color: black;
+    text-decoration:none;
+    font-weight: bold;
+    padding: auto;
+  }
 
-    .profilelinks:hover {
-      background: rgba(75, 75, 75, 0.25)
-    }
-
+  .profilelinks:hover {
+    background: rgba(75, 75, 75, 0.25)
+  }
 
   #classtoken {
     max-width:100%;
   }
-
 
   #bgheader {
     display:flex;
@@ -162,6 +109,26 @@
   #backgroundpreview {
     border-style: none solid solid solid; 
     border-width: 1px;
+
+    .backgroundbutton {
+      padding: 1px;
+      margin-bottom: 20px;
+      border-radius: 25px;
+      text-align: left;
+      width: 100%;
+      font-size: 24px;
+    }
+  
+    a:link, a:visited, a:hover, a:active  { 
+      color: black;
+      text-decoration:none;
+      font-weight: bold;
+      padding: auto;
+    }
+    
+    .backgroundbutton:hover {
+      background: rgba(75, 75, 75, 0.25)
+    }
   }
 
   #backgrounddetails {
@@ -210,6 +177,29 @@
     border-width: 1px;
   }
 }
+
+#courierpage {
+  .courierbutton {
+    padding: 1px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    text-align: left;
+    width: 100%;
+    font-size: 24px;
+  }
+
+  a:link, a:visited, a:hover, a:active  { 
+    color: black;
+    text-decoration:none;
+    font-weight: bold;
+    padding: auto;
+  }
+  
+  .courierbutton:hover {
+    background: rgba(75, 75, 75, 0.25)
+  }
+}
+
 
 #cabinmap {
   img {

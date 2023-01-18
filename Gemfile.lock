@@ -72,6 +72,8 @@ GEM
       kaminari (>= 1.0)
       sassc-rails (~> 2.1)
       selectize-rails (~> 0.6)
+    administrate-field-image (1.2.0)
+      administrate (>= 0.2.0.rc1)
     autoprefixer-rails (10.4.7.0)
       execjs (~> 2)
     aws-eventstream (1.2.0)
@@ -288,6 +290,7 @@ DEPENDENCIES
   MailchimpMarketing
   active_storage_validations
   administrate
+  administrate-field-image
   aws-sdk-s3
   bootsnap (>= 1.4.2)
   bootstrap (~> 5.2.0)

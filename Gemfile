@@ -29,6 +29,7 @@ gem 'devise'
 gem "recaptcha"
 # Administrate for easy data tables
 gem "administrate"
+gem "administrate-field-image"
 
 # Use Active Storage variant
 gem "aws-sdk-s3", require: false

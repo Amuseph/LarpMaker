@@ -279,7 +279,7 @@ module CharactersHelper
 
   def get_house_details()
     if @character.house.nil?
-      return 'Join a house in-game! See the rulebook for more details.'
+      return render 'character/housenone'
     else
       return render 'character/housedetails'
     end
@@ -287,7 +287,7 @@ module CharactersHelper
 
   def get_guild_details()
     if @character.guild.nil?
-      return 'Join a guild in-game! See the rulebook for more details.'
+      return render 'character/guildnone'
     else
       return render 'character/guilddetails'
     end

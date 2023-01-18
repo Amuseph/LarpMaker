@@ -20,6 +20,7 @@ class CharacterDashboard < Administrate::BaseDashboard
     eventattendances: Field::HasMany,
     events: Field::HasMany,
     race: Field::BelongsTo,
+    photo: Field::Image,
     characterclass: Field::BelongsTo,
     deity: Field::BelongsTo,
     house: Field::BelongsTo,
@@ -62,6 +63,7 @@ class CharacterDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     user
     name
+    photo
     pronouns
     rewrite
     level
@@ -88,6 +90,7 @@ class CharacterDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     user
     name
+    photo
     pronouns
     rewrite
     level

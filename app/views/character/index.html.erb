@@ -21,13 +21,13 @@
         <div class="col-md-auto" id='profilephoto'>
           <%= link_to character_changephoto_path, remote: true do %>        
             <% if @character.photo.attached? %>
-              <%= image_tag 'pages/camp/camp-header.jpg', id: 'characterphoto', size: '350x350' %>
+              <%= image_tag @character.photo, id: 'characterphoto', size: '350x350' %>
             <% else %>
               <%= image_tag 'pages/camp/camp-header.jpg', id: 'characterphoto', size: '350x350', class: 'center-block' %>
             <% end %>
           <% end %>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <% if can_edit_character() %>
             <div class="profilelinks">
               <%= link_to edit_character_path(session[:character]) do %>
@@ -48,27 +48,27 @@
           <% end %>
           <% if can_level(@character) %>
             <div class="profilelinks">
-              <%= link_to character_courier_path do %>
+              <%= link_to character_levelup_path, data: { confirm: 'Leveling up will cost ' + expToLevel(@character).to_s + ' exp. This is irreversible. Are you sure?'}, method: :post do %>
                 <div>
-                  <%= image_tag 'charactersheet/levelup.png', size: '25x25', class: 'center-block' %> - Level Up
+                  <%= image_tag 'charactersheet/helmet.png', size: '25x25', class: 'center-block' %> - Level Up
                 </div>
               <% end %>
             </div>
           <% end %>
           <% if !get_sheets_locked %>
             <div class="profilelinks">
-              <%= link_to character_courier_path do %>
+              <%= link_to character_trainskill_path, remote: true do %>
                 <div>
-                  <%= image_tag 'charactersheet/trainskill.png', size: '25x25', class: 'center-block' %> - Train Skill
+                  <%= image_tag 'charactersheet/clock.png', size: '25x25', class: 'center-block' %> - Train Skill
                 </div>
               <% end %>
             </div>
           <% end %>
           <% if can_buy_profession(@character) %>
             <div class="profilelinks">
-              <%= link_to character_courier_path do %>
+              <%= link_to character_learnprofession_path, remote: true do %>
                 <div>
-                  <%= image_tag 'charactersheet/trainprofession.png', size: '25x25', class: 'center-block' %> - Train Profession
+                  <%= image_tag 'charactersheet/tent.png', size: '25x25', class: 'center-block' %> - Train Profession
                 </div>
               <% end %>
             </div>
@@ -81,9 +81,9 @@
             <% end %>
           </div>
           <div class="profilelinks">
-            <%= link_to character_courier_path do %>
+            <%= link_to character_xpstore_path do %>
               <div>
-                <%= image_tag 'charactersheet/xpstore.png', size: '25x25', class: 'center-block' %> -  XP Store
+                <%= image_tag 'charactersheet/chest.png', size: '25x25', class: 'center-block' %> -  XP Store
               </div>
             <% end %>
           </div>
@@ -93,7 +93,7 @@
   </div>
 
   <div class="row">
-    <div class="container col-12 mt-2" id="bgheader">
+    <div class="col-12 mt-2" id="bgheader">
       <a id="backgroundlink" href="./character">
         <div>
           <i class="fas fa-plus"></i>&nbsp; Level <%= @character.level %> <%= @character.race.name %> <%= @character.characterclass.name %>
@@ -101,39 +101,55 @@
       </a>
     </div>
   </div>
-  <div class="row" id="backgroundpreview">
-    <div class="container col-3">
-      <%= image_tag get_character_token(@character), id: 'classtoken' %>
-    </div>
-    <div class="container col-9">
-      <% if (!@character.totem.nil? and !@character.totem.empty?) %>
-        <b>Totem:</b> <%= @character.totem  %><br>
-      <% end %>
 
-      <% if(@character.deity_id) %>
-        <b>Deity:</b> <%= if(@character.deity) then @character.deity.name end %><br>
-      <% end %>
-      <b>House:</b>
-      <% if(@character.house_id) %>
-        <%= @character.house.name %>
-      <% end %>
-      <br>
-      <b>Guild:</b> 
-      <% if(@character.guild_id) %>
-        <%= @character.guild.name  %>
-      <% end %>
+  <div class="row" id="backgroundpreview">
+    <div class="col-md-3">
+      <center>
+        <%= image_tag get_character_token(@character), id: 'classtoken' %><br>
+        <% if (!@character.totem.nil? and !@character.totem.empty?) %>
+          <%= @character.totem  %>
+        <% end %>
+        <% if(@character.deity_id) %>
+          <%= @character.deity.name %>
+        <% end %>
+      </center>
+    </div>
+    <div class="col-md-auto">
+    <br>
+      <div class='backgroundbutton'>
+        <%= link_to character_house_path do %>
+          <div>
+            <%= image_tag 'charactersheet/tower.png', size: '25x25', class: 'center-block' %> <b>House:</b> 
+            <% if(@character.house_id) %>
+              <%= @character.house.name %>
+            <% else %>
+              None
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class='backgroundbutton'>
+        <%= link_to character_guild_path do %>
+          <div>
+            <%= image_tag 'charactersheet/tower.png', size: '25x25', class: 'center-block' %> <b>Guild:</b> 
+            <% if(@character.guild_id) %>
+              <%= @character.guild.name  %>
+            <% else %>
+              Arcane Protection Agency Initiative
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <br>      
     </div>
   </div>
   <div class="row">
-    <div class="container col-12" id="backgrounddetails">
+    <div class="col-12" id="backgrounddetails">
       <%= edit_backstory_link %> <%= backstory_status %>
       <%= display_backstory %>
     </div>
   </div>
-
-
-
-
 
   <div class="row">
     <div class="container col-12 mt-2" id="skillheader">
@@ -163,55 +179,53 @@
   </div>
   <div class="row">
     <div class="container col-12" id="skilldetails">
-
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered table-sm">
-        <thead class = 'thead-dark'>
-        <tr>
-            <th>Name</th>
-            <th>#</th>
-            <th>Tier</th>
-            <th>Group</th>
-            <th>Rest Type</th>
-            <th>Incant</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-          <% @character.characterskills.select("skill_id, skills.tier, skills.name, max(acquiredate) as acquiredate").joins('INNER JOIN skills ON skills.id = characterskills.skill_id').group("skill_id, skills.tier, skills.name").order('tier, name asc').each do |characterskill| %>
-            <tr class="table-light">
-              <td><%= characterskill.skill.name %></td>
-              <td><%= @character.characterskills.select("skill_id").group("skill_id").count[characterskill.skill_id] %></td>
-              <td><%= characterskill.skill.tier %></td>
-              <td><%= characterskill.skill.skillgroup.name %></td>
-              <td><%= characterskill.skill.resttype.name %></td>
-              <td><%= characterskill.skill.incant %></td>
-              <td><%= characterskill.skill.description %> </td>
-              <td>
-                <%=
-                  if(can_refund_skill(characterskill))
-                    refundprice = skill_refund_price(characterskill)
-                    if (refundprice == 0)
-                      link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post do 
-                        fa_icon "trash" 
-                      end
-                    else
-                      link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post, data: { confirm: 'Doing this will cost you ' + refundprice.to_s + ' exp. This is irreversible.' } do 
-                        fa_icon "trash" 
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-sm">
+          <thead class = 'thead-dark'>
+          <tr>
+              <th>Name</th>
+              <th>#</th>
+              <th>Tier</th>
+              <th>Group</th>
+              <th>Rest Type</th>
+              <th>Incant</th>
+              <th>Description</th>
+              <th></th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @character.characterskills.select("skill_id, skills.tier, skills.name, max(acquiredate) as acquiredate").joins('INNER JOIN skills ON skills.id = characterskills.skill_id').group("skill_id, skills.tier, skills.name").order('tier, name asc').each do |characterskill| %>
+              <tr class="table-light">
+                <td><%= characterskill.skill.name %></td>
+                <td><%= @character.characterskills.select("skill_id").group("skill_id").count[characterskill.skill_id] %></td>
+                <td><%= characterskill.skill.tier %></td>
+                <td><%= characterskill.skill.skillgroup.name %></td>
+                <td><%= characterskill.skill.resttype.name %></td>
+                <td><%= characterskill.skill.incant %></td>
+                <td><%= characterskill.skill.description %> </td>
+                <td>
+                  <%=
+                    if(can_refund_skill(characterskill))
+                      refundprice = skill_refund_price(characterskill)
+                      if (refundprice == 0)
+                        link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post do 
+                          fa_icon "trash" 
+                        end
+                      else
+                        link_to character_removeskill_path(skill_id: characterskill.skill_id), method: :post, data: { confirm: 'Doing this will cost you ' + refundprice.to_s + ' exp. This is irreversible.' } do 
+                          fa_icon "trash" 
+                        end
                       end
                     end
-                  end
-                %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+                  %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-
 
   <div class="row">
     <div class="container col-12 mt-2" id="professionheader">
@@ -254,38 +268,51 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 <br>
+
+<div class="modal fade" id="characterSkillModal" tabindex="-1" role="dialog" aria-labelledby="characterSkillModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="characterSkillModalLabel">Add Skill</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> 
+      <div class="modal-body" id="skillModalBody"></div>
+    </div>
+  </div>
+</div>
+    
+<div class="modal fade" id="characterProfessionModal" tabindex="-1" role="dialog" aria-labelledby="characterProfessionModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="characterProfessionModalLabel">Add Profession</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> 
+      <div class="modal-body" id="professionModalBody" >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="characterPhotoModal" tabindex="-1" role="dialog" aria-labelledby="characterPhotoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="characterPhotoModalLabel">Update Character Photo</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> 
+      <div class="modal-body" id="characterPhotoModalBody"></div>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
   window.onload = function() {
@@ -315,6 +342,5 @@
       }
       return false;
     }
-
   }
 </script>

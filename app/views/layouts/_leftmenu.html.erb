@@ -14,41 +14,8 @@
     <%= link_to 'Printable Sheet', character_printablesheet_path, target: :_blank %>
   </div>
 
-  <div class='sideSubLink'>
-    <%= link_to 'Update Photo', character_changephoto_path, remote: true 
-    %>
-  </div>
+ 
 
 
-
-
-  <% if !get_between_game_skills_locked %>
-    <% if couriers_available() > 0 %>
-      <div class='sideSubLink'>
-        <%= link_to 'Send Courier', character_sendcourier_path, remote: true %>
-      </div>
-    <% end %>
-
-      <div class='sideSubLink'>
-        <%= link_to 'Send Between Game', character_sendbetweengame_path, remote: true %>
-      </div>
-  <% end %>
-
-  <div class='sideLink'>
-    <%= link_to character_house_path do %>
-      <div>
-        <%= image_tag("leftmenu/house.png") %>
-        House
-      </div>
-    <% end %>
-  </div>
-  <div class='sideLink'>
-    <%= link_to character_guild_path do %>
-      <div>
-        <%= image_tag("leftmenu/guild.png") %>
-        Guild
-      </div>
-    <% end %>
-  </div>
-  <% end %>
+  
 </div>
