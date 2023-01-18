@@ -266,16 +266,20 @@ module CharactersHelper
     totalXP / expToLevel(character).to_f * 100.0
   end
 
-  def percentOfCP(_character)
-    totalCP = ((@character.level * 50) + 50).to_f
-    currentCP = ((@character.skills.sum(:tier) * 10)).to_f
+  def percentOfCP(character)
+    totalCP = ((character.level * 50) + 50).to_f
+    currentCP = ((character.skills.sum(:tier) * 10)).to_f
 
     currentCP / totalCP * 100.0
   end
 
+  def get_character_token(character)
+    return '/images/classtoken/' + character.characterclass.name.downcase + '.png'
+  end
+
   def get_house_details()
     if @character.house.nil?
-      return 'Join a house in-game! See the rulebook for more details.'
+      return render 'character/housenone'
     else
       return render 'character/housedetails'
     end
@@ -283,7 +287,7 @@ module CharactersHelper
 
   def get_guild_details()
     if @character.guild.nil?
-      return 'Join a guild in-game! See the rulebook for more details.'
+      return render 'character/guildnone'
     else
       return render 'character/guilddetails'
     end

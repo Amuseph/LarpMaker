@@ -29,12 +29,11 @@ body {
   color: black;
   font-family: 'Copperplate Gothic Light';
   font-weight: bold;
-  margin-top: 12px;
   font-size: 12px;
   text-align: center;
 }
 
-#pageContent {
+#pagecontent {
   color: black;
   font-family: 'Copperplate Gothic Light';
   padding-left: 3%;
@@ -42,9 +41,18 @@ body {
   padding-bottom: 3%;
 }
 
-#mainContent {
+#maincontent {
+  //background-color: rgba(252, 227, 6, 0.774);
   background-image: url(parchmentbackground.jpg);
-  min-height: 85vh;
+  min-height: 75vh;
+}
+
+#bottomcontent {
+  //background-color: rgba(252, 227, 6, 0.774);
+  background-image: url(parchmentbackground.jpg);
+  border-top: #343a40;
+  border-top-style: solid; 
+  border-top-width: 1px;
 }
 
 #transferxplink {
@@ -56,17 +64,38 @@ body {
     font-size: 16px;
     padding: auto;
   }
-
-
 }
 
-#sidebarMenu {
-  background-image: url(parchmentbackground.jpg);
-  border-top-left-radius: 30px;
-  width: 100px;
-  min-height: 85vh;
+#houseprofile {
+  #housephoto {
+    max-width:100%;
+    height: auto;
+  }
+}
 
-  .sideLink {
+#guildprofile {
+  #guildphoto {
+    max-width:100%;
+    height: auto;
+  }
+}
+
+#characterprofile {
+  color: black;
+  font-family: 'Copperplate Gothic Light';
+
+  #charactername {
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  #characterphoto {
+    max-width:100%;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .profilelinks {
     padding: 0px;
     margin-top: 10px;
     border-radius: 25px;
@@ -77,109 +106,131 @@ body {
       height: 25px;
       width: 25px;
     }
+  }
 
+  a:link, a:visited, a:hover, a:active  { 
+    color: black;
+    text-decoration:none;
+    font-weight: bold;
+    padding: auto;
+  }
+
+  .profilelinks:hover {
+    background: rgba(75, 75, 75, 0.25)
+  }
+
+  #classtoken {
+    max-width:100%;
+  }
+
+  #bgheader {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #backgroundpreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+
+    .backgroundbutton {
+      padding: 1px;
+      margin-bottom: 20px;
+      border-radius: 25px;
+      text-align: left;
+      width: 100%;
+      font-size: 24px;
+    }
+  
     a:link, a:visited, a:hover, a:active  { 
       color: black;
       text-decoration:none;
       font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-      font-size: 16px;
       padding: auto;
     }
-  }
-
-  .sideSubLink {
-    padding-left: 10px;
-    margin-left: 20px;
-    border-radius: 25px;
-    text-align: left;
-
-    a:link, a:visited, a:hover, a:active  { 
-      color: black;
-      text-decoration:none;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-      font-size: 10px;
+    
+    .backgroundbutton:hover {
+      background: rgba(75, 75, 75, 0.25)
     }
   }
 
-  .sideLink:hover, .sideSubLink:hover {
+  #backgrounddetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #skillheader {
+    display:flex;
+    align-items:center;
+    font-size: 25px;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    a:link, a:visited, a:hover, a:active  { 
+      color: blue;
+      text-decoration:none;
+      font-weight: bold;
+    }
+  }
+
+  #skillpreview {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+
+  #skilldetails {
+    display: none;
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+  
+  #professionheader {
+    display:flex;
+    align-items:center;
+    background-color: white;
+    border-style: solid; 
+    border-width: 1px;
+    color: blue;
+    font-weight: bold;
+  }
+
+  #professiondetails {
+    border-style: none solid solid solid; 
+    border-width: 1px;
+  }
+}
+
+#courierpage {
+  .courierbutton {
+    padding: 1px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    text-align: left;
+    width: 100%;
+    font-size: 24px;
+  }
+
+  a:link, a:visited, a:hover, a:active  { 
+    color: black;
+    text-decoration:none;
+    font-weight: bold;
+    padding: auto;
+  }
+  
+  .courierbutton:hover {
     background: rgba(75, 75, 75, 0.25)
   }
 }
 
-#characterprofile {
-  #profilecard {
-    img {
-      display: block;
-      width:100%;
-    }
-    #profilecardimage {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-
-      #profilecardtop {
-        position: relative;
-        z-index: 1;
-      }
-
-      #characterphoto {
-        z-index: 0;
-        position: absolute;
-
-      }
-    }
-    
-    #profilecardmiddle {
-      position: relative;
-    }
-    #profilecardname {
-      position: absolute;
-      top: 50%;
-      transform: translate(0, -50%);
-      width: 100%;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-    }
-
-    #profilecardbottom {
-      position: relative;
-    }
-    #profilecarddetails {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 0);
-      top: 0px;
-      width: 80%;
-      font-weight: bold;
-      font-family: 'Copperplate Gothic Light';
-    }
-  padding: 0px;
-  }
-  #profiledata {
-    color: black;
-    font-family: 'Copperplate Gothic Light';
-    #name {
-      display: inline-block;
-      font-weight: bold;
-    }
-    #pronouns {
-      margin-left: 10px;
-    }
-  }
-}
-
-#characterbackstory {
-  a:link, a:visited, a:hover, a:active  { 
-    color: black;
-    font-weight: bold;
-    font-family: 'Copperplate Gothic Light';
-    font-size: 16px;
-    padding: auto;
-  }
-}
 
 #cabinmap {
   img {

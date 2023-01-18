@@ -7,7 +7,6 @@
     
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
-    <%= javascript_pack_tag 'changecharacter' %>
     
     <script src="https://unpkg.com/@popperjs/core@2"></script>  
     <% if Rails.env.production? %>
@@ -40,7 +39,7 @@
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark p-0 shadow">
       <%= render 'layouts/topmenu' %>
     </nav>
-    <div class="container-fluid", id='pageContent'>
+    <div class="container-fluid", id='pagecontent'>
       <main class="col-12", id='mainContent'>
         <%= yield %>
       </main>

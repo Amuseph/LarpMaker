@@ -11,6 +11,7 @@ class HouseDashboard < Administrate::BaseDashboard
     characters: Field::HasMany,
     id: Field::Number,
     name: Field::String,
+    photo: Field::Image,
     thane: Field::BelongsTo,
     createdate: Field::Date,
     created_at: Field::DateTime,
@@ -31,6 +32,7 @@ class HouseDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     name
+    photo
     thane
     characters
     createdate
@@ -43,6 +45,7 @@ class HouseDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
     name
+    photo
     thane
     characters
     createdate

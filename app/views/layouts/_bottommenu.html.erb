@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col">
+    <center>
+      <%= image_tag("logo_small.png") %><br>
+      <a href="https://www.youtube.com/channel/UCVzKfy-6sEgueNmAaruGn0g" target="_blank"> <i class="fab fa-youtube" id="youtube"></i></a>
+      <a href="https://www.facebook.com/mythlarp/" target="_blank"><i class="fab fa-facebook-square" id="facebook"></i></a>
+      <a href="https://discord.gg/mythlarp" target="_blank"><i class="fab fa-discord" id="discord"></i></a>
+    </center>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h5>About Us</h5>
+    <% # Our Staff<br>
+    %> 
+    
+    <%= link_to 'Terms of Service', pages_termsofservice_path %> <br>
+  </div>
+  <div class="col">
+    <h5>Support</h5>
+    <% # Contact Us<br>
+    %> 
+    
+    <%= link_to 'Website FAQ', pages_faq_path %><br>
+    <%= link_to 'LARP Resources', pages_larpresources_path %><br>
+  </div>
+</div>
