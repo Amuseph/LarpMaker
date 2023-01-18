@@ -20,7 +20,7 @@
       <div class="row justify-content-md-center">
         <div class="col-md-auto" id='profilephoto'>
           <%= link_to character_changephoto_path, remote: true do %>        
-            <% if !@character.photo.attached? %>
+            <% if @character.photo.attached? %>
               <%= image_tag @character.photo, id: 'characterphoto', size: '350x350' %>
             <% else %>
               <%= image_tag 'charactersheet/defaultprofile.png', id: 'characterphoto', size: '350x350', class: 'center-block' %>
