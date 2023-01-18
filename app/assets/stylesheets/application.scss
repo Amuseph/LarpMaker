@@ -20,21 +20,39 @@
 @import 'font-awesome';
 @import 'select2/dist/css/select2';
 
+body { 
+  background-image: url(woodbackground.jpg);
+  min-height: 100vh;
+}
+
 #gamedate {
   color: black;
   font-family: 'Copperplate Gothic Light';
   font-weight: bold;
-  margin-top: 12px;
   font-size: 12px;
   text-align: center;
 }
 
-#pageContent {
+#pagecontent {
   color: black;
   font-family: 'Copperplate Gothic Light';
   padding-left: 3%;
   padding-right: 3%;
   padding-bottom: 3%;
+}
+
+#maincontent {
+  //background-color: rgba(252, 227, 6, 0.774);
+  background-image: url(parchmentbackground.jpg);
+  min-height: 75vh;
+}
+
+#bottomcontent {
+  //background-color: rgba(252, 227, 6, 0.774);
+  background-image: url(parchmentbackground.jpg);
+  border-top: #343a40;
+  border-top-style: solid; 
+  border-top-width: 1px;
 }
 
 #transferxplink {
@@ -46,8 +64,20 @@
     font-size: 16px;
     padding: auto;
   }
+}
 
+#houseprofile {
+  #housephoto {
+    max-width:100%;
+    height: auto;
+  }
+}
 
+#guildprofile {
+  #guildphoto {
+    max-width:100%;
+    height: auto;
+  }
 }
 
 #characterprofile {
@@ -61,6 +91,7 @@
 
   #characterphoto {
     max-width:100%;
+    height: auto;
     border-radius: 50%;
   }
 

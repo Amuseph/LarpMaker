@@ -37,18 +37,18 @@
     <div class="container-fluid">
       <div class="row">
         <%= render 'layouts/topmenu' %>
-        <div class="col-1 bg-primary"></div>
-        <div class="col-10", id='mainContent'>
+        <div class="col-1"></div>
+        <div class="col-10", id='maincontent'>
           <%= yield %>
         </div>
-        <div class="col-1 bg-danger"></div>
+        <div class="col-1"></div>
       </div>
       <div class="row">
-        <div class="col-1 bg-danger"></div>
-        <div class="col-10">
+        <div class="col-1"></div>
+        <div class="col-10", id='bottomcontent'>
           <%= render 'layouts/bottommenu' %>
         </div>
-        <div class="col-1 bg-primary"></div>
+        <div class="col-1"></div>
       </div>
     </div>
   </body>

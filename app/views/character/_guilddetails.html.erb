@@ -1,4 +1,11 @@
-<center><h2 id='name'><%= @character.guild.name %></h2><br></center>
+<div class="col-md-auto" id="guildprofile">
+<center>
+<h2 id='name'><%= @character.guild.name %></h2><br>
+  <% if @character.guild.photo.attached? %>
+    <%= image_tag @character.guild.photo, id: 'guildphoto', size: '350x350' %><br>
+  <% end %>
+</center>
+
 <b>Guild Master:</b> <%= @character.guild.guildmaster.get_first_name %><br>
 
 <b>Members:</b><br>

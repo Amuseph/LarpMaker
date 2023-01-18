@@ -1,13 +1,3 @@
-<div id = 'gamedate'>
-  <%= Time.now.in_time_zone('Eastern Time (US & Canada)').day %> day in <%= getGameMonth(Time.now.in_time_zone('Eastern Time (US & Canada)').month) %><br>
-  Year <%= Time.now.in_time_zone('Eastern Time (US & Canada)').year - 1300 %>
-</div>
-<div class="position-sticky pt-2">
-  <% if !session[:character].nil?
-    @character = Character.find_by(id: session[:character]) 
-  %>
-
-
 
   
   <div class='sideSubLink'>

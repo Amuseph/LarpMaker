@@ -1,5 +1,9 @@
 <%= provide(:title, 'Homepage') %>
 <marquee behavior="scroll" Scrollamount=15 direction="left" ><%= get_marquee_text %></marquee>
+<div id = 'gamedate'>
+  <%= Time.now.in_time_zone('Eastern Time (US & Canada)').day %> day in <%= getGameMonth(Time.now.in_time_zone('Eastern Time (US & Canada)').month) %><br>
+  Year <%= Time.now.in_time_zone('Eastern Time (US & Canada)').year - 1300 %>
+</div>
 <div class="pagetitle">The Dancing Dragonfly of Damar Keep</div>
 The doors to the tavern creek open as you step in from the outdoors into the bustling interior. 
 There's the scent of ale in the air, mixed with the ever-present smell of blood and the loud voices making it clear that this is an adventurer's type of place. 

@@ -1,4 +1,10 @@
-<center><h2 id='name'><%= @character.house.name %></h2><br></center>
+<div class="col-md-auto" id="houseprofile">
+<center>
+  <h2 id='name'><%= @character.house.name %></h2><br>
+  <% if @character.house.photo.attached? %>
+    <%= image_tag @character.house.photo, id: 'housephoto', size: '350x350' %><br>
+  <% end %>
+</center>
 <b>Thane:</b> <%= @character.house.thane.get_first_name %><br>
 <br>
 
@@ -6,3 +12,4 @@
 <%=
   get_house_members(@character.house)
 %>
+</div>
