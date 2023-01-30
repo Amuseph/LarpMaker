@@ -1,45 +1,50 @@
 <%= provide(:title, 'Rulebook') %>
 <div class="container col-12 mt-4" id="rulebook">
   <div class="row">
-    <div class="container col-8">
-      <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid mx-auto d-block") %><br>
-    </div>
-    <div class="container col-4">
-      <p class = "h2 text-center">Download the PDF Version</p>
-      <p>Get into the action with our Player's Handbook. Make new friends and join a growing community of live RPG enthusiasts.</p>
-      <ul>
-        <li><b>Simple Rules:</b> Easy-to-learn allow you to make a difference right from the start. 
-        <li><b>Free Rulebook:</b> Free PDF version available.
-        <li><b>Free Membership:</b> No membership fees make it easy to join the ranks of kindred spirits with a common interest. 
-      </ul>
-      
-      <div class = "rulebookdownloadbutton">
-        <%= link_to "/rulebook/Myth Rulebook 1.8.2.pdf", target: '_blank' do %>
-          <div>
-            Download PDF Version
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid mx-auto d-block") %><br>
+        </div>
+        <div class="col-md-3">
+          <p class = "h2 text-center">Download the PDF Version</p>
+          <p>Get into the action with our Player's Handbook. Make new friends and join a growing community of live RPG enthusiasts.</p>
+          <ul>
+            <li><b>Simple Rules:</b> Easy-to-learn allow you to make a difference right from the start. 
+            <li><b>Free Rulebook:</b> Free PDF version available.
+            <li><b>Free Membership:</b> No membership fees make it easy to join the ranks of kindred spirits with a common interest. 
+          </ul>
+        
+          <div class = "rulebookdownloadbutton">
+            <%= link_to "/rulebook/Myth Rulebook 1.8.2.pdf", target: '_blank' do %>
+              <div>
+                Download PDF Version
+              </div>
+            <% end %>
           </div>
-        <% end %>
+          <center><%= link_to '[Errata | Changelog]', pages_rulebookchangelog_path %><br></center>
+        </div>
       </div>
-      <center><%= link_to '[Errata | Changelog]', pages_rulebookchangelog_path %><br></center>
-      Myth grants permission to print, download, a single copy of our rulebook for personal use.
     </div>
-  </div>
-  <div class="row mt-4">
-    <div class="container col-8">
-      <p class="h2 text-center">Hold The Rulebook In Your Hands</p>
-      <p>You are an adventurer capable of doing things most dare to dream. In a world filled with monsters, the call goes out for heroes to restore the balance. Will you and your friends save the day and become legends or end up another stone marker in the hero's graveyard? Time will tell.</p>
-      <p>If you like fantasy-driven tabletop adventures, imagine the thrill of actually being in one. Myth is an epic live roleplaying game in the Northeastern United States that allows you to step into the action. Here you will solve puzzles, discover treasure, explore dungeons, battle monsters with foam weapons, and interact with other adventurers in a realistic fantasy setting. Step into an exciting adventure today.</p>
-      <div class = "rulebookamazonbutton">
-        <%= link_to 'https://amzn.to/33mwmN8', target: '_blank' do %>
-          <div>
-            <i class="fab fa-amazon"></i> Order Print Version Now
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-7">
+          <p class="h2 text-center">Hold The Rulebook In Your Hands</p>
+          <p>You are an adventurer capable of doing things most dare to dream. In a world filled with monsters, the call goes out for heroes to restore the balance. Will you and your friends save the day and become legends or end up another stone marker in the hero's graveyard? Time will tell.</p>
+          <p>If you like fantasy-driven tabletop adventures, imagine the thrill of actually being in one. Myth is an epic live roleplaying game in the Northeastern United States that allows you to step into the action. Here you will solve puzzles, discover treasure, explore dungeons, battle monsters with foam weapons, and interact with other adventurers in a realistic fantasy setting. Step into an exciting adventure today.</p>
+          <div class = "rulebookamazonbutton">
+            <%= link_to 'https://amzn.to/33mwmN8', target: '_blank' do %>
+              <div>
+                <i class="fab fa-amazon"></i> Order Print Version
+              </div>
+            <% end %>
           </div>
-        <% end %>
+          <p>Users with Amazon Prime typically receive their rulebook in under a week. This professionally-bound version is great for old-school gamers who like quick access to the rules wherever you are and those who appreciate an affordable printed option of the game rules.</p>
+        </div>
+        <div class="col-md-auto">
+          <%= image_tag("pages/rulebook/rulebook-cover.jpg", :class => "img-fluid mx-auto d-block") %>
+        </div>
       </div>
-      <p>Users with Amazon Prime typically receive their rulebook in under a week. This professionally-bound version is great for old-school gamers who like quick access to the rules wherever you are and those who appreciate an affordable printed option of the game rules.</p>
-    </div>
-    <div class="container col-4">
-      <%= image_tag("pages/rulebook/rulebook-cover.jpg", :class => "img-fluid mx-auto d-block") %>
     </div>
   </div>
 </div>
