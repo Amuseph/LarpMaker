@@ -199,7 +199,7 @@ module CharactersHelper
       return 0
     elsif last_played_event.nil?
       # Never attended an event
-      return true
+      return 0
     elsif last_played_event.startdate < characterskill.acquiredate
       # Skill has never been used
       return 0
