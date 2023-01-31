@@ -295,7 +295,25 @@ body {
     }
   }
 
-.rulebookamazonbutton {
+  .craftingguidebutton {
+    background-color: rgb(14, 165, 0);
+    font-weight: bold;
+    padding: auto;
+    margin: 25px auto;
+    border-radius: 25px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    line-height:50px;
+      
+    a:link, a:visited, a:hover, a:active  { 
+      color: black;
+      font-family: "Roboto", Sans-serif;
+      font-size: 20px;
+    }
+  }
+
+  .rulebookamazonbutton {
     background-color: blue;
     font-weight: bold;
     padding: auto;
