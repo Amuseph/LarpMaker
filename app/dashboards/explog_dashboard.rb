@@ -15,7 +15,6 @@ class ExplogDashboard < Administrate::BaseDashboard
     grantedby: Field::BelongsTo,
     id: Field::Number,
     acquiredate: Field::DateTime,
-    name: Field::String,
     name: Field::Select.with_options(
       collection: ['Adjustment', 'Donation', 'Event', 'Feedback Letter', 'Level Up',
         'Profession Purchase', 'Referral Bonus', 'Ritual', 'Season Pass', 'Skill Refund',
