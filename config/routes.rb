@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get :laws
     get :townpositions
     get :rulebook
+    get :craftingguide
     get :rulebookchangelog
     get :camp
     get :events

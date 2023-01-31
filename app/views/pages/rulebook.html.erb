@@ -4,11 +4,11 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-auto">
-          <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid mx-auto d-block") %><br>
+          <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid") %><br>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-7">
           <p class = "h2 text-center">Download the PDF Version</p>
-          <p>Get into the action with our Player's Handbook. Make new friends and join a growing community of live RPG enthusiasts.</p>
+          <p>Get into the action with our Players Handbook. Make new friends and join a growing community of live RPG enthusiasts.</p>
           <ul>
             <li><b>Simple Rules:</b> Easy-to-learn allow you to make a difference right from the start. 
             <li><b>Free Rulebook:</b> Free PDF version available.
@@ -18,7 +18,14 @@
           <div class = "rulebookdownloadbutton">
             <%= link_to "/rulebook/Myth Rulebook 1.8.2.pdf", target: '_blank' do %>
               <div>
-                Download PDF Version
+                Download PDF
+              </div>
+            <% end %>
+          </div>
+          <div class = "craftingguidebutton">
+            <%= link_to pages_craftingguide_path do %>
+              <div>
+                Profession Primer
               </div>
             <% end %>
           </div>
@@ -26,6 +33,7 @@
         </div>
       </div>
     </div>
+
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-7">
