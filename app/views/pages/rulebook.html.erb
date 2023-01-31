@@ -4,9 +4,9 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-auto">
-          <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid mx-auto d-block") %><br>
+          <%= image_tag("pages/rulebook/rulebook-header.jpg", :class => "img-fluid") %><br>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-7">
           <p class = "h2 text-center">Download the PDF Version</p>
           <p>Get into the action with our Players Handbook. Make new friends and join a growing community of live RPG enthusiasts.</p>
           <ul>
@@ -18,29 +18,10 @@
           <div class = "rulebookdownloadbutton">
             <%= link_to "/rulebook/Myth Rulebook 1.8.2.pdf", target: '_blank' do %>
               <div>
-                Download PDF Version
+                Download PDF
               </div>
             <% end %>
           </div>
-          <center><%= link_to '[Errata | Changelog]', pages_rulebookchangelog_path %><br></center>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-          <%= image_tag("pages/rulebook/workbench.png", :class => "img-fluid mx-auto d-block") %><br>
-        </div>
-        <div class="col-md-6">
-          <p class = "h2 text-center">The Profession System</p>
-          <p>The profession system allows you to take your gameplay a step further. Utilizing professions you may</p>
-          <ul>
-            <li><b>Create Items:</b> Anywhere from potions to magical swords to aid you in your quests
-            <li><b>Find shortcuts in plots:</b> Bypass magical locks or use brews to tame wild beasts
-            <li><b>Enhance your cabin:</b> Receive buffs each time you rest in your cabin for you and your cabin mates
-          </ul>
           <div class = "craftingguidebutton">
             <%= link_to pages_craftingguide_path do %>
               <div>
@@ -48,12 +29,10 @@
               </div>
             <% end %>
           </div>
+          <center><%= link_to '[Errata | Changelog]', pages_rulebookchangelog_path %><br></center>
         </div>
       </div>
     </div>
-
-
-
 
     <div class="container">
       <div class="row justify-content-md-center">
