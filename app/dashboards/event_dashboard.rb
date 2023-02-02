@@ -19,7 +19,9 @@ class EventDashboard < Administrate::BaseDashboard
     location: Field::String,
     startdate: Field::Date,
     enddate: Field::Date,
+    theme: Field::String,
     description: Field::String,
+    context: Field::Image,
     playercount: Field::Number,
     castcount: Field::Number,
     atdoorcost: Field::Number,
@@ -55,6 +57,8 @@ class EventDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     name
     description
+    theme
+    context
     eventtype
     startdate
     enddate
@@ -82,6 +86,8 @@ class EventDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     name
     description
+    theme
+    context
     eventtype
     startdate
     enddate

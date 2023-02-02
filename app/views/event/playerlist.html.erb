@@ -1,0 +1,36 @@
+<%= provide(:title, 'Event Player List') %>
+<div class="container col-12">
+  <div class="pagetitle"><%= @event.name %></div>
+
+  <div class="container col-12" id = "cabinmap">
+    <div class="row">
+      <div class="col-6">
+        <%= image_tag("events/the_glade.jpg") %>
+      </div>
+      <div class="col-6">
+        <%= image_tag("events/the_crossing.jpg") %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <%= get_resident_players(@event,'The Glade') %>
+      </div>
+      <div class="col-6">
+        <%= get_resident_players(@event,'The Crossing') %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <%= image_tag("events/town_proper.jpg") %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <%= get_resident_players(@event,'Town Proper') %>
+        <hr>
+        The following individuals have not yet selected a sleeping arrangement<br>
+        <%= get_homeless_players(@event) %>
+      </div>
+    </div>
+  </div>
+</div>

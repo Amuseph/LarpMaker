@@ -13,19 +13,6 @@ class PlayerController < ApplicationController
     redirect_to root_path
   end
 
-  def changeeventcharacter
-    if request.post?
-      @eventattendance = Eventattendance.find(eventattendance_params[:eventattendance_id])
-      if @eventattendance.user_id == current_user.id
-        @eventattendance.character_id = eventattendance_params[:character_id]
-        @eventattendance.save!
-      end
-      redirect_to player_events_path
-    else
-      @eventattendance = Eventattendance.find_by(id: params[:eventattendance_id])
-    end
-  end
-
   def transferxp
     if request.post?
       @transferxp = Explog.create

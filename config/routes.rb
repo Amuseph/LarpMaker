@@ -73,7 +73,6 @@ Rails.application.routes.draw do
     get :banklog
     get :xpstore
     post :spendxp
-    get :events
     get :courier
     get :viewcourier
     get :sendcourier
@@ -116,16 +115,14 @@ Rails.application.routes.draw do
     get :submitfeedback
     post :submitfeedback
     post :castsignup
+    get :playerlist
   end
 
   namespace :player do
     get :explog
     get :transferxp
     post :transferxp
-    get :events
     post :changecharacter
-    get :changeeventcharacter
-    post :changeeventcharacter
     get :validateemail
     get :validatexpamount
   end

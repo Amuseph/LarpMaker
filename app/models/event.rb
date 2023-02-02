@@ -6,6 +6,9 @@ class Event < ApplicationRecord
   has_many :characters, through: :eventattendances
   has_many :users, through: :characters
 
+  has_one_attached :context
+  validates :context, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 15.megabytes , message: 'is not given between size' }
+
   default_scope { order(startdate: :desc) }
 
   def self.available_cabins(event)
