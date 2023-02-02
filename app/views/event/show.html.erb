@@ -1,73 +1,63 @@
 <%= provide(:title, 'Event Details') %>
 <div class="container col-12">
-<div class="pagetitle"><%= @event.name %></div>
-<div class="pagesubtitle" ><%= @event.description %></div>
+  <div class="pagetitle"><%= @event.name %></div>
+  <div class="pagesubtitle" ><%= @event.theme %></div>
 
-<div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
+  <div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
 
-<hr>
-<div class="container col-12" id = "cabinmap">
-  <div class="row">
-    <div class="col-12">
-      <b>Your Sleeping Arrangement: </b><%= 
-        if @myeventattendance.cabin.present?
-          if canUpdateCabin()
-            link_to @myeventattendance.cabin.name, event_updatecabin_path(@event), remote: true
-          else
-            @myeventattendance.cabin.name
-          end
-        else
-          if canUpdateCabin()
-            link_to 'None - Update Now', event_updatecabin_path(@event), remote: true
-          else
-            'None'
-          end
-        end
-      %>
-        
+  <hr>
+  <center>
+    <%= @event.description %><br>
+  </center>
+
+  <center>
+    <% if @event.context.attached? %>
+      <p class="h3">Event Without Context</p>
+      <%= image_tag @event.context, size: '350x350', :class => "img-fluid" %>
+    <% end %>
+  </center>
+  <br><br>
+  <p class="h3">Your Registration Details</p>
+  Registration: <%= @myeventattendance.registrationtype %><br>
+  Meal Plan: <%= get_mealplan_link(@event) %> <br> 
+  <% if has_cabin(@myeventattendance) %>
+    Cabin: <%= get_cabin_link(@myeventattendance) %> <br>
+  <% end %>
+ 
+  <center>
+    <%= link_to event_playerlist_path(@event.id) do %>
+      <%= image_tag("events/cabin.png", :class => "img-fluid mx-auto") %><br>
+      <b>View Registered Players</b>
+    <% end %>
+  </center>
+
+  <p class="h3">The Message Board</p>
+  Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
+
+  <center>
+    <div class="container col-12 mt-4" id="bulletinboard">
+      <% if !get_next_event.nil? %>
+        <% Dir.glob("app/assets/images/bulletinboard/#{@event.name}/*").map do |path| %>
+          <%= link_to image_url("bulletinboard/#{@event.name}/#{File.basename(path)}"), target: ':_blank' do %>
+            <%= image_tag "bulletinboard/#{@event.name}/#{ File.basename(path) }", :class => "img-fluid bulletinpost" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </center>
+  
+  <div class="modal fade" id="updateCabinModal" tabindex="-1" role="dialog" aria-labelledby="updateCabinModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateCabinModalLabel">Update Sleeping Arrangement</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> 
+        <div class="modal-body" id="updateCabinModalBody"></div>
       </div>
+    </div>
   </div>
 
-  <div class="row">
-    <div class="col-6">
-      <%= image_tag("events/the_glade.jpg") %>
-    </div>
-    <div class="col-6">
-      <%= image_tag("events/the_crossing.jpg") %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <%= get_resident_players(@event,'The Glade') %>
-    </div>
-    <div class="col-6">
-      <%= get_resident_players(@event,'The Crossing') %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <%= image_tag("events/town_proper.jpg") %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <%= get_resident_players(@event,'Town Proper') %>
-      <hr>
-      The following individuals have not yet selected a sleeping arrangement<br>
-      <%= get_homeless_players(@event) %>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="updateCabinModal" tabindex="-1" role="dialog" aria-labelledby="updateCabinModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="updateCabinModalLabel">Update Sleeping Arrangement</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div> 
-      <div class="modal-body" id="updateCabinModalBody"></div>
-    </div>
-  </div>
 </div>

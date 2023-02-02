@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_02_003056) do
+ActiveRecord::Schema.define(version: 2023_02_01_223422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 2023_01_02_003056) do
     t.integer "castcount", null: false
     t.integer "newplayerprice", null: false
     t.string "season", null: false
+    t.string "theme"
   end
 
   create_table "explogs", force: :cascade do |t|

@@ -11,13 +11,13 @@ class EventController < ApplicationController
 
   end
 
+  def playerlist
+    @event = Event.find(params[:event_id])
+  end
+
   def show
     @event = Event.find(params[:id])
     @myeventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
-
-    year_of_season = @event.startdate.year
-    first_event_of_season = Event.order(:startdate).find_by("season = ? and extract(year from startdate) = ?", @event.season, year_of_season)
-    event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
   end
 
   def mealplan

@@ -5,11 +5,35 @@ module EventsHelper
     13
   end
 
-  def canUpdateCabin()
-    if !get_sheets_locked && (@myeventattendance.registrationtype == 'Player') && @myeventattendance.event.startdate > Date.today
-      true
+  def has_cabin(eventattendance)
+    if eventattendance.registrationtype == 'Player'
+      return true
     else
-      false
+      return false
+    end
+  end
+
+  def get_cabin_link(eventattendance)
+    if eventattendance.cabin.present?
+      if can_update_cabin(eventattendance)
+        return link_to eventattendance.cabin.name, event_updatecabin_path(@event), remote: true
+      else
+        return eventattendance.cabin.name
+      end
+    else
+      if can_update_cabin(eventattendance)
+        return link_to 'None - Update Now', event_updatecabin_path(@event), remote: true
+      else
+        return 'None'
+      end
+    end
+  end
+
+  def can_update_cabin(eventattendance)
+    if !get_sheets_locked && (eventattendance.registrationtype == 'Player') && eventattendance.event.startdate > Date.today
+      return true
+    else
+      return false
     end
   end
 
