@@ -40,15 +40,17 @@
         <div class="col-1"></div>
         <div class="col-10 pb-4", id='maincontent'>
           <div class="container-sm">
-          <%= yield %>
+            <%= yield %>
           </div>
         </div>
         <div class="col-1"></div>
       </div>
       <div class="row">
         <div class="col-1"></div>
-        <div class="col-10 pt-4", id='bottomcontent'>
-          <%= render 'layouts/bottommenu' %>
+        <div class="col-10 pt-4 pb-4", id='bottomcontent'>
+          <div class="container-sm">
+            <%= render 'layouts/bottommenu' %>
+          </div>
         </div>
         <div class="col-1"></div>
       </div>
