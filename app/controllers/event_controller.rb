@@ -72,14 +72,14 @@ class EventController < ApplicationController
       @eventattendance.mealplan = params[:mealplan][:mealchoice]
       if @eventattendance.save!
         add_event_exp(@event, @eventattendance)
-        redirect_to player_events_path
+        redirect_to event_index_path
       end
     end
   end
 
   def orderevent
     if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
-      redirect_to player_events_path
+      redirect_to event_index_path
     end
     @event = Event.find(params[:event_id])
     @cabin = Cabin.find(params[:eventpurchase][:cabin])
@@ -94,7 +94,7 @@ class EventController < ApplicationController
 
   def prepareeventorder
     if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
-      return redirect_to player_events_path
+      return redirect_to event_index_path
     end
     @event = Event.find(params[:event_id])
     
@@ -208,13 +208,14 @@ class EventController < ApplicationController
     @eventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
     @eventattendance.mealplan = params[:mealplan][:mealchoice]
     if @eventattendance.save
-      redirect_to player_events_path(params[:event_id])
+      redirect_to event_path(params[:event_id])
+
     end
   end
 
   def ordermealplan
     if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id, mealplan: params[:mealplan][:mealchoice]).nil?
-      return redirect_to player_events_path
+      return redirect_to event_index_path
     end
     @event = Event.find_by(id: params[:event_id])
     @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
@@ -224,7 +225,7 @@ class EventController < ApplicationController
 
   def preparemealplanorder
     if !Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id, mealplan: params[:meal_type]).nil?
-      return redirect_to player_events_path
+      return redirect_to event_index_path
     end
     @event = Event.find(params[:event_id])
     @myeventattendance = Eventattendance.find_by(event_id: params[:event_id], user_id: current_user.id)
