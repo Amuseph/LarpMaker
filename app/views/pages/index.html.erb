@@ -13,22 +13,4 @@ As you enter the room, the air fills with shouts of glee and anger from a group 
 <br>
 A paladin greets you with a hearty smile. "Welcome to the Dancing Dragonfly friend. Make yourself at home."
 <br>
-You make your way to the message board, eager to find glory and your story.
-<br>
-<br>
-
-<center>
-<p class="h3">The Message Board</p>
-Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
-
-  <div class="container col-12 mt-4" id="bulletinboard">
-    <% folder = get_next_event %>
-    <% if !get_next_event.nil? %>
-      <% Dir.glob("app/assets/images/bulletinboard/#{folder.name}/*").map do |path| %>
-        <%= link_to image_url("bulletinboard/#{folder.name}/#{File.basename(path)}"), target: ':_blank' do %>
-          <%= image_tag "bulletinboard/#{folder.name}/#{ File.basename(path) }", :class => "img-fluid bulletinpost" %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-</center>
+You make your way inside, eager to find glory and your story.
