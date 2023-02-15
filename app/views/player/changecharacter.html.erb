@@ -1,0 +1,78 @@
+<%= provide(:title, 'Change Character') %>
+<div class="container col-12 mt-4" id="characterprofile">
+
+  <%= bootstrap_form_for :changecharacter, url: player_changecharacter_path do |f| %>
+    <div class="row">
+      <div class="container">
+        <div class="col-12">
+          <%= f.collection_select :character_id, current_user.characters, :id, :name, :selected => session[:character], hide_label: true, class: 'm-auto align-self-center' %>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-md-3">
+        <center><img id='changeCharacterclasstoken' height= '100' width= '100'/><br>Class</center>
+      </div>
+      <div class="col-md-3">
+        <center><span id='characterlevel' class = 'display-1'>1</span><br>Level</center>
+      </div>
+      <div class="col-md-3">
+        <center><img id='changeCharacterdeitytoken' height= '100' width= '100'/><br><span id='deitytext'>Deity</span></center>
+      </div>
+    </div>
+    <div class="row pt-4 justify-content-md-center">
+      <%= f.submit 'Load Character', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  <div class="container col-12 mt-4">
+    
+    <% if (current_user.charactercount > current_user.characters.where("status = ?", 'Active').count)  %>
+      <p>If you no longer have an active character, create a new one with the button below! You can continue to use this screen to reference your old characters. <br>
+      Please note you can only have 1 active character. </p>
+      <center><%= button_to "New Character", new_character_path, method: :get, class: "btn btn-secondary" %></center>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+<script>
+  $(document ).ready(function() {
+    characterDetails()
+    $('#changecharacter_character_id').change(function() {
+      characterDetails()
+    });
+  });
+
+  function characterDetails() {
+    var character = document.getElementById('changecharacter_character_id').value
+    $.ajax({
+      url: '/character/getcharacter',
+      type: 'GET',
+      dataType: 'json',
+      data: { 'character_id' : character},
+      success: function(data){
+        $('#characterlevel').html(data.all_data.character.level)
+        document.getElementById('changeCharacterclasstoken').src = '/images/classtoken/' + data.all_data.characterclass.name.toLowerCase() + '.png'
+        document.getElementById('changeCharacterclasstoken').title = data.all_data.characterclass.name;
+
+        if (data.all_data.deity == null) {
+          document.getElementById('changeCharacterdeitytoken').style.visibility = 'hidden';
+          document.getElementById('deitytext').style.visibility = 'hidden';
+          document.getElementById('changeCharacterdeitytoken').title = '';
+        } else {
+          document.getElementById('changeCharacterdeitytoken').src = '/images/deitytoken/' + data.all_data.deity.name.toLowerCase() + '.gif'
+          document.getElementById('changeCharacterdeitytoken').style.visibility = 'visible';
+          document.getElementById('deitytext').style.visibility = 'visible';
+          document.getElementById('changeCharacterdeitytoken').title = data.all_data.deity.name;
+        }
+        
+      }
+    })
+    
+  }
+</script>

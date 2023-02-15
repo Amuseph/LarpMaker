@@ -5,12 +5,15 @@ class PlayerController < ApplicationController
   before_action :authenticate_user!
 
   def changecharacter
-    @changedcharacter = Character.find(changecharacter_params[:character_id])
-    current_user.last_character = @changedcharacter.id
-    session[:character] = @changedcharacter.id
-    current_user.save!
+    if request.post?
+      @changedcharacter = Character.find(changecharacter_params[:character_id])
+      current_user.last_character = @changedcharacter.id
+      session[:character] = @changedcharacter.id
+      current_user.save!
 
-    redirect_to root_path
+      redirect_to root_path
+    else
+    end
   end
 
   def transferxp

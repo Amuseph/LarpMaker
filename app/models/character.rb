@@ -29,6 +29,9 @@ class Character < ApplicationRecord
 
 
   def get_first_name
+    if self.name.nil?
+      return ""
+    end
     return self.name.partition(" ").first 
   end
 

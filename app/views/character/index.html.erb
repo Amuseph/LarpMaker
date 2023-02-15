@@ -155,11 +155,14 @@
 
   <div class="row">
     <div class="container col-12 mt-2" id="skillheader">
-      <a id="skilllink" href="./character">
-        <div>
+      <div>
+        <a id="skilllink" href="./character">
           <i class="fas fa-plus"></i>&nbsp; Skills
-        </div>
-      </a>
+        </a>
+        <%= link_to character_printablesheet_path, target: :_blank do %>
+          <span class="float-right mt-auto"><i class="fas fa-print "></i></span>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="row py-1" id="skillpreview">

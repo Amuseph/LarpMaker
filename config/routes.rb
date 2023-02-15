@@ -122,6 +122,7 @@ Rails.application.routes.draw do
     get :explog
     get :transferxp
     post :transferxp
+    get :changecharacter
     post :changecharacter
     get :validateemail
     get :validatexpamount

@@ -52,6 +52,9 @@
           <li class='nav-item dropdown'>
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuProfile">Profile</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuProfile">
+              <% if ((current_user.charactercount != current_user.characters.where("status = ?", 'Active').count) or (current_user.characters.count != 1)) %>
+                <li><%= link_to 'Change Character', player_changecharacter_path, :class => 'dropdown-item' %></li>
+              <% end %>
               <li><%= link_to 'XP Log', player_explog_path, :class => 'dropdown-item' %></li>
               <li><%= link_to 'My Events', event_index_path, :class => 'dropdown-item' %></li>
               <div class="dropdown-divider"></div>
