@@ -40,17 +40,6 @@ include PlayersHelper
     end
   end
 
-  def checkActiveCampTab(type, tabName)
-    requestedTab = if params[:tab].nil?
-                     'general'
-                   else
-                     params[:tab]
-                   end
-    return 'active' if (tabName == requestedTab) && (type == 'link')
-
-    'show active' if (tabName == requestedTab) && (type == 'content')
-  end
-
   def display_rulebook_changelog
     changelist = +""
     changelist = +""
