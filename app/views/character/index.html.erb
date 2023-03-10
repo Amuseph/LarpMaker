@@ -1,4 +1,5 @@
 <%= provide(:title, 'My Character') %>
+<marquee behavior="scroll" Scrollamount=15 direction="left" ><%= get_marquee_text %></marquee>
 <div class="container col-12 mt-4" id="characterprofile">
   <div>
     <% if(@character.level < 20) %>
