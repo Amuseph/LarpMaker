@@ -58,7 +58,7 @@ class EventController < ApplicationController
       if (@event.mealplan && @event.mealplancost == 0)
         @mealoptions = [['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
       elsif @event.mealplan
-        @mealoptions = [['None', 'None'], ['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
+        @mealoptions = [['None', 'None'], ['Meat - $' + get_mealplan_cost(@event,nil, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(@event,nil, 'Vegan').to_s, 'Vegan']]
       else
         @mealoptions = [['None', 'None']]
       end
