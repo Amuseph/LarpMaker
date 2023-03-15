@@ -173,8 +173,6 @@ module EventsHelper
     elsif eventattendance.mealplan.in?(['Meat', 'Vegan'])
       return [['Meat', 'Meat'], ['Vegan', 'Vegan']]
     elsif eventattendance.mealplan.in?([nil, ''])
-      return [['Brew of the Month Club - $5', 'Brew of the Month Club'], ['Meat - $' + get_mealplan_cost(event,eventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(event,eventattendance, 'Vegan').to_s, 'Vegan']]
-    elsif eventattendance.mealplan = 'Brew of the Month Club'
       return [['Meat - $' + get_mealplan_cost(event,eventattendance, 'Meat').to_s, 'Meat'], ['Vegan - $' + get_mealplan_cost(event,eventattendance, 'Vegan').to_s, 'Vegan']]
     end
   end
@@ -185,7 +183,7 @@ module EventsHelper
     if @selected_meal.in?([nil, '', 'No Meal'])
       @selected_meal = 'None'
     end
-    if @selected_meal.in?(['None', 'Brew of the Month Club']) && (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Player')
+    if @selected_meal.in?(['None']) && (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Player')
       return (render partial: 'event/partials/purchasemealplan')
     elsif (event.startdate - early_bird_days > Date.today) && (@eventattendance.registrationtype == 'Cast')
       return (render partial: 'event/partials/updatemealplan')
@@ -218,14 +216,10 @@ module EventsHelper
   end
 
   def get_mealplan_cost(event, eventattendance, option)
-    if option == 'Brew of the Month Club'
-      return 5
-    elsif eventattendance.nil?
+    if eventattendance.nil?
       return event.mealplancost
     elsif (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && (option == 'Meat' or option == 'Vegan')
       return event.mealplancost
-    elsif (eventattendance.mealplan.nil? or eventattendance.mealplan.empty?) && option == 'Brew of the Month Club'
-      return 5
     elsif eventattendance.mealplan == 'Brew of the Month Club'
       return event.mealplancost - 5
     end
