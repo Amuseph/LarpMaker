@@ -2,7 +2,8 @@
 module EventsHelper
 
   def early_bird_days
-    14
+    #14
+    return 12
   end
 
   def has_cabin(eventattendance)
@@ -287,7 +288,8 @@ module EventsHelper
   end
 
   def get_event_price_details(event)
-    early_bird_date = event.startdate - 13
+    #early_bird_date = event.startdate - 13
+    early_bird_date = event.startdate - 11
     days_till_earlybird = (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - early_bird_days
     
     event_price_html = ''
