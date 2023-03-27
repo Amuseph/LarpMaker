@@ -34,7 +34,7 @@ class Character < ApplicationRecord
       return ""
     end
     name_array = self.name.split(" ")
-    if name_array[0].length <= 3
+    if (name_array[0].length <= 3) and (name_array.length() > 1)
       return name_array[0] + " " + name_array[1]
     end
     return name_array[0]
