@@ -20,7 +20,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     cabin: Field::BelongsTo,
     id: Field::Number,
     registrationtype: Field::Select.with_options(
-      collection: ['Player', 'Cast', 'Staff'],
+      collection: ['Player', 'Cast'],
     ),
     mealplan: Field::Select.with_options(
       collection: ['', 'No Meal', 'Meat', 'Vegan'],
@@ -28,6 +28,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     registerdate: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    noshow: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,6 +54,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     character
     cabin
     registrationtype
+    noshow
     registerdate
     created_at
     updated_at
@@ -67,6 +69,7 @@ class EventattendanceDashboard < Administrate::BaseDashboard
     character
     cabin
     registrationtype
+    noshow
     mealplan
     registerdate
   ].freeze

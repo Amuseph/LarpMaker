@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_01_223422) do
+ActiveRecord::Schema.define(version: 2023_03_27_161456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 2023_02_01_223422) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "cabin_id"
     t.string "mealplan"
+    t.boolean "noshow", default: false
     t.index ["character_id", "event_id"], name: "index_eventattendances_on_character_id_and_event_id", unique: true
     t.index ["character_id"], name: "index_eventattendances_on_character_id"
     t.index ["event_id", "user_id"], name: "index_eventattendances_on_event_id_and_user_id", unique: true

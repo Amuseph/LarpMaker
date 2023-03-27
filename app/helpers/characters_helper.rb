@@ -355,7 +355,7 @@ module CharactersHelper
   end
 
   def get_last_played_adventure(character)
-    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and character_id = ?', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', character.id).reorder('enddate desc').first
+    return Event.joins(:eventattendances).where('enddate < ? AND levelingevent and eventtype = ? and character_id = ? and not noshow', Time.now.in_time_zone('Eastern Time (US & Canada)'), 'Adventure Weekend', character.id).reorder('enddate desc').first
   end
 
 end
