@@ -8,7 +8,8 @@ include PlayersHelper
   end
 
   def sheets_auto_lock_days 
-    14
+    #14
+    12
   end
 
   def get_sheets_locked
