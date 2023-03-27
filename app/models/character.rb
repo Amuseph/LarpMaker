@@ -29,12 +29,16 @@ class Character < ApplicationRecord
 
 
   def get_first_name
+    
     if self.name.nil?
       return ""
     end
-    return self.name.partition(" ").first 
+    name_array = self.name.split(" ")
+    if name_array[0].length <= 3
+      return name_array[0] + " " + name_array[1]
+    end
+    return name_array[0]
   end
-
 
   def check_class
     if characterclass.name != 'Paladin' && characterclass.name != 'Cleric'
