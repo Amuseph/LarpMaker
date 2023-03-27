@@ -19,7 +19,7 @@
     Skills
   </div>
   <div class="row">
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Tier 1</h3>
         A single use of a non-permanenet Tier 1 skill. This can exceed the 10 purchase maximum.<br>
         Lasts until the end of the next event.
@@ -31,7 +31,7 @@
       <% end %>
 
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Tier 2</h3>
         A single use of a non-permanenet Tier 2 skill. This can exceed the 10 purchase maximum.<br>
         Lasts until the end of the next event.
@@ -43,7 +43,7 @@
       <% end %>
 
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Tier 3</h3>
         A single use of a non-permanenet Tier 3 skill. This can exceed the 10 purchase maximum.<br>
         Lasts until the end of the next event.
@@ -60,7 +60,7 @@
     Items
   </div>
   <div class="row">
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Body Panacea</h3>
         A single-use consumable that will remove Poison, Disease, Weakness, Waylay, and all Maimed limbs.<br>
         Lasts until the end of the next event.
@@ -69,7 +69,7 @@
         <%= get_xpstore_link('BodyPanacea') %>
       <% end %>
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Spirit Panacea</h3>
         A single-use consumable that will remove Bind, Pin, Snare, Paralyze, Sleep, and Silence.<br>
         Lasts until the end of the next event.
@@ -78,7 +78,7 @@
         <%= get_xpstore_link('SpiritPanacea') %>
       <% end %>
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Mind Panacea</h3>
         A single-use consumable that will Dispel Fear, Taunt, Corrupt, Pacify, and Enslave.<br>
         Lasts until the end of the next event.
@@ -93,14 +93,14 @@
     Professions
   </div>
   <div class="row pl-10">
-    <div class="container col-12" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <p>Profession purchases will not increase your labor pool. <br>
       Actions using this still costs the appropriate labor. <br>
       You may only purchase a single Profession this way per event.</p>
     </div>
   </div>
   <div class="row">
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Collecting</h3>
         Allows access to a single Novice Collector Profession until the end of the next event.
       <br>
@@ -109,7 +109,7 @@
         <%= get_xpstore_link('Collecting') %>
       <% end %>
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Refining</h3>
         Allows access to a single Novice Refining Profession until the end of the next event.
       <br>
@@ -118,7 +118,7 @@
         <%= get_xpstore_link('Refining') %>
       <% end %>
     </div>
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Crafting</h3>
         Allows access to a single Novice Crafting Profession until the end of the next event.
       <br>
@@ -133,7 +133,7 @@
     Heroic Actions
   </div>
   <div class="row">
-    <div class="container col-6" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Second Wind</h3>
         A single-use token that allows you to immediately gain the benfits of a Short Rest.<br>
         May only purchase once per event.
@@ -142,7 +142,7 @@
         <%= get_xpstore_link('SecondWind') %>
       <% end %>
     </div>
-    <div class="container col-6" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <h3>Luck Token</h3>
         A single-use token that allows you to immediately gain the use of a single Long Rest ability.<br>
         May only purchase once per event. 
@@ -157,7 +157,7 @@
     Premier Cabins
   </div>
   <div class="row">
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <%= image_tag("pages/xpstore/juniper.png", :class => "img-fluid  mx-auto d-block") %><br>
       <h3>Juniper Cabin</h3>
         Located next to the Dancing Dragonfly, this cabin sleeps 12 and has lights and a bathroom. Purchasing this will update your attendence to that event to Juniper. Should you have multiple parties interested, they must all purchase this.<br>
@@ -171,11 +171,7 @@
       <% end %>
     </div>
 
-    <div class="container col-4" id="itemcontainer">
-
-    </div>
-
-    <div class="container col-4" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       
       <h3>Weeping Willow - Left Cabin</h3>
         Located next to the bridge to The Glade, this cabin sleeps 4 and has lights and a bathroom with a shower. Purchasing this will update your attendence to that event to Weeping Willow - Left. Should you have multiple parties interested, they must all purchase this.<br>
@@ -194,7 +190,7 @@
     Dedrots Favors
   </div>
   <div class="row">
-    <div class="container col-6" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <%= image_tag("pages/xpstore/good_fortune.jpg", :class => "img-fluid") %><br>
       <h3>Description</h3>
       Remove one die from your total roll. You can remove one die for each Good Fortune card you redeem before you start rolling.
@@ -209,7 +205,7 @@
         <%= get_xpstore_link('GoodFortune') %>
       <% end %>
     </div>
-    <div class="container col-6" id="itemcontainer">
+    <div class="container" id="itemcontainer">
       <%= image_tag("pages/xpstore/graven_miracle.jpg", :class => "img-fluid") %><br>
       <h3>Description</h3>
       If you reach or exceed 15 points and perish, you may turn in this card to escape dying.
@@ -224,4 +220,5 @@
         <%= get_xpstore_link('GravenMiracle') %>
       <% end %>
     </div>
+  </div>
 </div>
