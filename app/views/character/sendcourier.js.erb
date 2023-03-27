@@ -2,5 +2,6 @@ $('#sendCourierModalBody').html("<%= escape_javascript( render partial: 'modals/
 $('#sendCourierModalLabel').html("Send New Courier")
 $('#sendCourierModal').modal({
     backdrop: 'static',
-    keyboard: false,
-    show: true});
+    keyboard: false});
+
+$('#sendCourierModal').modal('show');

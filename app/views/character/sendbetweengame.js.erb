@@ -2,8 +2,9 @@ $('#sendCourierModalBody').html("<%= escape_javascript( render partial: 'modals/
 $('#sendCourierModalLabel').html("Send Between Game Action")
 $('#sendCourierModal').modal({
   backdrop: 'static',
-  keyboard: false,
-  show: true});
+  keyboard: false});
+
+$('#sendCourierModal').modal('show');
 
 $('#courier_skillname').change(function() {
   skillCountValidation()
