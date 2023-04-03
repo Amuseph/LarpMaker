@@ -2,8 +2,7 @@
 module EventsHelper
 
   def early_bird_days
-    #14
-    return 12
+    return 14
   end
 
   def has_cabin(eventattendance)
