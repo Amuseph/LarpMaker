@@ -170,6 +170,18 @@
         <%= get_xpstore_link('Juniper') %>
       <% end %>
     </div>
+    <div class="container" id="itemcontainer">
+      <h3>Weeping Willow - Left Cabin</h3>
+        Located next to the bridge to The Glade, this cabin sleeps 4 and has lights and a bathroom with a shower. Purchasing this will update your attendence to that event to Weeping Willow - Left. Should you have multiple parties interested, they must all purchase this.<br>
+        This is non-refundable should you change your mind and wish to select a different cabin.
+      <br>
+      <%= bootstrap_form_for :cabinpurchase, url: character_spendxp_path(item: 'WeepingWillow') do |f| %>
+        <% if !xpstore_cabinlist_weepingwillow.empty? %>
+          <%= select_tag :cabinpurchase, options_for_select(xpstore_cabinlist_weepingwillow) %><br>
+        <% end %>
+        <%= get_xpstore_link('WeepingWillow') %>
+      <% end %>
+    </div>
   </div>
   
   <div class="mb-2" id="xpstorecategory">
