@@ -42,6 +42,7 @@ class UserDashboard < Administrate::BaseDashboard
     confirmation_sent_at: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    waiver: Field::Boolean,
     last_character: Field::Number,
   }.freeze
 
@@ -73,6 +74,7 @@ class UserDashboard < Administrate::BaseDashboard
     state
     zipcode
     phonenumber
+    waiver
     charactercount
     created_at
     explogs
@@ -95,6 +97,7 @@ class UserDashboard < Administrate::BaseDashboard
     state
     zipcode
     phonenumber
+    waiver
     charactercount
   ].freeze
 
