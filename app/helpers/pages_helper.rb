@@ -255,30 +255,33 @@ include PlayersHelper
       return ("<p class=""h2"">Sheets have been locked while we prepare for game! </p>").html_safe
     end
 
-    if !next_event.nil?
-      sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
-  
-      if sheets_lock_in <= 14
-        if sheets_lock_in > 1
-          return ("<p class=""h2"">Character Sheets lock in %s days! </p>" % (sheets_lock_in)).html_safe
-        else
-          hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
-          return ("<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)).html_safe
-        end
-      end
-    end
-    
+    marquee_message = ''
+
     if !get_between_game_skills_locked
       bgs_lock_in = bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i
       if bgs_lock_in > 1
-        return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_in)).html_safe
+        marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_in)
+        
       else
         hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
-        return ("<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_lock)).html_safe
+        marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_lock)
       end
     end
 
-    return
+    if !next_event.nil?
+      sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
+      
+      if sheets_lock_in <= 14
+        if sheets_lock_in > 1
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in %s days! </p>" % (sheets_lock_in)
+        else
+          hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)
+        end
+      end
+    end
+
+    return marquee_message.html_safe
   end
 
 end
