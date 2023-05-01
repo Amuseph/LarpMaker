@@ -29,12 +29,13 @@ class Character < ApplicationRecord
 
 
   def get_first_name
+    skipped_first_names = ['Lord', 'Lady', 'The', 'Sir', 'Ser']
     
     if self.name.nil?
       return ""
     end
     name_array = self.name.split(" ")
-    if (name_array[0].length <= 3) and (name_array.length() > 1)
+    if (skipped_first_names.include? name_array[0]) and (name_array.length() > 1)
       return name_array[0] + " " + name_array[1]
     end
     return name_array[0]
