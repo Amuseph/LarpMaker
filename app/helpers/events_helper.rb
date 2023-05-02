@@ -65,14 +65,14 @@ module EventsHelper
     event_feedback_exp_days = 14
     
     if ((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i <= event_feedback_exp_days)
-      @explog = Explog.new
-      @explog.user_id = eventattendance.user_id
-      @explog.name = 'Feedback Letter'
-      @explog.acquiredate = Time.now.to_date
-      @explog.description = "Exp for Feedback Letter - " + event.name
-      @explog.amount = event.feedbackexp
-      @explog.grantedby_id = current_user.id
-      @explog.save!
+      explog = Explog.new
+      explog.user_id = eventattendance.user_id
+      explog.name = 'Feedback Letter'
+      explog.acquiredate = Time.now.to_date
+      explog.description = "Exp for Feedback Letter - " + event.name
+      explog.amount = event.feedbackexp
+      explog.grantedby_id = eventattendance.user_id
+      explog.save!
     end
   end
 

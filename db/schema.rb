@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_21_234650) do
+ActiveRecord::Schema.define(version: 2023_05_02_015708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,24 +175,19 @@ ActiveRecord::Schema.define(version: 2023_04_21_234650) do
     t.bigint "user_id", null: false
     t.bigint "character_id"
     t.bigint "event_id", null: false
-    t.integer "preeventcommunicationrating"
-    t.integer "eventrating"
-    t.integer "attendnextevent"
-    t.integer "sleepingrating"
-    t.integer "openingmeetingrating"
-    t.integer "closingmeetingrating"
-    t.integer "plotrating"
     t.string "feedback", null: false
-    t.string "questions"
-    t.string "standoutplayers"
     t.string "standoutnpc", null: false
     t.string "charactergoals", null: false
     t.string "charactergoalactions", null: false
     t.string "whatdidyoudo", null: false
-    t.string "nexteventplans", null: false
+    t.string "nexteventplans"
     t.string "professions", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "eventorganization"
+    t.string "combatvsnoncombat"
+    t.string "newplayers"
+    t.string "immersion"
     t.index ["character_id"], name: "index_eventfeedbacks_on_character_id"
     t.index ["event_id"], name: "index_eventfeedbacks_on_event_id"
     t.index ["user_id"], name: "index_eventfeedbacks_on_user_id"
