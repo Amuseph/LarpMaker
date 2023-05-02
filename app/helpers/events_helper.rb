@@ -54,7 +54,7 @@ module EventsHelper
       return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
       return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
-    elsif (((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) and not eventattendance.noshow and eventattendance.registrationtype != 'Player')
+    elsif (((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) and not eventattendance.noshow)
         return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
     else
       return
