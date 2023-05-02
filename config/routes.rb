@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     post :prepareeventorder
     post :processeventorder
     get :castsignup
+    get :viewoldfeedback
     get :viewfeedback
     get :submitfeedback
     post :submitfeedback

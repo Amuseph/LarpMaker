@@ -22,22 +22,17 @@ class EventfeedbackDashboard < Administrate::BaseDashboard
       searchable_fields: ['name'],
     ),
     created_at: Field::DateTime,
-    preeventcommunicationrating: Field::Number,
-    eventrating: Field::Number,
-    attendnextevent: Field::Number,
-    sleepingrating: Field::Number,
-    openingmeetingrating: Field::Number,
-    closingmeetingrating: Field::Number,
-    plotrating: Field::Number,
     feedback: Field::String,
-    questions: Field::String,
-    standoutplayers: Field::String,
     standoutnpc: Field::String,
     charactergoals: Field::String,
     charactergoalactions: Field::String,
     whatdidyoudo: Field::String,
     nexteventplans: Field::String,
     professions: Field::String,
+    eventorganization: Field::String,
+    combatvsnoncombat: Field::String,
+    newplayers: Field::String,
+    immersion: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -59,22 +54,17 @@ class EventfeedbackDashboard < Administrate::BaseDashboard
     user
     character
     created_at
-    preeventcommunicationrating
-    eventrating
-    attendnextevent
-    sleepingrating
-    openingmeetingrating
-    closingmeetingrating
-    plotrating
     feedback
-    questions
-    standoutplayers
     standoutnpc
+    eventorganization
     charactergoals
     charactergoalactions
     whatdidyoudo
     nexteventplans
     professions
+    combatvsnoncombat
+    newplayers
+    immersion
   ].freeze
 
   # FORM_ATTRIBUTES

@@ -16,22 +16,26 @@
       <li>Ensure we remain transparent about improvements.</li>
     </ul>
     <p>If there is something we are doing well or could do better, we want your constructive feedback. If you didn’t like something? How could we improve upon it in the future?</p>
-    <p class = "h4">Setting Goals</p>
-    <p>Defining your character's number 1 goal helps us to better see the direction you're trying to take your character. 
-    Keep the World Builders informed as to what your current goal is, the steps you took at the event to achieve that goal, and what you plan to do in the future.</p>
+    <p>Please note: feedback should be related to the event and plots ran during this specific event. If there are concerns in regards to rules, players, cast or decisions made by staff, please email feedback@mythlarp.com</p>
   <hr>
 
 </div>
   <%= bootstrap_form_for :eventfeedback, url: event_submitfeedback_path do |f| %>
     
-    <%= f.text_area :feedback, :required => true, label: 'Do you have any constructive feedback for Myth?' %>
-    <%= f.text_area :standoutnpc, :required => true, label: 'What NPCs Stand Out to You, if Any, And Why?' %>
-    <%= f.text_area :nexteventplans, :required => true, label: 'What are your plans for the next event?' %>
-
-    <%= f.text_area :charactergoals, :required => true, label: 'What is Your Characters number 1 goal?' %>
-    <%= f.text_area :charactergoalactions, :required => true, label: 'What steps have you taken to reach your goal so far?' %>
-    <%= f.text_area :whatdidyoudo, :required => true, label: 'What Did Your Character do During The Event?' %>
-    <%= f.text_area :professions, :required => true, label: 'Are you doing anything with your profession?' %>
+    <%= f.text_area :feedback, :required => true, label: 'What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.' %>
+    <%= f.text_area :standoutnpc, :required => true, label: 'Were there any NPCs that particularly stood out to you during the event? If so, please explain what made their performance memorable.' %>
+    <%= f.text_area :eventorganization, :required => true, label: 'How satisfied were you with the overall event organization, including scheduling, communication, and staff interactions? Please provide any suggestions for improvement.' %>
+    <%= f.text_area :charactergoals, :required => true, label: "What are your character's primary goals, and how do you plan to pursue these goals during the next event?" %>
+    <%= f.text_area :charactergoalactions, :required => true, label: 'What steps has your character taken so far to achieve their goals? Were there any obstacles or challenges encountered during the event that affected your progress?' %>
+    <%= f.text_area :whatdidyoudo, :required => true, label: 'What specific activities or encounters did your character participate in during the event? Were there any memorable moments or experiences you would like to share?' %>
+    <%= f.text_area :professions, :required => true, label: "Are you actively engaged with your character's profession? If so, how has the event contributed to your profession's development or storyline?" %>
+    
+    <%= f.text_area :combatvsnoncombat, :required => true, label: "How would you rate the balance between combat and non-combat encounters during the event? Are there any types of encounters or activities you would like to see more of in future events?" %>
+    <% if can_rewrite_character() %>
+      <%= f.text_area :newplayers, :required => true, label: "Did you feel the event provided adequate support and resources for new players? If not, what suggestions do you have for improving the new player experience?" %>
+    <% end %>
+    <%= f.text_area :immersion, :required => true, label: "How well did the event maintain immersion and role-playing quality? Were there any instances where you felt immersion was disrupted, and if so, how could these be addressed in future events?" %>
+    
     <%= f.submit 'Submit Feedback', class: "btn btn-success" %>
     <%= link_to 'Cancel', root_path, class: "btn btn-danger" %>
   <% end %>

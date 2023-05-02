@@ -219,9 +219,6 @@ module CharactersHelper
   end
 
   def couriers_available()
-    # REMOVE AFTER SPRING 3 2023
-    return 0
-
     available_couriers = 1
     last_played_event = get_last_played_adventure(@character)
     used_couriers = @character.courier.where('senddate > ? and couriertype = ?', last_played_event.enddate, 'Courier').count

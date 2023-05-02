@@ -28,13 +28,16 @@ class EventController < ApplicationController
 
   def viewfeedback
     @event = Event.find(params[:event_id])
-    @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+  end
+
+  def viewoldfeedback
+    @event = Event.find(params[:event_id])
     @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
   end
 
   def submitfeedback
     @event = Event.find(params[:event_id])
-    @ratingoptions = [['Very Satisfied', 1], ['Somewhat Satisfied', 2], ['Neither Satisfied or Dissatisfied', 3], ['Somewhat Dissatisfied', 3], ['Very Dissatisfied', 5]]
     @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
     if request.post?
       if Eventfeedback.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
@@ -310,7 +313,7 @@ class EventController < ApplicationController
   end
 
   def feedback_params
-    params.require(:eventfeedback).permit(:preeventcommunicationrating, :eventrating, :attendnextevent, :sleepingrating, :openingmeetingrating, :closingmeetingrating, :plotrating, :feedback, :questions, :standoutplayers, :standoutnpc, :eventrating, :nexteventplans, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions)
+    params.require(:eventfeedback).permit(:feedback, :standoutnpc, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion)
   end
 
   def paypal_init
