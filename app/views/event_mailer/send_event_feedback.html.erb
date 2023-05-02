@@ -42,11 +42,11 @@
     <p>How would you rate the balance between combat and non-combat encounters during the event? Are there any types of encounters or activities you would like to see more of in future events?</p>
     <%= simple_format(@feedback.combatvsnoncombat) %>
 
-    <% if !newplayers.nil? %>
+    <% if !@feedback.newplayers.nil? %>
       <p>Did you feel the event provided adequate support and resources for new players? If not, what suggestions do you have for improving the new player experience?</p>
       <%= simple_format(@feedback.newplayers) %>
     <% end %>
-    
+
     <p>How well did the event maintain immersion and role-playing quality? Were there any instances where you felt immersion was disrupted, and if so, how could these be addressed in future events?</p>
     <%= simple_format(@feedback.immersion) %>
 
