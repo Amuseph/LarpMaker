@@ -18,7 +18,17 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
       
-        gtag('config', 'G-7PT1X8ZKV6');
+        gtag('config', 'G-7PT1X8ZKV6', {
+          'user_properties': {
+            user_name: <%= 
+              if user_signed_in?
+                ("'"+ current_user.firstname + ' ' + current_user.lastname + "'").html_safe
+              else
+                'Not Logged In'
+              end %>
+          }
+        });
+
       </script>
     <% end %>
         <script src="https://unpkg.com/@popperjs/core@2"></script>  
