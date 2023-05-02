@@ -31,11 +31,6 @@ class EventController < ApplicationController
     @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
   end
 
-  def viewoldfeedback
-    @event = Event.find(params[:event_id])
-    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
-  end
-
   def submitfeedback
     @event = Event.find(params[:event_id])
     @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
