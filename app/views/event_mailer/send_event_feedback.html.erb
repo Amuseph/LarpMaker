@@ -18,26 +18,37 @@
     For Event: <%= @feedback.event.startdate.strftime("%m/%d/%Y") %><br>
     --------------------<br>
         
-    <p>Do you have any constructive feedback for Myth?</p>
+    <p>What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.</p>
     <%= simple_format(@feedback.feedback) %>
       
-    <p>What NPCs Stand Out to You, if Any, And Why?</p>
+    <p>Were there any NPCs that particularly stood out to you during the event? If so, please explain what made their performance memorable.</p>
     <%= simple_format(@feedback.standoutnpc) %>
 
-    <p>What are your plans for the next event?</p>
-    <%= simple_format(@feedback.nexteventplans) %>
+    <p>How satisfied were you with the overall event organization, including scheduling, communication, and staff interactions? Please provide any suggestions for improvement.</p>
+    <%= simple_format(@feedback.eventorganization) %>
     
-    <p>What is Your Characters Number 1 Goal?</p>
+    <p>What are your characters primary goals, and how do you plan to pursue these goals during the next event?</p>
     <%= simple_format(@feedback.charactergoals) %>
     
-    <p>What steps have you taken to reach your goal so far?</p>
+    <p>What steps has your character taken so far to achieve their goals? Were there any obstacles or challenges encountered during the event that affected your progress?</p>
     <%= simple_format(@feedback.charactergoalactions) %>
     
-    <p>What Did Your Character do During The Event?</p>
+    <p>What specific activities or encounters did your character participate in during the event? Were there any memorable moments or experiences you would like to share?</p>
     <%= simple_format(@feedback.whatdidyoudo) %>
     
-    <p>Are you doing anything with your profession?</p>
+    <p>Are you actively engaged with your character's profession? If so, how has the event contributed to your profession's development or storyline?</p>
     <%= simple_format(@feedback.professions) %>
+    
+    <p>How would you rate the balance between combat and non-combat encounters during the event? Are there any types of encounters or activities you would like to see more of in future events?</p>
+    <%= simple_format(@feedback.combatvsnoncombat) %>
+
+    <% if !newplayers.nil? %>
+      <p>Did you feel the event provided adequate support and resources for new players? If not, what suggestions do you have for improving the new player experience?</p>
+      <%= simple_format(@feedback.newplayers) %>
+    <% end %>
+    
+    <p>How well did the event maintain immersion and role-playing quality? Were there any instances where you felt immersion was disrupted, and if so, how could these be addressed in future events?</p>
+    <%= simple_format(@feedback.immersion) %>
 
   </body>
 </html>
