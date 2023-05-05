@@ -215,7 +215,7 @@ class Skill < ApplicationRecord
           return '“By Voice, Through Ryknos, Dispel Pacify.” Special: You
           may cast this spell while under the effects of Pacify.'
         when 'Scandelen'
-          return '“By Scandelen, Sleep 5 Minutes. Pause your Poison
+          return '“Through Scandelen, Sleep 5 Minutes. Pause your Poison
           count. If you reach the end of Sleep’s duration
           uninterrupted, Heal 5 Hit Points, Cure Poison, and
           Cure Disease, and Bestow 5 Temporary Hit Points.”'
@@ -471,7 +471,7 @@ class Skill < ApplicationRecord
           when 'Ryknos'
             return 'By Voice, Through Ryknos, Dispel Pacify.'
           when 'Scandelen'
-            return 'By Scandelen, Sleep 5 Minutes. Pause your Poison
+            return 'Through Scandelen, Sleep 5 Minutes. Pause your Poison
             count. If you reach the end of Sleeps duration
             uninterrupted, Heal 5 Hit Points, Cure Poison, and
             Cure Disease, and Bestow 5 Temporary Hit Points'
