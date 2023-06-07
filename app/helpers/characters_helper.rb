@@ -15,6 +15,8 @@ module CharactersHelper
     if !get_sheets_locked 
       if Setting.allow_global_reroll
         false
+      elsif (current_user.usertype != 'Player')
+        false
       elsif (@character.rewrite)
         false
       elsif (@character.events.where('startdate <= ? AND levelingevent and eventtype = ?', Time.now, 'Adventure Weekend').count) < 1
