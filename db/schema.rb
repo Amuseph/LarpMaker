@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_02_015708) do
+ActiveRecord::Schema.define(version: 2023_07_25_185759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(version: 2023_05_02_015708) do
     t.string "location", null: false
     t.date "startdate", null: false
     t.date "enddate", null: false
-    t.string "description", null: false
+    t.string "description"
     t.integer "atdoorcost", default: 0
     t.integer "earlybirdcost", default: 0
     t.integer "eventexp", default: 300
