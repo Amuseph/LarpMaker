@@ -30,21 +30,6 @@
       <b>View Registered Players</b>
     <% end %>
   </center>
-
-  <p class="h3">The Message Board</p>
-  Here you can find posters hung up by the town for the next gather. Perhaps they contain your next adventure?
-
-  <center>
-    <div class="container col-12 mt-4" id="bulletinboard">
-      <% if !get_next_event.nil? %>
-        <% Dir.glob("app/assets/images/bulletinboard/#{@event.name}/*").map do |path| %>
-          <%= link_to image_url("bulletinboard/#{@event.name}/#{File.basename(path)}"), target: ':_blank' do %>
-            <%= image_tag "bulletinboard/#{@event.name}/#{ File.basename(path) }", :class => "img-fluid bulletinpost" %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
-  </center>
   
   <div class="modal fade" id="updateCabinModal" tabindex="-1" role="dialog" aria-labelledby="updateCabinModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
