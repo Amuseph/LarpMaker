@@ -32,6 +32,12 @@ class EventController < ApplicationController
    
   end
 
+  def viewoldfeedback
+    @event = Event.find(params[:event_id])
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+   
+  end
+
   def submitfeedback
     @event = Event.find(params[:event_id])
     @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
@@ -48,7 +54,8 @@ class EventController < ApplicationController
         end
       end
 
-      client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143267448662016141/Nb_Ggex6-CckSeR_cccLwruk31v_YADLfV3eQXzhzwUJH8cyhqvs8w6PsTFF2qrLhUST')
+      client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143326111623823460/gsdOvU8SJwCrfXNSqefPYDMU_bs7llHpXwz7uKeMqig-8xWK3giyXpV9-3gAX480ZAyh')
+      
       client.execute do |builder|
         builder.content = 'A new feedback has been submitted!'
         builder.avatar_url = 'https://mythlarp.herokuapp.com/images/deitytoken/scandelen.gif'
@@ -56,6 +63,14 @@ class EventController < ApplicationController
         builder.add_embed do |embed|
           embed.title = 'A Standout NPC'
           embed.description = @eventfeedback.standoutnpc
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Standout Player'
+          embed.description = @eventfeedback.standoutplayer
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Memorable Moment'
+          embed.description = @eventfeedback.memorablemoment
         end
       end
 
@@ -321,7 +336,7 @@ class EventController < ApplicationController
   end
 
   def feedback_params
-    params.require(:eventfeedback).permit(:feedback, :standoutnpc, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion)
+    params.require(:eventfeedback).permit(:feedback, :standoutnpc, :standoutplayer, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion, :memorablemoment)
   end
 
   def paypal_init

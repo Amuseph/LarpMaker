@@ -4,7 +4,22 @@
   <div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
   <hr>
   <%= bootstrap_form_with(model: @eventfeedback, url: event_submitfeedback_path) do |f| %>
+
+    <% if @eventfeedback.created_at < '2023-05-01'.to_date %>
+    
+      <%= f.text_area :feedback, :disabled => true, label: 'Do you have any constructive feedback for Myth?' %>
+      <%= f.text_area :standoutnpc, :disabled => true, label: 'What NPC Stands Out to You, if Any, And Why?' %>
+      <%= f.text_area :nexteventplans, :disabled => true, label: 'What are your plans for the next event?' %>
+  
+      <%= f.text_area :charactergoals, :disabled => true, label: 'What is Your Characters number 1 goal?' %>
+      <%= f.text_area :charactergoalactions, :disabled => true, label: 'What steps have you taken to reach your goal so far?' %>
+      <%= f.text_area :whatdidyoudo, :disabled => true, label: 'What Did Your Character do During The Event?' %>
+      <%= f.text_area :professions, :disabled => true, label: 'Are you doing anything with your profession?' %>
+
+    <% else %>
+    
       <%= f.text_area :feedback, :disabled => true, label: 'What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.' %>
+      <%= f.text_area :standoutnpc, :disabled => true, label: 'What NPC Stands Out to You, if Any, And Why?' %>
       <%= f.text_area :eventorganization, :disabled => true, label: 'How satisfied were you with the overall event organization, including scheduling, communication, and staff interactions? Please provide any suggestions for improvement.' %>
       <%= f.text_area :charactergoals, :disabled => true, label: "What are your character's primary goals, and how do you plan to pursue these goals during the next event?" %>
       <%= f.text_area :charactergoalactions, :disabled => true, label: 'What steps has your character taken so far to achieve their goals? Were there any obstacles or challenges encountered during the event that affected your progress?' %>
@@ -15,13 +30,8 @@
         <%= f.text_area :newplayers, :disabled => true, label: "Did you feel the event provided adequate support and resources for new players? If not, what suggestions do you have for improving the new player experience?" %>
       <% end %>
       <%= f.text_area :immersion, :disabled => true, label: "How well did the event maintain immersion and role-playing quality? Were there any instances where you felt immersion was disrupted, and if so, how could these be addressed in future events?" %>
-   
-      <h2>Discord Feedback</h2>
-      <p>The following are submitted to ur Feedback Zone on Discord!</p>
-      <%= f.text_area :standoutnpc, :disabled => true, label: "What NPC stands out to you and why?" %>
-      <%= f.text_area :standoutplayer, :disabled => true, label: 'What Player stands out to you and why?' %>
-      <%= f.text_area :memorablemoment, :disabled => true, label: 'What is a memorable moment you would like to share with everyone?' %>
-   
+    <% end %>
+    
   <% end %>
   <%= link_to 'Close', event_index_path, class: "btn btn-danger" %>
   <br>

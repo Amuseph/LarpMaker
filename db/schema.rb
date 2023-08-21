@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_25_185759) do
+ActiveRecord::Schema.define(version: 2023_08_21_230645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(version: 2023_07_25_185759) do
     t.string "combatvsnoncombat"
     t.string "newplayers"
     t.string "immersion"
+    t.string "standoutplayer"
+    t.string "memorablemoment"
     t.index ["character_id"], name: "index_eventfeedbacks_on_character_id"
     t.index ["event_id"], name: "index_eventfeedbacks_on_event_id"
     t.index ["user_id"], name: "index_eventfeedbacks_on_user_id"
@@ -228,6 +230,9 @@ ActiveRecord::Schema.define(version: 2023_07_25_185759) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["grantedby_id"], name: "index_explogs_on_grantedby_id"
     t.index ["user_id"], name: "index_explogs_on_user_id"
+  end
+
+  create_table "feedback_columns", force: :cascade do |t|
   end
 
   create_table "guilds", force: :cascade do |t|
