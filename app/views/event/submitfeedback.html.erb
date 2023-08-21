@@ -17,13 +17,14 @@
     </ul>
     <p>If there is something we are doing well or could do better, we want your constructive feedback. If you didn’t like something? How could we improve upon it in the future?</p>
     <p>Please note: feedback should be related to the event and plots ran during this specific event. If there are concerns in regards to rules, players, cast or decisions made by staff, please email feedback@mythlarp.com</p>
+    <p>Some of these feedbacks will post to Discord!</p>
   <hr>
 
 </div>
   <%= bootstrap_form_for :eventfeedback, url: event_submitfeedback_path do |f| %>
     
     <%= f.text_area :feedback, :required => true, label: 'What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.' %>
-    <%= f.text_area :standoutnpc, :required => true, label: 'Were there any NPCs that particularly stood out to you during the event? If so, please explain what made their performance memorable.' %>
+    <%= f.text_area :standoutnpc, :required => true, label: 'What NPCs Stand Out to You, if Any, And Why? - Note: This will be posted to Discord', :maxlength => 1000 %>
     <%= f.text_area :eventorganization, :required => true, label: 'How satisfied were you with the overall event organization, including scheduling, communication, and staff interactions? Please provide any suggestions for improvement.' %>
     <%= f.text_area :charactergoals, :required => true, label: "What are your character's primary goals, and how do you plan to pursue these goals during the next event?" %>
     <%= f.text_area :charactergoalactions, :required => true, label: 'What steps has your character taken so far to achieve their goals? Were there any obstacles or challenges encountered during the event that affected your progress?' %>

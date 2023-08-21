@@ -43,6 +43,9 @@ gem 'paypal-checkout-sdk'
 #Mailing List
 gem 'MailchimpMarketing'
 
+#Discord Notifications
+gem 'discordrb-webhooks'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 

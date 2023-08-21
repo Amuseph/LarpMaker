@@ -29,6 +29,7 @@ class EventController < ApplicationController
   def viewfeedback
     @event = Event.find(params[:event_id])
     @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+   
   end
 
   def submitfeedback
@@ -46,6 +47,18 @@ class EventController < ApplicationController
           
         end
       end
+
+      client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143267448662016141/Nb_Ggex6-CckSeR_cccLwruk31v_YADLfV3eQXzhzwUJH8cyhqvs8w6PsTFF2qrLhUST')
+      client.execute do |builder|
+        builder.content = 'A new feedback has been submitted!'
+        builder.avatar_url = 'https://mythlarp.herokuapp.com/images/deitytoken/scandelen.gif'
+        builder.username = 'Scandelen'
+        builder.add_embed do |embed|
+          embed.title = 'A Standout NPC'
+          embed.description = @eventfeedback.standoutnpc
+        end
+      end
+
       redirect_to event_viewfeedback_path(params[:event_id])
     end
   end
