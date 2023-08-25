@@ -226,7 +226,7 @@ class EventController < ApplicationController
     
         if [0, 5, 10, 15, 25, 50, 100].include? (@event.playercount - player_count)
           client.execute do |builder|
-            builder.content = 'A new friend is joining us for ' + @event.name
+            builder.content = "A new friend is joining us for **#{@event.name}**"
             builder.add_embed do |embed|
               embed.title = 'Event Stats'
               embed.description = """
