@@ -3,7 +3,7 @@ class CharacterMailer < ApplicationMailer
   def send_courier
     @courier = params[:courier]
     @subject = 'Courier From ' + @courier.character.name + ' to ' + @courier.recipient
-    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: @subject)
+    mail(from: 'courier@mythlarp.com', to: 'andrewwarzocha+84aiyc6tzpqifqvyedgt@boards.trello.com', subject: @subject)
   end
 
   def send_between_game
