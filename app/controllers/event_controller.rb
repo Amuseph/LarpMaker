@@ -58,8 +58,6 @@ class EventController < ApplicationController
       
       client.execute do |builder|
         builder.content = 'A new feedback has been submitted!'
-        builder.avatar_url = 'https://mythlarp.herokuapp.com/images/deitytoken/scandelen.gif'
-        builder.username = 'Scandelen'
         builder.add_embed do |embed|
           embed.title = 'A Standout NPC'
           embed.description = @eventfeedback.standoutnpc
@@ -101,6 +99,7 @@ class EventController < ApplicationController
         redirect_to event_index_path
       end
     end
+
   end
 
   def orderevent
@@ -220,6 +219,23 @@ class EventController < ApplicationController
       if response.result.status == 'COMPLETED'
 
         add_user_to_event(current_user, @event, params[:meal_type], params[:cabin])
+
+        client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143267691981967370/4wIcJ5Y3yO60JHzyv6egXiYozu1tTZZHP5TbEjH_mc-0KugsEuovoUcrN0u4kQxDv73t')
+      
+        player_count = Eventattendance.all.where('event_id = ? and Registrationtype = ?', @event.id, 'Player').count
+    
+        if [10, 25, 50, 100].include? (@event.playercount - player_count)
+          client.execute do |builder|
+            builder.content = 'A new friend is joining us for ' + @event.name
+            builder.add_embed do |embed|
+              embed.title = 'Event Stats'
+              embed.description = """
+              **Player Count**: #{player_count.to_s} 
+              **Player Slots Remaining**: #{(@event.playercount - player_count).to_s}
+              """
+            end
+          end
+        end
 
         return render :json => {:status => response.result.status}, :status => :ok
       end
