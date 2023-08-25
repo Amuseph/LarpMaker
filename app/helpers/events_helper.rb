@@ -53,7 +53,11 @@ module EventsHelper
     elsif !event.levelingevent
       return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
-      return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
+      if event.startdate <= Date.parse('20-05-2023') #Change me to 08
+        return link_to 'View Your Feedback', event_viewoldfeedback_path(event.id)
+      else
+        return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
+      end
     elsif (((Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - event.enddate).to_i < 30) and not eventattendance.noshow)
         return link_to 'Submit Feedback', event_submitfeedback_path(event.id)
     else

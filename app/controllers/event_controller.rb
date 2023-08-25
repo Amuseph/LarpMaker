@@ -29,6 +29,13 @@ class EventController < ApplicationController
   def viewfeedback
     @event = Event.find(params[:event_id])
     @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+   
+  end
+
+  def viewoldfeedback
+    @event = Event.find(params[:event_id])
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+   
   end
 
   def submitfeedback
@@ -46,6 +53,25 @@ class EventController < ApplicationController
           
         end
       end
+
+      client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143326111623823460/gsdOvU8SJwCrfXNSqefPYDMU_bs7llHpXwz7uKeMqig-8xWK3giyXpV9-3gAX480ZAyh')
+      
+      client.execute do |builder|
+        builder.content = 'A new feedback has been submitted!'
+        builder.add_embed do |embed|
+          embed.title = 'A Standout NPC'
+          embed.description = @eventfeedback.standoutnpc
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Standout Player'
+          embed.description = @eventfeedback.standoutplayer
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Memorable Moment'
+          embed.description = @eventfeedback.memorablemoment
+        end
+      end
+
       redirect_to event_viewfeedback_path(params[:event_id])
     end
   end
@@ -73,6 +99,7 @@ class EventController < ApplicationController
         redirect_to event_index_path
       end
     end
+
   end
 
   def orderevent
@@ -193,6 +220,23 @@ class EventController < ApplicationController
 
         add_user_to_event(current_user, @event, params[:meal_type], params[:cabin])
 
+        client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143267691981967370/4wIcJ5Y3yO60JHzyv6egXiYozu1tTZZHP5TbEjH_mc-0KugsEuovoUcrN0u4kQxDv73t')
+      
+        player_count = Eventattendance.all.where('event_id = ? and Registrationtype = ?', @event.id, 'Player').count
+    
+        if [0, 5, 10, 15, 25, 50, 100].include? (@event.playercount - player_count)
+          client.execute do |builder|
+            builder.content = "A new friend is joining us for **#{@event.name}**"
+            builder.add_embed do |embed|
+              embed.title = 'Event Stats'
+              embed.description = """
+              **Player Count**: #{player_count.to_s} 
+              **Player Slots Remaining**: #{(@event.playercount - player_count).to_s}
+              """
+            end
+          end
+        end
+
         return render :json => {:status => response.result.status}, :status => :ok
       end
     rescue PayPalHttp::HttpError => ioe
@@ -308,7 +352,7 @@ class EventController < ApplicationController
   end
 
   def feedback_params
-    params.require(:eventfeedback).permit(:feedback, :standoutnpc, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion)
+    params.require(:eventfeedback).permit(:feedback, :standoutnpc, :standoutplayer, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion, :memorablemoment)
   end
 
   def paypal_init
