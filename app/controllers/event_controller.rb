@@ -224,7 +224,7 @@ class EventController < ApplicationController
       
         player_count = Eventattendance.all.where('event_id = ? and Registrationtype = ?', @event.id, 'Player').count
     
-        if [10, 25, 50, 100].include? (@event.playercount - player_count)
+        if [0, 5, 10, 15, 25, 50, 100].include? (@event.playercount - player_count)
           client.execute do |builder|
             builder.content = 'A new friend is joining us for ' + @event.name
             builder.add_embed do |embed|
