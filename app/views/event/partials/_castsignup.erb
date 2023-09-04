@@ -11,10 +11,12 @@
 <%= bootstrap_form_for :mealplan, url: event_castsignup_path do |f| %>
   <%= f.check_box :acceptterms, required: true, label: ("I agree to the #{link_to 'Terms of Service', pages_termsofservice_path, target: '_blank'} and #{link_to 'waiver policy', pages_waiver_path, target: '_blank'}.").html_safe %>
 
-
+  <% if get_sheets_locked %>
+    <%= f.select :mealchoice, ['No Meal'], required: true, label: 'Meal Plan Has Been Locked. Please be sure to register 2 weeks before the event!' %>
+  <% else %>
     <%= f.select :mealchoice, ['No Meal', 'Meat', 'Vegan'], required: true, label: 'Choose your meal plan' %>
 
-
+  <% end %>
   <%= f.submit 'Sign Up To Cast', class: "btn btn-success" %>
   <%= link_to 'Cancel', :back, class: "btn btn-danger" %>
 <% end %>
