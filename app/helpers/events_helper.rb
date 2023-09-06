@@ -120,6 +120,8 @@ module EventsHelper
       return 'An error has occured. Please reach out to support@mythlarp.com'
     elsif (attendancecount >= event.playercount)
       return image_tag("pages/events/register_to_play_soldout.png", :class => "img-fluid mx-auto")
+    elsif (event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date <= 7)
+      return image_tag("pages/events/register_to_play_soldout.png", :class => "img-fluid mx-auto")
     else
       return (link_to(image_tag("pages/events/register_to_play.png", :class => "img-fluid mx-auto"), event_playersignup_path(event.id))) + ('<br> Only ' + (event.playercount - attendancecount).to_s + ' slots remain').html_safe
     end
