@@ -50,5 +50,14 @@
     <p>How well did the event maintain immersion and role-playing quality? Were there any instances where you felt immersion was disrupted, and if so, how could these be addressed in future events?</p>
     <%= simple_format(@feedback.immersion) %>
 
+    <p>What NPC stands out to you and why?</p>
+    <%= simple_format(@feedback.standoutnpc) %>
+
+    <p>What Player stands out to you and why?</p>
+    <%= simple_format(@feedback.imstandoutplayermersion) %>
+
+    <p>What is a memorable moment you would like to share with everyone?</p>
+    <%= simple_format(@feedback.memorablemoment) %>
+
   </body>
 </html>
