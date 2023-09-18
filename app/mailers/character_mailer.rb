@@ -21,7 +21,7 @@ class CharacterMailer < ApplicationMailer
         subject = 'Between Game Skill From ' + @courier.character.name
     end
 
-    mail(from: 'courier@mythlarp.com', to: 'courier@mythlarp.com', subject: subject)
+    mail(from: 'courier@mythlarp.com', to: 'andrewwarzocha+84aiyc6tzpqifqvyedgt@boards.trello.com', subject: subject)
   end
 
   def send_backstory
