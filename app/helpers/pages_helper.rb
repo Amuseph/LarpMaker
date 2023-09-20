@@ -288,7 +288,7 @@ include PlayersHelper
         end
       else
         if hours_till_bgs_lock.nil?
-          marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers are due in less than 9999 days!. Feedback are due in less than %s days! </p>" % (bgs_lock_in)
+          marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers are due in less than %s days! </p>" % (bgs_lock_in)
         else
           marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_bgs_lock)
         end
@@ -300,7 +300,7 @@ include PlayersHelper
     end
 
     if !sheets_lock_in.nil? && !get_sheets_locked
-      if bgs_lock_in > sheets_lock_in
+      if !bgs_lock_in.nil? && (bgs_lock_in > sheets_lock_in)
         if hours_till_bgs_lock.nil?
           marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s days! </p>" % (sheets_lock_in)
         else
