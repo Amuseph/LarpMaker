@@ -257,25 +257,59 @@ include PlayersHelper
 
     marquee_message = ''
 
+    if !next_event.nil?
+      sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
+      if sheets_lock_in > 1
+        hours_till_sheet_lock = nil
+      else
+        hours_till_sheet_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+      end
+    else
+      sheets_lock_in =  nil
+    end
+
     if !get_between_game_skills_locked
       bgs_lock_in = bgs_lock_days - (Time.now.in_time_zone('Eastern Time (US & Canada)').to_date - last_event.enddate).to_i
       if bgs_lock_in > 1
-        marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s days! </p>" % (bgs_lock_in)
-        
+        hours_till_bgs_lock = nil
       else
-        hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
-        marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_lock)
+        hours_till_bgs_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+      end
+    else
+      bgs_lock_in = nil
+    end
+
+    if !bgs_lock_in.nil?
+      if (bgs_lock_in > sheets_lock_in) || get_sheets_locked
+        if hours_till_bgs_lock.nil?
+          marquee_message = marquee_message + "<p class=""h2"">Feedback is due in less than %s days! </p>" % (bgs_lock_in)
+        else
+          marquee_message = marquee_message + "<p class=""h2"">Feedback is due in less than %s hours! </p>" % (hours_till_bgs_lock)
+        end
+      else
+        if hours_till_bgs_lock.nil?
+          marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers are due in less than 9999 days!. Feedback are due in less than %s days! </p>" % (bgs_lock_in)
+        else
+          marquee_message = marquee_message + "<p class=""h2"">Between Game Skills / Couriers / Feedback are due in less than %s hours! </p>" % (hours_till_bgs_lock)
+        end
       end
     end
 
-    if !next_event.nil?
-      sheets_lock_in =  (next_event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i - sheets_auto_lock_days
-      
-      if sheets_lock_in <= 14
-        if sheets_lock_in > 1
-          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in %s days! </p>" % (sheets_lock_in)
+    if get_sheets_locked
+      marquee_message = marquee_message + "<p class=""h2"">Sheets have been locked while we prepare for game! </p>"
+    end
+
+    if !sheets_lock_in.nil? && !get_sheets_locked
+      if bgs_lock_in > sheets_lock_in
+        if hours_till_bgs_lock.nil?
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s days! </p>" % (sheets_lock_in)
         else
-          hours_till_lock = ((DateTime.tomorrow.in_time_zone('Eastern Time (US & Canada)').to_time - Time.now.in_time_zone('Eastern Time (US & Canada)')) / 1.hour).to_i + 1
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s hour(s)! </p>" % (hours_till_lock)
+        end
+      else
+        if hours_till_bgs_lock.nil?
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s days! </p>" % (sheets_lock_in)
+        else
           marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)
         end
       end
