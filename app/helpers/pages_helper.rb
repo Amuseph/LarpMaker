@@ -299,18 +299,19 @@ include PlayersHelper
       marquee_message = marquee_message + "<p class=""h2"">Sheets have been locked while we prepare for game! </p>"
     end
 
+
     if !sheets_lock_in.nil? && !get_sheets_locked
       if !bgs_lock_in.nil? && (bgs_lock_in > sheets_lock_in)
-        if hours_till_bgs_lock.nil?
+        if hours_till_sheet_lock.nil?
           marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s days! </p>" % (sheets_lock_in)
         else
-          marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s hour(s)! </p>" % (hours_till_lock)
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets / Between Game Skills / Couriers lock in less than %s hour(s)! </p>" % (hours_till_sheet_lock)
         end
       else
-        if hours_till_bgs_lock.nil?
+        if hours_till_sheet_lock.nil?
           marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s days! </p>" % (sheets_lock_in)
         else
-          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_lock)
+          marquee_message = marquee_message + "<p class=""h2"">Character Sheets lock in less than %s hour(s)! </p>" % (hours_till_sheet_lock)
         end
       end
     end
