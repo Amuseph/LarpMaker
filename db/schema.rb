@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_21_230645) do
+ActiveRecord::Schema.define(version: 2023_09_21_155645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 2023_08_21_230645) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "mealplan", null: false
     t.integer "mealplancost"
-    t.text "mealplandetails"
+    t.text "mealplandetails", default: ""
     t.integer "playercount", null: false
     t.integer "castcount", null: false
     t.integer "newplayerprice", null: false
