@@ -5,5 +5,9 @@
     Food at Myth may contain allergens such as celery, gluten, crustaceans, eggs, fish, lupin, milk, mollusks, mustard, nuts, peanuts, sesame seeds, soya, or sulfates. We will do our best to accommodate those with some allergic reactions to the ingredients mentioned above. Sometimes we can not make significant alterations to our meal plans. If your safety is at risk from eating any of these allergens, we recommend against getting the meal plan.
   </p>
 <p>
-  <%= simple_format(@event.mealplandetails.html_safe)%>
+  <%= 
+    if !@event.mealplandetails.nil?
+      simple_format(@event.mealplandetails.html_safe)
+    end
+  %>
 </p>
