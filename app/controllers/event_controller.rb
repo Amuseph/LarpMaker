@@ -220,7 +220,7 @@ class EventController < ApplicationController
 
         add_user_to_event(current_user, @event, params[:meal_type], params[:cabin])
 
-        client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143267691981967370/4wIcJ5Y3yO60JHzyv6egXiYozu1tTZZHP5TbEjH_mc-0KugsEuovoUcrN0u4kQxDv73t')
+        client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1155664606564462703/20UOf4U-xxfHg6-E3jRJ_Ds4t5aj9EPmAfxYxSs1nf8v-G-f5gyS6QpBhL4PW7FNoOmz')
       
         player_count = Eventattendance.all.where('event_id = ? and Registrationtype = ?', @event.id, 'Player').count
     
