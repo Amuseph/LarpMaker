@@ -16,7 +16,7 @@
 <%= bootstrap_form_for :mealplan, url: event_castsignup_path do |f| %>
   <%= f.check_box :acceptterms, required: true, label: ("I agree to the #{link_to 'Terms of Service', pages_termsofservice_path, target: '_blank'} and #{link_to 'waiver policy', pages_waiver_path, target: '_blank'}.").html_safe %>
 
-  <% if get_sheets_locked %>
+  <% if ((@event.startdate - Time.now.in_time_zone('Eastern Time (US & Canada)').to_date).to_i <= sheets_auto_lock_days) %>
     <%= f.select :mealchoice, ['No Meal'], required: true, label: 'Meal Plan Has Been Locked. Please be sure to register 2 weeks before the event!' %>
   <% else %>
     <%= f.select :mealchoice, ['No Meal', 'Meat', 'Vegan'], required: true, label: 'Choose your meal plan' %>
