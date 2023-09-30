@@ -115,7 +115,7 @@ class EventController < ApplicationController
         end
       end
 
-      redirect_to event_viewfeedback_path(params[:event_id])
+      redirect_to event_viewcastfeedback_path(params[:event_id])
     end
   end
 

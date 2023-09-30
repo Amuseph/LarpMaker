@@ -53,9 +53,9 @@ module EventsHelper
     elsif !event.levelingevent
       return
     elsif !Eventfeedback.find_by('event_id = ? and user_id = ?', event.id, current_user.id).nil?
-      if event.startdate <= Date.parse('20-05-2023') #Change me to 08
+      if event.startdate <= Date.parse('20-05-2023')
         return link_to 'View Your Feedback', event_viewoldfeedback_path(event.id)
-      elsif event.startdate <= Date.parse('01-10-2023') #Change me to 08
+      elsif event.startdate <= Date.parse('30-09-2023') 
         return link_to 'View Your Feedback', event_viewfeedback_path(event.id)
       else
         if eventattendance.registrationtype == 'Player'

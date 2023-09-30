@@ -3,6 +3,7 @@
 class Event < ApplicationRecord
   has_many :eventattendances
   has_many :eventfeedbacks
+  has_many :eventcastfeedbacks
   has_many :characters, through: :eventattendances
   has_many :users, through: :characters
 
