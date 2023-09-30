@@ -103,15 +103,15 @@ class EventController < ApplicationController
         builder.content = 'A new feedback has been submitted!'
         builder.add_embed do |embed|
           embed.title = 'A Standout NPC'
-          embed.description = @eventfeedback.standoutnpc
+          embed.description = @eventcastfeedback.standoutnpc
         end
         builder.add_embed do |embed|
           embed.title = 'A Standout Player'
-          embed.description = @eventfeedback.standoutplayer
+          embed.description = @eventcastfeedback.standoutplayer
         end
         builder.add_embed do |embed|
           embed.title = 'A Memorable Moment'
-          embed.description = @eventfeedback.memorablemoment
+          embed.description = @eventcastfeedback.memorablemoment
         end
       end
 
