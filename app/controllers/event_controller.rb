@@ -32,6 +32,12 @@ class EventController < ApplicationController
    
   end
 
+  def viewcastfeedback
+    @event = Event.find(params[:event_id])
+    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+   
+  end
+
   def viewoldfeedback
     @event = Event.find(params[:event_id])
     @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
@@ -75,6 +81,45 @@ class EventController < ApplicationController
       redirect_to event_viewfeedback_path(params[:event_id])
     end
   end
+
+  def submitcastfeedback
+    @event = Event.find(params[:event_id])
+    @eventattendance = @event.eventattendances.find_by(user_id: current_user.id, event_id: @event.id)
+    if request.post?
+      if Eventcastfeedback.find_by(event_id: params[:event_id], user_id: current_user.id).nil?
+        @eventcastfeedback = Eventcastfeedback.create(castfeedback_params)
+        @eventcastfeedback.user_id = current_user.id
+        @eventcastfeedback.event_id = params[:event_id]
+        if @eventcastfeedback.save!
+          add_feedback_exp(@event, @eventattendance)
+          EventMailer.with(eventcastfeedback: @eventcastfeedback).send_event_cast_feedback.deliver_later
+          
+        end
+      end
+
+      client = Discordrb::Webhooks::Client.new(url: 'https://discord.com/api/webhooks/1143326111623823460/gsdOvU8SJwCrfXNSqefPYDMU_bs7llHpXwz7uKeMqig-8xWK3giyXpV9-3gAX480ZAyh')
+      
+      client.execute do |builder|
+        builder.content = 'A new feedback has been submitted!'
+        builder.add_embed do |embed|
+          embed.title = 'A Standout NPC'
+          embed.description = @eventfeedback.standoutnpc
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Standout Player'
+          embed.description = @eventfeedback.standoutplayer
+        end
+        builder.add_embed do |embed|
+          embed.title = 'A Memorable Moment'
+          embed.description = @eventfeedback.memorablemoment
+        end
+      end
+
+      redirect_to event_viewfeedback_path(params[:event_id])
+    end
+  end
+
+
 
   def playersignup
     @event = Event.find(params[:event_id])
@@ -353,6 +398,10 @@ class EventController < ApplicationController
 
   def feedback_params
     params.require(:eventfeedback).permit(:feedback, :standoutnpc, :standoutplayer, :eventorganization, :charactergoals, :charactergoalactions, :whatdidyoudo, :professions, :combatvsnoncombat, :newplayers, :immersion, :memorablemoment)
+  end
+
+  def castfeedback_params
+    params.require(:eventcastfeedback).permit(:feedback, :standoutnpc, :standoutplayer, :eventorganization, :learning, :opportunity, :whatdidyoudo, :castvalue, :returningchance, :combatvsnoncombat, :faceroles, :mechanics, :immersion, :memorablemoment)
   end
 
   def paypal_init

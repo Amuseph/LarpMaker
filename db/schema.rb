@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_21_155645) do
+ActiveRecord::Schema.define(version: 2023_09_30_030812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,27 @@ ActiveRecord::Schema.define(version: 2023_09_21_155645) do
     t.index ["event_id", "user_id"], name: "index_eventattendances_on_event_id_and_user_id", unique: true
     t.index ["event_id"], name: "index_eventattendances_on_event_id"
     t.index ["user_id"], name: "index_eventattendances_on_user_id"
+  end
+
+  create_table "eventcastfeedbacks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.string "feedback", null: false
+    t.string "eventorganization", null: false
+    t.string "learning", null: false
+    t.string "opportunity", null: false
+    t.integer "castvalue", null: false
+    t.integer "returningchance", null: false
+    t.string "combatvsnoncombat", null: false
+    t.string "faceroles", null: false
+    t.string "mechanics", null: false
+    t.string "standoutplayer", null: false
+    t.string "standoutnpc", null: false
+    t.string "memorablemoment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_eventcastfeedbacks_on_event_id"
+    t.index ["user_id"], name: "index_eventcastfeedbacks_on_user_id"
   end
 
   create_table "eventfeedbacks", force: :cascade do |t|
@@ -439,6 +460,8 @@ ActiveRecord::Schema.define(version: 2023_09_21_155645) do
   add_foreign_key "eventattendances", "characters"
   add_foreign_key "eventattendances", "events"
   add_foreign_key "eventattendances", "users"
+  add_foreign_key "eventcastfeedbacks", "events"
+  add_foreign_key "eventcastfeedbacks", "users"
   add_foreign_key "eventfeedbacks", "characters"
   add_foreign_key "eventfeedbacks", "events"
   add_foreign_key "eventfeedbacks", "users"
