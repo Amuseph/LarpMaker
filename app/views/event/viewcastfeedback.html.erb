@@ -1,0 +1,27 @@
+<div class="container col-12">
+  <div class="pagetitle"><%= @event.name %></div>
+  <div class="pagesubtitle" ><%= @event.description %></div>
+  <div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
+  <hr>
+  <%= bootstrap_form_with(model: @eventcastfeedback, url: event_submitcastfeedback_path) do |f| %>
+
+    <%= f.text_area :feedback, :disabled => true, label: 'What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.' %>
+      <%= f.text_area :eventorganization, :disabled => true, label: 'How satisfied were you with the overall event organization including scheduling, communication prior to and at the event, interactions with fellow Cast, and interactions with Cast in Specific Roles (Producer, Team Lead, Craftmaster, Desk, etc.)?  Please provide any suggestions for improvement.' %>
+      <%= f.text_area :learning, :disabled => true, label: "What, if any, is something you are interested in learning how to do at the event or getting more involved with?" %>
+      <%= f.text_area :opportunity, :disabled => true, label: 'What, if anything, is something that you would like to do that you haven’t had an opportunity to do?' %>
+      <%= f.text_area :castvalue, :disabled => true, label: 'On a scale of 1-5, with 1=very low and 5= very high, how valued do you feel as a Cast member at Myth?' %>
+      <%= f.text_area :returningchance, :disabled => true, label: "On a scale of 1-5, where 1=never and 5=certainly, how likely are you to return for a future event as Cast or as a Player?" %>
+      <%= f.text_area :combatvsnoncombat, :disabled => true, label: "How would you rate the balance of combat and non-combat?" %>
+      <%= f.text_area :faceroles, :disabled => true, label: "How would you rate the Recurring / Face role opportunities?" %>
+      <%= f.text_area :mechanics, :disabled => true, label: "How would you describe the keyword system and game mechanics?  Were there any that stand out as particularly difficult to understand?  Were there any that you particularly enjoyed?" %>
+
+      <h2>Discord Feedback</h2>
+      <p>The following are submitted to ur Feedback Zone on Discord!</p>
+      <%= f.text_area :standoutnpc, :disabled => true, label: "What NPC stands out to you and why?" %>
+      <%= f.text_area :standoutplayer, :disabled => true, label: 'What Player stands out to you and why?' %>
+      <%= f.text_area :memorablemoment, :disabled => true, label: 'What is a memorable moment you would like to share with everyone?' %>
+   
+  <% end %>
+  <%= link_to 'Close', event_index_path, class: "btn btn-danger" %>
+  <br>
+</div>

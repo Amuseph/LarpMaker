@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Cast: <%= @feedback.user.firstname + ' ' + @feedback.user.lastname %> |   
+    </p>
+
+    --------------------<br>
+    EVENT INFO<br>
+    For Event: <%= @feedback.event.startdate.strftime("%m/%d/%Y") %><br>
+    --------------------<br>
+        
+    <p>What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.</p>
+    <%= simple_format(@feedback.feedback) %>
+
+    <p>How satisfied were you with the overall event organization including scheduling, communication prior to and at the event, interactions with fellow Cast, and interactions with Cast in Specific Roles (Producer, Team Lead, Craftmaster, Desk, etc.)?  Please provide any suggestions for improvement.</p>
+    <%= simple_format(@feedback.eventorganization) %>
+    
+    <p>What, if any, is something you are interested in learning how to do at the event or getting more involved with?</p>
+    <%= simple_format(@feedback.learning) %>
+    
+    <p>What, if anything, is something that you would like to do that you haven’t had an opportunity to do?</p>
+    <%= simple_format(@feedback.opportunity) %>
+    
+    <p>On a scale of 1-5, with 1=very low and 5= very high, how valued do you feel as a Cast member at Myth?</p>
+    <%= simple_format(@feedback.castvalue) %>
+    
+    <p>On a scale of 1-5, where 1=never and 5=certainly, how likely are you to return for a future event as Cast or as a Player?</p>
+    <%= simple_format(@feedback.returningchance) %>
+    
+    <p>How would you rate the balance of combat and non-combat?</p>
+    <%= simple_format(@feedback.combatvsnoncombat) %>
+
+    <p>How would you rate the Recurring / Face role opportunities?</p>
+    <%= simple_format(@feedback.faceroles) %>
+
+    <p>How would you describe the keyword system and game mechanics?  Were there any that stand out as particularly difficult to understand?  Were there any that you particularly enjoyed?</p>
+    <%= simple_format(@feedback.mechanics) %>
+
+    <p>What NPC stands out to you and why?</p>
+    <%= simple_format(@feedback.standoutnpc) %>
+
+    <p>What Player stands out to you and why?</p>
+    <%= simple_format(@feedback.standoutplayer) %>
+
+    <p>What is a memorable moment you would like to share with everyone?</p>
+    <%= simple_format(@feedback.memorablemoment) %>
+
+  </body>
+</html>

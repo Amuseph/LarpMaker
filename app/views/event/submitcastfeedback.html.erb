@@ -1,0 +1,43 @@
+<%= provide(:title, 'Submit Feedback') %>
+<div class="container col-12">
+  <div class="pagetitle"><%= @event.name %></div>
+  <div class="pagesubtitle" ><%= @event.description %></div>
+  <div class="text-center"><strong>Start Date:</strong> <%= @event.startdate %>  -to-  <strong>End Date:</strong> <%= @event.enddate %></div>
+</div>
+<hr>
+<div class="container col-12">
+    <p class = "h2 text-center">Your Feedback Is Important</p>
+    <p>Your feedback is essential to us, which is why we award XP for giving it. Telling us about your experience, good or bad, means that we can better understand what is important to you, what we are doing well, and where we need to make improvements.</p>
+    <p>Your feedback helps us to:</p>
+    <ul>
+      <li>Make sure we pay attention to what makes the event fun for our friends.</li>
+      <li>Improve and enhance the Myth experience for everyone involved (players and NPCs).</li>
+      <li>Improve the stories we tell and the decisions we make going forward.</li>
+      <li>Ensure we remain transparent about improvements.</li>
+    </ul>
+    <p>If there is something we are doing well or could do better, we want your constructive feedback. If you didn’t like something? How could we improve upon it in the future?</p>
+    <p>Please note: feedback should be related to the event and plots ran during this specific event. If there are concerns in regards to rules, players, cast or decisions made by staff, please email feedback@mythlarp.com</p>
+    <p>Some of these feedbacks will post to Discord!</p>
+  <hr>
+
+</div>
+  <%= bootstrap_form_for :eventcastfeedback, url: event_submitcastfeedback_path do |f| %>    
+    <%= f.text_area :feedback, :required => true, label: 'What aspects of the event did you enjoy the most, and what areas do you believe could be improved? Please provide specific examples.' %>
+    <%= f.text_area :eventorganization, :required => true, label: 'How satisfied were you with the overall event organization including scheduling, communication prior to and at the event, interactions with fellow Cast, and interactions with Cast in Specific Roles (Producer, Team Lead, Craftmaster, Desk, etc.)?  Please provide any suggestions for improvement.' %>
+    <%= f.text_area :learning, :required => true, label: "What, if any, is something you are interested in learning how to do at the event or getting more involved with?" %>
+    <%= f.text_area :opportunity, :required => true, label: 'What, if anything, is something that you would like to do that you haven’t had an opportunity to do?' %>
+    <%= f.select :castvalue, [ 1, 2, 3, 4, 5 ], :required => true, label: 'On a scale of 1-5, with 1=very low and 5= very high, how valued do you feel as a Cast member at Myth?' %>
+    <%= f.select :returningchance, [ 1, 2, 3, 4, 5 ], :required => true, label: "On a scale of 1-5, where 1=never and 5=certainly, how likely are you to return for a future event as Cast or as a Player?" %>
+    <%= f.text_area :combatvsnoncombat, :required => true, label: "How would you rate the balance of combat and non-combat?" %>
+    <%= f.text_area :faceroles, :required => true, label: "How would you rate the Recurring / Face role opportunities?" %>
+    <%= f.text_area :mechanics, :required => true, label: "How would you describe the keyword system and game mechanics?  Were there any that stand out as particularly difficult to understand?  Were there any that you particularly enjoyed?" %>
+    
+    <h2>Discord Feedback</h2>
+    <p>The following are submitted to our Feedback Zone on Discord! Please be mindful of what you post.</p>
+    <%= f.text_area :standoutnpc, :required => true, label: '"What NPC stands out to you and why?', :maxlength => 1000 %>
+    <%= f.text_area :standoutplayer, :required => true, label: 'What Player stands out to you and why?', :maxlength => 1000 %>
+    <%= f.text_area :memorablemoment, :required => true, label: 'What is a memorable moment you would like to share with everyone?', :maxlength => 1000 %>
+    <%= f.submit 'Submit Feedback', class: "btn btn-success" %>
+    <%= link_to 'Cancel', root_path, class: "btn btn-danger" %>
+  <% end %>
+<br>

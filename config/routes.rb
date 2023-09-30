@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       resources :houses
       resources :eventattendances
       resources :eventfeedbacks, only: [:index, :show, :destroy]
+      resources :eventcastfeedbacks, only: [:index, :show, :destroy]
       resources :incidents
       resources :cabins
       resources :rulebookchanges
@@ -112,9 +113,12 @@ Rails.application.routes.draw do
     post :processeventorder
     get :castsignup
     get :viewfeedback
+    get :viewcastfeedback
     get :viewoldfeedback
     get :submitfeedback
     post :submitfeedback
+    get :submitcastfeedback
+    post :submitcastfeedback
     post :castsignup
     get :playerlist
   end
