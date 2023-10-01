@@ -34,7 +34,7 @@ class EventController < ApplicationController
 
   def viewcastfeedback
     @event = Event.find(params[:event_id])
-    @eventfeedback = Eventfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
+    @eventcastfeedback = Eventcastfeedback.find_by('event_id = ? and user_id = ?', params[:event_id], current_user.id)
    
   end
 
