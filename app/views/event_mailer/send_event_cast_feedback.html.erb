@@ -26,10 +26,10 @@
     <%= simple_format(@feedback.opportunity) %>
     
     <p>On a scale of 1-5, with 1=very low and 5= very high, how valued do you feel as a Cast member at Myth?</p>
-    <%= simple_format(@feedback.castvalue) %>
+    <%= simple_format(@feedback.castvalue.to_s) %>
     
     <p>On a scale of 1-5, where 1=never and 5=certainly, how likely are you to return for a future event as Cast or as a Player?</p>
-    <%= simple_format(@feedback.returningchance) %>
+    <%= simple_format(@feedback.returningchance.to_s) %>
     
     <p>How would you rate the balance of combat and non-combat?</p>
     <%= simple_format(@feedback.combatvsnoncombat) %>
