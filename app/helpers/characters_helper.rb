@@ -140,6 +140,33 @@ module CharactersHelper
     end
   end
 
+  def skills_to_train(character)
+
+      
+    favoredfoes = ['Beasts', 'Constructs', 'Elementals', 'Monstrous Humanoids', 'Plants',
+                    'Undead'] - character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details')
+    availableskills = []
+    availablegroups = []
+
+    character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
+      skilllist = []
+      if (skillgroup.name == 'Druid' && character.totem == '')
+        totemskills = ['Totemic Gift', 'Totemic Blessing', 'Totemic Protection']
+        skills = character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and skills.name NOT IN (?)', skillgroup.id, totemskills)
+      else
+        skills = character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?', skillgroup.id)
+      end
+      skills.each do |skill|
+        skilllist.push([skill.name, skill.id]) if can_purchase_skill(character, skill)
+      end
+      unless skilllist.empty?
+        availableskills.push([skillgroup.name, skilllist])
+        availablegroups.push(skillgroup.name)
+      end
+    end
+    return availablegroups, availableskills, favoredfoes
+  end
+
   def edit_backstory_link
     if get_last_played_adventure(@character).nil?
       return 'You must play a game before submitting a backstory. Please check back after attending an event!'

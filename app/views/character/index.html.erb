@@ -57,13 +57,16 @@
             </div>
           <% end %>
           <% if !get_sheets_locked %>
-            <div class="profilelinks">
-              <%= link_to character_trainskill_path, remote: true do %>
-                <div>
-                  <%= image_tag 'charactersheet/clock.png', size: '25x25', class: 'center-block' %> - Train Skill
-                </div>
-              <% end %>
-            </div>
+            <% availablegroups, availableskills, favoredfoes = skills_to_train(@character) %>
+            <% if !availablegroups.empty? %>
+              <div class="profilelinks">
+                <%= link_to character_trainskill_path, remote: true do %>
+                  <div>
+                    <%= image_tag 'charactersheet/clock.png', size: '25x25', class: 'center-block' %> - Train Skill
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
           <% end %>
           <% if can_buy_profession(@character) %>
             <div class="profilelinks">

@@ -196,28 +196,8 @@ class CharacterController < ApplicationController
     else
       @characterskill = Characterskill.new
 
-      
-      @favoredfoes = ['Beasts', 'Constructs', 'Elementals', 'Monstrous Humanoids', 'Plants',
-                      'Undead'] - @character.characterskills.where(skill: Skill.where(name: 'Favored Foe')).pluck('details')
-      @availableskills = []
-      @availablegroups = []
+      @availablegroups, @availableskills, @favoredfoes = skills_to_train(@character)
 
-      @character.characterclass.skillgroups.where('skillgroups.playeravailable = true').each do |skillgroup|
-        skilllist = []
-        if (skillgroup.name == 'Druid' && @character.totem == '')
-          totemskills = ['Totemic Gift', 'Totemic Blessing', 'Totemic Protection']
-          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ? and skills.name NOT IN (?)', skillgroup.id, totemskills)
-        else
-          skills = @character.characterclass.skills.where('skills.playeravailable = true and skills.skillgroup_id = ?', skillgroup.id)
-        end
-        skills.each do |skill|
-          skilllist.push([skill.name, skill.id]) if can_purchase_skill(@character, skill)
-        end
-        unless skilllist.empty?
-          @availableskills.push([skillgroup.name, skilllist])
-          @availablegroups.push(skillgroup.name)
-        end
-      end
       respond_to do |format|
         format.js
       end
