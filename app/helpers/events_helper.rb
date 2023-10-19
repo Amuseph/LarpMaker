@@ -104,7 +104,15 @@ module EventsHelper
       @explog.save!
     end
 
-    if eventattendance.registrationtype == 'Player' && days_till_first_lockout > 0
+    puts('TACO')
+    puts('TACO')
+    puts('TACO')
+    puts(event.season)
+    puts('TACO')
+    puts('TACO')
+    puts('TACO')
+
+    if eventattendance.registrationtype == 'Player' && days_till_first_lockout > 0 && event.season != 'N/A'
       event_count_of_season = Event.where("season = ? and extract(year from startdate) = ?", @event.season, year_of_season).count
       player_event_count_of_season = Event.joins(:eventattendances).where("user_id = ? and season = ? and registrationtype = ? and extract(year from startdate) = ?", eventattendance.user, @event.season, 'Player', year_of_season).count
       if event_count_of_season == player_event_count_of_season
